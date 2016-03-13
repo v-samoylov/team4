@@ -16,6 +16,22 @@ npm install
 npm start
 ```
 
+## Структура проекта
+
+```
+bin/            Инстанс сервера
+blocks/         Статика и верстка (partials)
+config/         Конфигурационные файлы для разных окружений
+controllers/    Контроллеры для страниц
+lib/            helpers
+middleware/     Мидлвары проекта
+models/         Модели
+pages/          Статика и верстка (pages)
+test/           Тесты
+app.js          Express приложение
+routes.js       Привязка контроллеров к url
+```
+
 ### Окружение
 
 По умолчанию сервер запускается в режиме development.
