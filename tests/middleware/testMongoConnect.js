@@ -1,12 +1,10 @@
 'use strict';
 
-const mocha = require('mocha');
 const chai = require('chai');
 const sinon = require('sinon');
 
 const should = chai.should();
 
-// Можете объяснить почему требуется специальный фреймворк, чтобы 'should' из 'chai' работал ?
 chai.use(require('sinon-chai'));
 
 const mongoConnect = require('../../middleware/mongoConnect');
@@ -19,6 +17,7 @@ describe('Tests for mongoConnect.js', () => {
         var cb = sinon.spy(actual => {
             actual(req, {}, () => {
                 req.should.have.property('db');
+                req.db.close();
                 done();
             });
         });
@@ -28,15 +27,25 @@ describe('Tests for mongoConnect.js', () => {
         cb.should.have.been.calledWith();
     });
 
-    it.skip('Should check that mongoConnect crash on bad url', done => {
-        var actual = mongoConnect('mongodb://bad-url');
+    it('Should check that returns same db for multiple requests', done => {
+        var actual = mongoConnect();
+        var req = {};
+        var _db;
 
-        var cb = sinon.spy(actual => {
-            actual({}, {}, () => {
-                done();
+        var cb = sinon.spy(conn => {
+            conn(req, {}, () => {
+                _db = req.db;
+
+                actual(req, {}, () => {
+                    _db.should.equal(req.db);
+                    req.db.close();
+                    done();
+                });
             });
         });
 
         cb(actual);
+        cb.should.have.been.calledOnce;
+        cb.should.have.been.calledWith();
     });
 });
