@@ -1,0 +1,19 @@
+{
+  "name": "photoquest-team4",
+  "version": "1.0.0",
+  "description": "[![Stories in Ready](https://badge.waffle.io/urfu-2015/team4.png?label=ready&title=Ready)](https://waffle.io/urfu-2015/team4)\r # DreamTeam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urfu-2015/team4.git"
+  },
+  "author": "team4",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/urfu-2015/team4/issues"
+  },
+  "homepage": "https://github.com/urfu-2015/team4#readme"
+}
