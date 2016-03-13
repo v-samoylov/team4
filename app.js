@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongo = require('./middleware/mongoConnect');
 var app = express();
@@ -33,7 +32,7 @@ app.use((req, res, next) => {
     var isLogined = hash.validate(userId);
     var name = userId.parse('.')[0];
     if (isLogined) {
-    	req.user.name = name;
+    	    req.user.name = name;
     }
     next();
 });

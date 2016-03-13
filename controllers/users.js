@@ -1,7 +1,7 @@
 'use strict';
 
 var validator = require('validator');
-var usersModel = require('../models/users.js') 
+var usersModel = require('../models/users.js'); 
 var validator = require('../lib/hash.js');
 
 module.exports.logout = (req, res) => {
