@@ -5,20 +5,16 @@ var usersModel = require('../models/users.js');
 var hash = require('../lib/hash.js');
 
 module.exports.logout = (req, res) => {
-
 };
 
-module.exports.register = (req, res) => {
+module.exports.register = (req, res, next) => {
     var users = usersModel(req.db);
-    var name = res.query.name;
-    var email = res.query.email;
-    var password = res.query.password;
+    var name = req.body.name;
+    var email = req.body.email;
+    var password = req.body.password;
     users.addUser({name, email, password}).then(
         (result) => {
-            if (err) {
-                return res.status(400).send(err.message);
-            }
-            res.status(200).send('Registration is successfull');
+            res.status(200).send('Registration was successfull');
         },
         (error) => {
             switch (error.code) {
@@ -31,16 +27,17 @@ module.exports.register = (req, res) => {
             }
             return;
         }
-        );
+    );
 };
 
-module.exports.login = (req, res) => {
-    var name = res.query.name;
-    var email = res.query.email;
-    var password = res.query.password;
+module.exports.login = (req, res, next) => {
+    var users = usersModel(req.db);
+    var name = req.body.name;
+    var email = req.body.email;
+    var password = req.body.password;
     users.login({email, password}).then(
         (result) => {
-            res.status(200).send('Logined successfully');
+            res.status(200).send('Successfully logged in');
             var userId = hash.create(name);
             var currTime = new Date();
             res.cookie('id', userId, {expires: currTime + 1000000});
@@ -70,3 +67,4 @@ module.exports.validate = (req, res, next) => {
     }
     next();
 };
+
