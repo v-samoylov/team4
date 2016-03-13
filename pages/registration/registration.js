@@ -17,7 +17,7 @@ $('#submit').click(function (e) {
     })
         .done(function (msg) {
             console.log(msg);
-      })
+        })
         .fail(function (msg) {
             console.log(msg);
         })
