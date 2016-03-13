@@ -6,8 +6,6 @@ const dbConfig = config.get("db");
 const mongoUri = `mongodb://${dbConfig.login}:${dbConfig.password}` +
     `@${dbConfig.host}:${dbConfig.port}/${dbConfig.name}`;
 
-console.log(dbConfig);
-
 module.exports = () => {
     let db;
     return (req, res, next) => {
