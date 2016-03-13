@@ -78,6 +78,6 @@ function isNameExist(newName) {
 function getHash(password) {
     return crypto
         .createHmac('sha256', salt)
-        .update(password)
+        .update(password.toString())
         .digest('hex');
 }
