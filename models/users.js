@@ -1,22 +1,31 @@
 'use strict';
+
 const crypto = require('crypto');
+
 let usersCollection;
 let salt = 'dreamTeam';
 
 const errors = {
     nameExist: {
         code: 1,
-        messege: 'Имя уже существует'
+        message: 'Имя уже существует'
     },
     mongoError: {
         code: 2,
-        messege: 'Ошибка Mongo'
+        message: 'Ошибка Mongo'
     },
     wrongData: {
         code: 1,
-        messege: 'Неверные логин/пароль'
+        message: 'Неверные логин/пароль'
     }
 };
+
+function getHash(password) {
+    return crypto
+        .createHmac('sha256', salt)
+        .update(password.toString())
+        .digest('hex');
+}
 
 const login = user => {
     return new Promise((resolve, reject) => {
@@ -54,16 +63,6 @@ const addUser = newUser => {
     });
 };
 
-const operations = {
-    addUser: newUser => addUser(newUser),
-    login: user => login(user)
-};
-
-module.exports = db => {
-    usersCollection = db.collection('users');
-    return operations;
-};
-
 function isNameExist(newName) {
     return new Promise((resolve, reject) => {
         usersCollection.find({name: newName}).toArray((err, result) => {
@@ -75,9 +74,12 @@ function isNameExist(newName) {
     });
 }
 
-function getHash(password) {
-    return crypto
-        .createHmac('sha256', salt)
-        .update(password.toString())
-        .digest('hex');
-}
+const operations = {
+    addUser: newUser => addUser(newUser),
+    login: user => login(user)
+};
+
+module.exports = db => {
+    usersCollection = db.collection('users');
+    return operations;
+};
