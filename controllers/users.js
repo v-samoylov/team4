@@ -2,13 +2,14 @@
 
 var validator = require('validator');
 var usersModel = require('../models/users.js');
+var hash = require('../lib/hash.js');
 
 module.exports.logout = (req, res) => {
 
 };
 
 module.exports.register = (req, res) => {
-    var users = usersModel(req.bd);
+    var users = usersModel(req.db);
     var name = res.query.name;
     var email = res.query.email;
     var password = res.query.password;
@@ -34,6 +35,7 @@ module.exports.register = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
+    var name = res.query.name;
     var email = res.query.email;
     var password = res.query.password;
     users.login({email, password}).then(
@@ -59,11 +61,12 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.validate = (req, res, next) => {
-    var name = res.query.name;
-    var email = res.query.email;
-    var password = res.query.password;
-    if (validator.isEmail(login)) {
-        res.sendStatus();
+    var name = req.body.name;
+    var email = req.body.email;
+    var password = req.body.password;
+    if (!validator.isEmail(email)) {
+        res.status(200).send({message: 'Wrong email', status: 'error'});
+        return;
     }
     next();
 };
