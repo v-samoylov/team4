@@ -1,4 +1,5 @@
 'use strict';
+
 const MongoClient = require('mongodb').MongoClient;
 
 module.exports = (mongoUri) => {
@@ -18,4 +19,5 @@ module.exports = (mongoUri) => {
             next();
         }
     };
-}
+};
+

@@ -13,16 +13,16 @@ app.set('views', path.join(__dirname, 'pages'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(mongo());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send(err.message);
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send(err.message);
 });
 
 require('./routes')(app);
