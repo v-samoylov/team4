@@ -7,8 +7,8 @@
     "lint:js": "eslint --fix .",
     "lint:css": "stylelint **/*.css",
     "lint": "npm-run-all lint:*",
-    "linter": "npm-run-all lint:*",
-    "build": "webpack"
+    "build": "webpack",
+    "linter": "npm-run-all lint:*"
   },
   "dependencies": {
     "express": "~4.13.1",
