@@ -1,7 +1,7 @@
 require('../../blocks/header/header.css');
 require('./authorization.css');
 
-function test () {
+function test() {
     console.log('success test');
 }
 
