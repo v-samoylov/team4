@@ -4,7 +4,8 @@ require('../../blocks/form/form.css');
 require('../../blocks/grid/grid.css');
 require('../../blocks/footer/footer.css');
 require('./authorization.css');
-//--
+
+/* global $: true*/
 $('#submit').click(function (e) {
     e.preventDefault();
     var password = $('#password').val();
@@ -12,12 +13,12 @@ $('#submit').click(function (e) {
     $.ajax({
         method: "POST",
         url: "/user/login",
-        data: { password: password, email: email }
+        data: {password: password, email: email}
     })
         .done(function (msg) {
             console.log(msg);
         })
         .fail(function (msg) {
             console.log(msg);
-        })
+        });
 });

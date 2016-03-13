@@ -4,6 +4,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongo = require('./middleware/mongoConnect');
 var app = express();
+
 const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
 
@@ -25,9 +26,11 @@ app.use((req, res, next) => {
     req.user = {};
     const hash = require('./lib/hash.js');
     var userId = req.cookies.id;
+    var isLogined;
+    var name;
     if (userId) {
-        var isLogined = hash.validate(userId);
-        var name = userId.parse('.')[0];
+        isLogined = hash.validate(userId);
+        name = userId.parse('.')[0];
     }
     if (isLogined) {
         req.user.name = name;
