@@ -4,6 +4,3 @@ require('../../blocks/form/form.css');
 require('../../blocks/grid/grid.css');
 require('../../blocks/footer/footer.css');
 require('./registration.css');
-
-
-
