@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var mongo = require('./middleware/mongoConnect');
 var app = express();
 const hbs = require('hbs');
+const cookieParser = require('cookie-parser');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'pages'));
@@ -22,6 +23,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500).send(err.message);
+});
+app.use(cookieParser());
+
+app.use((req, res, next) => {
+    req.user = {};
+    const hash = require('./lib/hash.js');
+    var userId = req.cookies.id;
+    var isLogined = hash.validate(userId);
+    var name = userId.parse('.')[0];
+    if (isLogined) {
+    	req.user.name = name;
+    }
+    next();
 });
 
 require('./routes')(app);
