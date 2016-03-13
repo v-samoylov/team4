@@ -27,7 +27,7 @@ lib/            helpers
 middleware/     Мидлвары проекта
 models/         Модели
 pages/          Статика и верстка (pages)
-test/           Тесты
+tests/          Тесты
 app.js          Express приложение
 routes.js       Привязка контроллеров к url
 ```
