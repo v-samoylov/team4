@@ -32,7 +32,7 @@ app.use((req, res, next) => {
     var isLogined = hash.validate(userId);
     var name = userId.parse('.')[0];
     if (isLogined) {
-    	req.user.name = name;
+    	        req.user.name = name;
     }
     next();
 });

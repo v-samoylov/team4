@@ -10,4 +10,4 @@ $('#submit').click(function (e) {
     var name = $('#name').val();
     var password = $('#password').val();
     var email = $('#email').val();
-})
+});
