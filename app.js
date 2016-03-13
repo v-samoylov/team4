@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongo = require('./middleware/mongoConnect');
 var app = express();
+const hbs = require('hbs');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'pages'));
@@ -25,5 +26,7 @@ app.use(function(err, req, res, next) {
 });
 
 require('./routes')(app);
+
+hbs.registerPartials(path.join(__dirname, 'blocks'));
 
 module.exports = app;
