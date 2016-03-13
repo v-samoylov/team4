@@ -1,8 +1,9 @@
 {
   "db": {
-    "host": "ds011449.mlab.com",
-    "port": "11449",
+    "host": "ds013599.mlab.com",
+    "port": "13599",
     "login": "team4",
-    "password": "DreamTeam"
+    "password": "DreamTeam",
+    "name": "team4hackaton-test"
   }
 }

@@ -14,7 +14,7 @@ module.exports.register = (req, res) => {
     var email = res.query.email;
     var password = res.query.password;
     users.addUser({name, email, password}).then(
-        (result) {
+        (result) => {
             if (err) {
                 return res.status(400).send(err.message);  
             }
