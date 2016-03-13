@@ -61,11 +61,11 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.validate = (req, res, next) => {
-    var name = res.query.name;
-    var email = res.query.email;
-    var password = res.query.password;
+    var name = req.body.name;
+    var email = req.body.email;
+    var password = req.body.password;
     if (!validator.isEmail(email)) {
-        res.status(400).send('Wrong email');
+        res.status(200).send({message: 'Wrong email', status: 'error'});
         return;
     }
     next();
