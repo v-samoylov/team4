@@ -1,17 +1,44 @@
-var app = require('express')();
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var mongo = require('./middleware/mongoConnect');
+var app = express();
+const hbs = require('hbs');
+const cookieParser = require('cookie-parser');
+
+// view engine setup
+app.set('views', path.join(__dirname, 'pages'));
+app.set('view engine', 'hbs');
+
+// uncomment after placing your favicon in /public
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(mongo());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(function (err, req, res) {
+    console.error(err.stack);
+    res.status(500).send(err.message);
+});
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     req.user = {};
     const hash = require('./lib/hash.js');
-    const cookieParser = require('cookie-parser');
-    app.use(cookieParser());
     var userId = req.cookies.id;
     var isLogined = hash.validate(userId);
     var name = userId.parse('.')[0];
     if (isLogined) {
-    	req.user.name = name;
+    	        req.user.name = name;
     }
     next();
 });
 
-app.listen(80);
+require('./routes')(app);
+
+hbs.registerPartials(path.join(__dirname, 'blocks'));
+
+module.exports = app;

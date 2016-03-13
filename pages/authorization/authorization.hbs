@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Авторизация</title>
+    <meta name="description" content="">
+    <link rel="stylesheet" href="/authorization.css">
+</head>
+<body>
+{{> header/header }}
+<form class="form-horizontal form-of-authorization">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox">Запомнить
+        </label>
+        <a href="" class="link-for-checkIn">Регистрация</a>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      {{> button/button text='Авторизация'}}
+    </div>
+  </div>
+</form>
+{{> footer/footer }}
+
+<script src="/authorization.js"></script>
+</body>
+</html>
