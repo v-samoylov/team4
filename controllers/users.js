@@ -9,7 +9,7 @@ module.exports.logout = (req, res) => {
 };
 
 module.exports.register = (req, res) => {
-    var users = usersModel(req.bd);
+    var users = usersModel(req.db);
     var name = res.query.name;
     var email = res.query.email;
     var password = res.query.password;
@@ -64,8 +64,9 @@ module.exports.validate = (req, res, next) => {
     var name = res.query.name;
     var email = res.query.email;
     var password = res.query.password;
-    //if (validator.isEmail(login)) {
-    //    res.sendStatus();
-    //}
+    if (!validator.isEmail(email)) {
+        res.status(400).send('Wrong email');
+        return;
+    }
     next();
 };
