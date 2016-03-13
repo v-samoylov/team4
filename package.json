@@ -23,6 +23,7 @@
     "eslint-config-xo": "0.12.0",
     "webpack": "^1.12.14",
     "morgan": "~1.6.1",
-    "debug": "~2.2.0"
+    "debug": "~2.2.0",
+    "npm-run-all": "1.5.2"
   }
 }
