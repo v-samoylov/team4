@@ -1,8 +1,7 @@
 'use strict';
 
 var validator = require('validator');
-var usersModel = require('../models/users.js') 
-var validator = require('../lib/hash.js');
+var usersModel = require('../models/users.js');
 
 module.exports.logout = (req, res) => {
 
@@ -14,22 +13,22 @@ module.exports.register = (req, res) => {
     var email = res.query.email;
     var password = res.query.password;
     users.addUser({name, email, password}).then(
-        (result) {
+        (result) => {
             if (err) {
-                return res.status(400).send(err.message);  
+                return res.status(400).send(err.message);
             }
             res.status(200).send('Registration is successfull');
         },
         (error) => {
             switch (error.code) {
                 case 1:
-                    res.status(400).send(error.message); 
+                    res.status(400).send(error.message);
                     break;
                 case 2:
-                    res.status(400).send(error.message); 
+                    res.status(400).send(error.message);
                     break;
             }
-            return;  
+            return;
         }
         );
 };
@@ -47,13 +46,13 @@ module.exports.login = (req, res) => {
         (error) => {
             switch (error.code) {
                 case 1:
-                    res.status(400).send(error.message); 
+                    res.status(400).send(error.message);
                     break;
                 case 2:
-                    res.status(400).send(error.message); 
+                    res.status(400).send(error.message);
                     break;
             }
-            return;  
+            return;
         }
     );
     next();
