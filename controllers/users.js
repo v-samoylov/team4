@@ -2,6 +2,7 @@
 
 var validator = require('validator');
 var usersModel = require('../models/users.js');
+var hash = require('../lib/hash');
 
 module.exports.logout = (req, res) => {
 
