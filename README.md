@@ -4,6 +4,8 @@
 # PhotoQuest 44
 > 0.0.1a
 
+![circle](https://cloud.githubusercontent.com/assets/4165695/13728695/78d6ac82-e942-11e5-8e1d-d9c456fba919.gif)
+
 ## Запуск проекта
 
 Этот проект расчитан на запуск под `node >= 4`
@@ -31,10 +33,8 @@ npm start
 
 ### npm скрипты
 
-`npm start` - запуск проекта
-`npm lint:js` - проверка js (eslint)
-`npm lint:css` - проверка css (stylelint)
-`npm lint` - проверка js и css (выполняется перед push)
-`npm build` - сборка клиентского js и css (webpack)
-
-
+* `npm start` - запуск проекта
+* `npm lint:js` - проверка js (eslint)
+* `npm lint:css` - проверка css (stylelint)
+* `npm lint` - проверка js и css (выполняется перед push)
+* `npm build` - сборка клиентского js и css (webpack)
