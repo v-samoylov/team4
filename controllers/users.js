@@ -64,8 +64,8 @@ module.exports.validate = (req, res, next) => {
     var name = res.query.name;
     var email = res.query.email;
     var password = res.query.password;
-    if (validator.isEmail(login)) {
-        res.sendStatus();
-    }
+    //if (validator.isEmail(login)) {
+    //    res.sendStatus();
+    //}
     next();
 };
