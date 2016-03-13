@@ -7,7 +7,7 @@
     "lint:js": "eslint --fix .",
     "lint:css": "stylelint **/*.css",
     "lint": "npm-run-all lint:*",
-    "precommit": "npm-run-all lint:*"
+    "linter": "npm-run-all lint:*"
   },
   "dependencies": {
     "express": "~4.13.1",
