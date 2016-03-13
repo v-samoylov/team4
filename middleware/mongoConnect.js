@@ -9,10 +9,11 @@ module.exports = (mongoUri) => {
         if (!db) {
             db = MongoClient.connect(mongoUri, (err, db) => {
                 if (err) {
-                    next(new Error('failed to connect mongo'));
+                    next(err);
+                } else {
+                    req.db = db;
+                    next();
                 }
-                req.db = db;
-                next();
             });
         } else {
             req.db = db;
