@@ -5,6 +5,7 @@ require('../../blocks/grid/grid.css');
 require('../../blocks/footer/footer.css');
 require('./registration.css');
 
+/* global $: true*/
 $('#submit').click(function (e) {
     e.preventDefault();
     var name = $('#name').val();
