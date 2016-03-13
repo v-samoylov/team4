@@ -6,7 +6,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     context: path.join(__dirname, 'pages'),
     entry: {
-        authorization: './authorization/authorization.js'
+        authorization: './authorization/authorization.js',
+        registration: './registration/registration.js'
     },
     devtool: 'source-map',
     output: {
