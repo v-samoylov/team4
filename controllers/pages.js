@@ -5,7 +5,6 @@ exports.reg = (req, res) => {
     res.render('registration/registration', {});
 };
 
-
 exports.error404 = (req, res) => {
     res.sendStatus(404);
 };

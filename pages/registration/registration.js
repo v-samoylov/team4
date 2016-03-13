@@ -4,6 +4,7 @@ require('../../blocks/form/form.css');
 require('../../blocks/grid/grid.css');
 require('../../blocks/footer/footer.css');
 require('./registration.css');
+<<<<<<< HEAD
 
 $('#submit').click(function (e) {
     e.preventDefault();
@@ -14,3 +15,5 @@ $('#submit').click(function (e) {
 })
 
 
+=======
+>>>>>>> origin/master

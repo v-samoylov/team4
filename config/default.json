@@ -1,9 +1,9 @@
 {
   "db": {
     "host": "localhost",
-    "port": "11449",
-    "login": "team4",
-    "password": "DreamTeam",
+    "port": "27001",
+    "login": "root",
+    "password": "",
     "name": "team4hackaton"
   }
 }
