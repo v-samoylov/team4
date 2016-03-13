@@ -33,10 +33,8 @@ npm start
 
 ### npm скрипты
 
-`npm start` - запуск проекта
-`npm lint:js` - проверка js (eslint)
-`npm lint:css` - проверка css (stylelint)
-`npm lint` - проверка js и css (выполняется перед push)
-`npm build` - сборка клиентского js и css (webpack)
-
-
+* `npm start` - запуск проекта
+* `npm lint:js` - проверка js (eslint)
+* `npm lint:css` - проверка css (stylelint)
+* `npm lint` - проверка js и css (выполняется перед push)
+* `npm build` - сборка клиентского js и css (webpack)
