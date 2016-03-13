@@ -2,7 +2,7 @@
 
 const MongoClient = require('mongodb').MongoClient;
 
-module.exports = (mongoUri) => {
+module.exports = mongoUri => {
     let db;
     mongoUri = mongoUri || 'mongodb://team4:DreamTeam@ds011449.mlab.com:11449/team4hackaton';
     return (req, res, next) => {
