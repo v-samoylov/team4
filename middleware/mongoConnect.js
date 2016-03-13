@@ -7,17 +7,18 @@ const mongoUri = `mongodb://${dbConfig.login}:${dbConfig.password}` +
     `@${dbConfig.host}:${dbConfig.port}/${dbConfig.name}`;
 
 module.exports = () => {
-    let db;
+    let connection;
     return (req, res, next) => {
-        if (db) {
-            req.db = db;
+        if (connection) {
+            req.db = connection;
             next();
         } else {
-            db = MongoClient.connect(mongoUri, (err, db) => {
+            connection = MongoClient.connect(mongoUri, (err, db) => {
                 if (err) {
                     next(err);
                 } else {
-                    req.db = db;
+                    connection = db;
+                    req.db = connection;
                     next();
                 }
             });
