@@ -7,7 +7,7 @@
     "lint:js": "eslint --fix .",
     "lint:css": "stylelint **/*.css",
     "lint": "npm-run-all lint:*",
-    "tests": "npm run tests --recursive --timeout 10000",
+    "tests": "mocha tests --recursive --timeout 10000",
     "build": "webpack"
   },
   "dependencies": {
