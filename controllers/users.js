@@ -4,25 +4,31 @@ var validator = require('validator');
 var usersModel = require('../models/users.js');
 var hash = require('../lib/hash.js');
 
-module.exports.logout = (req, res) => {
+module.exports.logout = () => {
 };
 
-module.exports.register = (req, res, next) => {
+module.exports.register = (req, res) => {
     var users = usersModel(req.db);
     var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
     users.addUser({name, email, password}).then(
-        (result) => {
+        result => {
             res.status(200).send('Registration was successfull');
+            req.user = {};
+            req.user.name = result.name;
+            req.user.email = result.email;
         },
-        (error) => {
+        error => {
             switch (error.code) {
                 case 1:
                     res.status(400).send(error.message);
                     break;
                 case 2:
-                    res.status(400).send(error.message);
+                    res.status(500).send(error.message);
+                    break;
+                default:
+                    res.status(500).send(error.message);
                     break;
             }
             return;
@@ -30,41 +36,38 @@ module.exports.register = (req, res, next) => {
     );
 };
 
-module.exports.login = (req, res, next) => {
+module.exports.login = (req, res) => {
     var users = usersModel(req.db);
-    var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
     users.login({email, password}).then(
-        (result) => {
+        result => {
+            var userId = hash.create(result.name);
+            res.cookie('id', userId, {maxAge: 1000000});
             res.status(200).send('Successfully logged in');
-            var userId = hash.create(name);
-            var currTime = new Date();
-            res.cookie('id', userId, {expires: currTime + 1000000});
         },
-        (error) => {
+        error => {
             switch (error.code) {
                 case 1:
                     res.status(400).send(error.message);
                     break;
                 case 2:
-                    res.status(400).send(error.message);
+                    res.status(500).send(error.message);
+                    break;
+                default:
+                    res.status(500).send(error.message);
                     break;
             }
             return;
         }
     );
-    next();
 };
 
 module.exports.validate = (req, res, next) => {
-    var name = req.body.name;
     var email = req.body.email;
-    var password = req.body.password;
     if (!validator.isEmail(email)) {
         res.status(200).send({message: 'Wrong email', status: 'error'});
         return;
     }
     next();
 };
-
