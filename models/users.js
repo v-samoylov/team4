@@ -33,7 +33,7 @@ const login = user => {
             if (err) {
                 reject(errors.mongoError);
             }
-            let userDb = result[0];
+            let userDb = result[0] || {};
             let hasRightPassword = userDb.password === getHash(user.password);
             if (result.length && hasRightPassword) {
                 resolve(userDb);
