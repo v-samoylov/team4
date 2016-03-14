@@ -29,13 +29,14 @@ function getHash(password) {
 
 const login = user => {
     return new Promise((resolve, reject) => {
-        user.password = getHash(user.password);
         usersCollection.find({email: user.email}).toArray((err, result) => {
             if (err) {
                 reject(errors.mongoError);
             }
-            if (result.length) {
-                resolve(result[0]);
+            let userDb = result[0];
+            let hasRightPassword = userDb.password === getHash(user.password);
+            if (result.length && hasRightPassword) {
+                resolve(userDb);
             } else {
                 reject(errors.wrongData);
             }
