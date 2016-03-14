@@ -30,7 +30,7 @@ function getHash(password) {
 const login = user => {
     return new Promise((resolve, reject) => {
         user.password = getHash(user.password);
-        usersCollection.find(user).toArray((err, result) => {
+        usersCollection.find({email: user.email}).toArray((err, result) => {
             if (err) {
                 reject(errors.mongoError);
             }

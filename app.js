@@ -18,7 +18,6 @@ app.use(mongo());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
@@ -26,13 +25,13 @@ app.use((req, res, next) => {
     req.user = {};
     const hash = require('./lib/hash.js');
     var userId = req.cookies.id;
-    var isLogined;
+    var isLoggedIn;
     var name;
     if (userId) {
-        isLogined = hash.validate(userId);
-        name = userId.parse('.')[0];
+        isLoggedIn = hash.validate(userId);
+        name = userId.split('.')[0];
     }
-    if (isLogined) {
+    if (isLoggedIn) {
         req.user.name = name;
     }
     next();
