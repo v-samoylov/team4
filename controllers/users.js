@@ -4,7 +4,9 @@ var validator = require('validator');
 var usersModel = require('../models/users.js');
 var hash = require('../lib/hash.js');
 
-module.exports.logout = () => {
+module.exports.logout = (req, res) => {
+    res.clearCookie('id');
+    res.status(200).send('Successfully logged out');
 };
 
 module.exports.register = (req, res) => {
