@@ -5,7 +5,6 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('team4:server');
 var http = require('http');
 const config = require('config');
 const serverConfig = config.get("server");
@@ -31,7 +30,6 @@ server.listen(port, () => {
         `${serverConfig.port}\x1B[39m`);
 });
 server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -77,14 +75,4 @@ function onError(error) {
         default:
             throw error;
     }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
-    debug('Listening on ' + bind);
 }
