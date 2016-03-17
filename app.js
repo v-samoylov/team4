@@ -7,6 +7,7 @@ var app = express();
 
 const hbs = require('hbs');
 const cookieParser = require('cookie-parser');
+const cookieAuthenticator = require('./middleware/cookieAuthenticator');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'pages'));
@@ -20,22 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
-
-app.use((req, res, next) => {
-    req.user = {};
-    const hash = require('./lib/hash.js');
-    var userId = req.cookies.id;
-    var isLoggedIn;
-    var name;
-    if (userId) {
-        isLoggedIn = hash.validate(userId);
-        name = userId.split('.')[0];
-    }
-    if (isLoggedIn) {
-        req.user.name = name;
-    }
-    next();
-});
+app.use(cookieAuthenticator());
 
 require('./routes')(app);
 
