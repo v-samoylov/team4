@@ -1,3 +1,4 @@
+'use strict';
 
 const hash = require('../lib/hash.js');
 const config = require('config');
