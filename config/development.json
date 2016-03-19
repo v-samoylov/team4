@@ -5,5 +5,8 @@
     "login": "team4",
     "password": "DreamTeam",
     "name": "team4hackaton-test"
+  },
+  "hash": {
+    "cookieSalt": "r8fjhqa8ds"
   }
 }

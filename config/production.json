@@ -4,5 +4,8 @@
     "port": "11449",
     "login": "team4",
     "password": "DreamTeam"
+  },
+  "hash": {
+    "cookieSalt": "r8fjhqa8ds"
   }
 }
