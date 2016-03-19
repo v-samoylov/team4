@@ -4,15 +4,19 @@ var validator = require('validator');
 var usersModel = require('../models/users.js');
 var hash = require('../lib/hash.js');
 const config = require('config');
+const debug = require('debug')('team4:controllers:users');
 const hashConfig = config.get("hash");
 const salt = hashConfig.cookieSalt;
 
+
 module.exports.logout = (req, res) => {
+    debug('logout');
     res.clearCookie('id');
     res.status(200).send('Successfully logged out');
 };
 
 module.exports.register = (req, res) => {
+    debug('register');
     const users = usersModel(req.db);
     var name = req.body.name;
     var email = req.body.email;
@@ -28,6 +32,7 @@ module.exports.register = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
+    debug('login');
     const users = usersModel(req.db);
     var email = req.body.email;
     var password = req.body.password;
@@ -44,6 +49,7 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.validate = (req, res, next) => {
+    debug('validate');
     if (!req.body.password) {
         res.status(400).send({message: 'Password is required', status: 'Error'});
         return;
