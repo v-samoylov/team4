@@ -45,22 +45,32 @@ module.exports.login = (req, res) => {
 
 module.exports.validate = (req, res, next) => {
     if (!req.body.password) {
-        res.status(200).send({message: 'Password is required', status: 'Error'});
+        res.status(401).send({message: 'Password is required', status: 'Error'});
         return;
     }
     if (!req.body.email) {
-        res.status(200).send({message: 'Email is required', status: 'Error'});
+        res.status(401).send({message: 'Email is required', status: 'Error'});
         return;
     }
+    req.body.email = req.body.email.trim();
+    if (!validator.isEmail(req.body.email)) {
+        res.status(401).send({message: 'Email is not valid', status: 'Error'});
+        return;
+    }
+
     if (req.path === '/user/reg') {
         if (!req.body.name) {
-            res.status(200).send({message: 'Name is required', status: 'Error'});
+            res.status(401).send({message: 'Name is required', status: 'Error'});
             return;
         }
-    }
-    if (!validator.isEmail(req.body.email)) {
-        res.status(200).send({message: 'Email is not valid', status: 'Error'});
-        return;
+        req.body.name = req.body.name.trim();
+        if (
+            !req.body.name.match(/^[А-яA-z\s\-0-9]+$/) ||
+            !req.body.name.match(/[А-яA-z]+/)
+        ) {
+            res.status(401).send({message: 'Name is not valid', status: 'Error'});
+            return;
+        }
     }
     next();
 };
