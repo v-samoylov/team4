@@ -6,5 +6,5 @@ exports.reg = (req, res) => {
 };
 
 exports.error404 = (req, res) => {
-    res.sendStatus(404);
+    res.render('notFound/notFound', {});
 };
