@@ -8,15 +8,10 @@ const debug = require('debug')('team4:controllers:users');
 const hashConfig = config.get("hash");
 const salt = hashConfig.cookieSalt;
 
-const config = require('config');
-const hashConfig = config.get("hash");
-const salt = hashConfig.cookieSalt;
-
 module.exports.logout = (req, res) => {
     debug('logout');
     res.clearCookie('id');
     res.status(200).send('Successfully logged out');
-    
 };
 
 module.exports.register = (req, res) => {
@@ -53,6 +48,7 @@ module.exports.login = (req, res) => {
 };
 
 module.exports.validate = (req, res, next) => {
+    debug('validate');
     if (!req.body.password) {
         res.status(400).send({message: 'Password is required', status: 'Error'});
         return;
