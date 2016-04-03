@@ -47,6 +47,18 @@ SET NODE_ENV=production
 npm start
 ```
 
+Для включения логов дебага выполните:
+
+Unix:
+```bash
+DEBUG=team4:* npm start
+```
+Windows:
+```bash
+set DEBUG=team4:*
+npm start
+```
+
 ### npm скрипты
 
 * `npm start` - запуск проекта
