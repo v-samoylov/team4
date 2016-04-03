@@ -16,7 +16,7 @@ $('#submit').click(function (e) {
         url: '/user/reg',
         data: {name: name, password: password, email: email}
     })
-        .done(function (msg) {
+        .done(function () {
             window.location = '/';
         })
         .fail(function (msg) {
