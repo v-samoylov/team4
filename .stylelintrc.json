@@ -3,7 +3,7 @@
   "rules": {
     "indentation": 4,
     "block-opening-brace-newline-before": "always",
-    "block-opening-brace-space-before": "newer",
+    "block-opening-brace-space-before": "never-single-line",
     "block-closing-brace-newline-before": "always"
   },
   "ignoreFiles": [
