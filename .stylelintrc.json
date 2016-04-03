@@ -1,6 +1,12 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "indentation": 4
-  }
+    "indentation": 4,
+    "block-opening-brace-newline-before": "always",
+    "block-opening-brace-space-before": "newer",
+    "block-closing-brace-newline-before": "always"
+  },
+  "ignoreFiles": [
+    "public/*"
+  ]
 }
