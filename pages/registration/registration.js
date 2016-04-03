@@ -17,7 +17,7 @@ $('#submit').click(function (e) {
         data: {name: name, password: password, email: email}
     })
         .done(function (msg) {
-            console.log(msg);
+            window.location = '/';
         })
         .fail(function (msg) {
             console.log(msg);
