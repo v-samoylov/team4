@@ -7,7 +7,8 @@ module.exports = {
     context: path.join(__dirname, 'pages'),
     entry: {
         authorization: './authorization/authorization.js',
-        registration: './registration/registration.js'
+        registration: './registration/registration.js',
+        notFound: './notFound/notFound.js'
     },
     devtool: 'source-map',
     output: {
