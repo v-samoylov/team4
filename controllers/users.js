@@ -3,68 +3,77 @@
 var validator = require('validator');
 var usersModel = require('../models/users.js');
 var hash = require('../lib/hash.js');
+const config = require('config');
+const hashConfig = config.get("hash");
+const salt = hashConfig.cookieSalt;
 
 module.exports.logout = (req, res) => {
+    res.clearCookie('id');
+    res.status(200).send('Successfully logged out');
 };
 
-module.exports.register = (req, res, next) => {
-    var users = usersModel(req.db);
+module.exports.register = (req, res) => {
+    const users = usersModel(req.db);
     var name = req.body.name;
     var email = req.body.email;
     var password = req.body.password;
     users.addUser({name, email, password}).then(
-        (result) => {
+        () => {
             res.status(200).send('Registration was successfull');
         },
-        (error) => {
-            switch (error.code) {
-                case 1:
-                    res.status(400).send(error.message);
-                    break;
-                case 2:
-                    res.status(400).send(error.message);
-                    break;
-            }
-            return;
+        error => {
+            res.status(error.code).send(error.message);
         }
     );
 };
 
-module.exports.login = (req, res, next) => {
-    var users = usersModel(req.db);
-    var name = req.body.name;
+module.exports.login = (req, res) => {
+    const users = usersModel(req.db);
     var email = req.body.email;
     var password = req.body.password;
     users.login({email, password}).then(
-        (result) => {
+        result => {
+            var userId = hash.create(result.name, salt);
+            res.cookie('id', userId, {maxAge: 1000000});
             res.status(200).send('Successfully logged in');
-            var userId = hash.create(name);
-            var currTime = new Date();
-            res.cookie('id', userId, {expires: currTime + 1000000});
         },
-        (error) => {
-            switch (error.code) {
-                case 1:
-                    res.status(400).send(error.message);
-                    break;
-                case 2:
-                    res.status(400).send(error.message);
-                    break;
-            }
-            return;
+        error => {
+            res.status(error.code).send(error.message);
         }
     );
-    next();
 };
 
 module.exports.validate = (req, res, next) => {
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
-    if (!validator.isEmail(email)) {
-        res.status(200).send({message: 'Wrong email', status: 'error'});
+    if (!req.body.password) {
+        res.status(400).send({message: 'Password is required', status: 'Error'});
         return;
+    }
+    if (!req.body.email) {
+        res.status(400).send({message: 'Email is required', status: 'Error'});
+        return;
+    }
+    req.body.email = req.body.email.trim();
+    if (!validator.isEmail(req.body.email)) {
+        res.status(400).send({message: 'Email is not valid', status: 'Error'});
+        return;
+    }
+    if (req.body.password.length > 30) {
+        res.status(400).send({message: 'Password is not valid', status: 'Error'});
+        return;
+    }
+    if (req.path === '/user/reg') {
+        if (!req.body.name) {
+            res.status(400).send({message: 'Name is required', status: 'Error'});
+            return;
+        }
+        req.body.name = req.body.name.trim();
+        if (
+            !req.body.name.match(/^[А-яA-z\-0-9]{2,30}$/) ||
+            !req.body.name.match(/[А-яA-z]+/)
+        ) {
+            res.status(400).send({message: 'Name is not valid', status: 'Error'});
+            return;
+        }
     }
     next();
 };
-
