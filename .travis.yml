@@ -12,7 +12,6 @@ notifications:
     on_failure: always
 deploy:
   provider: heroku
-  api_key:
-    secure: 134bf008-8e37-471d-8b3c-1d1e0509e10d
+  api_key: 134bf008-8e37-471d-8b3c-1d1e0509e10d
   on: master
   app: dream-team-4
