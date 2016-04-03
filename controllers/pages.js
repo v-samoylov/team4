@@ -11,6 +11,5 @@ exports.reg = (req, res) => {
 
 exports.error404 = (req, res) => {
     debug('error404');
-    res.sendStatus(404);
-    res.render('notFound/notFound', {});
+    res.status(404).render('notFound/notFound', {});
 };
