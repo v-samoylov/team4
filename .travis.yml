@@ -8,8 +8,6 @@ script:
 - npm run lint && npm run tests
 notifications:
   slack: savichev95@gmail.com:dtrEmz259nh6SzVu2P38Lnnc
-    on_success: always
-    on_failure: always
 deploy:
   provider: heroku
   api_key: 134bf008-8e37-471d-8b3c-1d1e0509e10d
