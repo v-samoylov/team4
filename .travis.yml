@@ -6,10 +6,10 @@ install:
 - npm install
 script:
 - npm run lint && npm run tests
-notifications:
-  slack: urfu-2015:dtrEmz259nh6SzVu2P38Lnnc
 deploy:
   provider: heroku
   api_key: 134bf008-8e37-471d-8b3c-1d1e0509e10d
   on: master
   app: dream-team-4
+notifications:
+  slack: urfu-2015:dtrEmz259nh6SzVu2P38Lnnc
