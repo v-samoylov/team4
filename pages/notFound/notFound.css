@@ -1,13 +1,15 @@
-img 
+img
 {
-	height: 400px;
+    height: 400px;
 }
+
 .main_div
 {
-	text-align: center;
+    text-align: center;
 }
+
 p,
 a
 {
-	font-size: 40px;
+    font-size: 40px;
 }
