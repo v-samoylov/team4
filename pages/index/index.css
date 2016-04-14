@@ -1,0 +1,39 @@
+html
+{
+    overflow-x: hidden;
+}
+
+body
+{
+    background-color: black !important;
+}
+
+.main_content
+{
+    text-align: center;
+    margin: 10px 0;
+}
+
+.top_line,
+.bottom_line
+{
+    display: flex;
+    justify-content: center;
+}
+
+.main_content_name
+{
+    font-size: 40px;
+    color: white;
+}
+
+img
+{
+    width: 200px;
+    padding: 0 15px;
+}
+
+.getAllQuests
+{
+    font-size: 25px;
+}

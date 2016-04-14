@@ -1,0 +1,20 @@
+<header class="row">
+    <div class="header_title col-sm-8">
+        <a href="/">ФотоКвесты by Team4</a>
+    </div>
+    <div class="header_links_search  col-sm-4">
+        <div class="header_links">
+            {{#if commonData.user}}
+                <a class="header_links_a" href="">Выход</a>
+                <a class="header_links_a" href="">Создать квест</a>
+            {{else}}
+                <a class="header_links_a" href="/auto">Вход</a>
+                <a class="header_links_a" href="/reg">Регистрация</a>
+            {{/if}}
+        </div>
+        <div class="header_search">
+            <input type="search" placeholder="Поиск по сайту">
+            <input type="button" value="Найти">
+        </div>
+    </div>
+</header>

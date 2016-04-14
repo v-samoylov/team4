@@ -1,4 +1,14 @@
-header
+.header_title
 {
-    font-size: 50px;
+    font-size: 40px;
+}
+
+.header_links_a
+{
+    font-size: 20px;
+}
+
+.header_links_a
+{
+    margin-right: 5px;
 }

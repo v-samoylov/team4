@@ -6,6 +6,7 @@ module.exports = function (app) {
     app.post('/user/reg', users.validate, users.register);
     app.post('/user/logout', users.logout);
     app.get('/', pages.index);
+    app.get('/auto', pages.auto);
     app.get('/reg', pages.reg);
     app.all('*', pages.error404);
 

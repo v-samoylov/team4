@@ -11,6 +11,7 @@
   "rules": {
     "indent": [2, 4, {"SwitchCase": 1}],
     "max-len": [2, 100],
-    "max-params": [2, 3]
+    "max-params": [2, 3],
+    "linebreak-style": [1, "unix"]
   }
 }
