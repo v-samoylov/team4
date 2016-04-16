@@ -28,38 +28,27 @@ function getHash(password) {
 }
 
 const login = user => {
-    return new Promise((resolve, reject) => {
-        user.password = getHash(user.password);
-        usersCollection.find(user).toArray((err, result) => {
-            if (err) {
-                reject(errors.mongoError);
-            }
+    user.password = getHash(user.password);
+    return usersCollection.find(user).toArray()
+    .then(
+        result => {
             if (result.length) {
-                resolve(result[0]);
-            } else {
-                reject(errors.wrongData);
+                return result[0];
             }
-        });
-    });
+            throw errors.wrongData;
+        },
+        () => {
+            throw errors.mongoError;
+        }
+    );
 };
 
 const addUser = newUser => {
-    return new Promise((resolve, reject) => {
-        isNameExist(newUser.name).then(
-            exist => {
-                if (exist) {
-                    reject(errors.nameExist);
-                }
-                newUser.password = getHash(newUser.password);
-                usersCollection.insertOne(newUser, err => {
-                    if (err) {
-                        reject(errors.mongoError);
-                    }
-                    resolve();
-                });
-            },
-            () => reject(errors.mongoError)
-        );
+    return isNameExist(newUser.name)
+    .then(() => {
+        newUser.password = getHash(newUser.password);
+        newUser.quests = [];
+        return usersCollection.insertOne(newUser);
     });
 };
 
@@ -67,9 +56,12 @@ function isNameExist(newName) {
     return new Promise((resolve, reject) => {
         usersCollection.find({name: newName}).toArray((err, result) => {
             if (err) {
-                reject(err);
+                reject(errors.mongoError);
+            } else if (result.length) {
+                reject(errors.nameExist);
+            } else {
+                resolve();
             }
-            resolve(result.length);
         });
     });
 }
