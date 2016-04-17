@@ -12,14 +12,21 @@ module.exports = () => {
         } else {
             req.commonData = {user: {}};
         }
+        if (res.commonData) {
+            res.commonData.user = {};
+        } else {
+            res.commonData = {user: {}};
+        }        
         var userId = req.cookies.id;
         if (userId) {
             var isLoggedIn = hash.validate(userId, salt);
             var userName = userId.split('.')[0];
             if (isLoggedIn) {
                 req.commonData.user.name = userName;
+                res.commonData.user.name = userName;
             }
         }
         next();
     };
 };
+
