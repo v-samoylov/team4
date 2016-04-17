@@ -1,3 +1,13 @@
+html
+{
+    overflow-x: hidden;
+}
+
+body
+{
+    background-color: #e1dede !important;
+}
+
 img
 {
     height: 400px;

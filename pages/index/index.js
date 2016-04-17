@@ -1,2 +1,2 @@
-require('./notFound.css');
+require('./index.css');
 require('../../blocks/header/header.js');

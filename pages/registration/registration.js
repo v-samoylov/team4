@@ -1,4 +1,5 @@
 require('./registration.css');
+require('../../blocks/header/header.js');
 
 /* global $: true*/
 $('#submit').click(function (e) {
