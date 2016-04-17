@@ -115,8 +115,8 @@ const addCommentToPlace = (title, placeTitle, comment) => {
 
 const getAllQuests = () => quests.find({}, {_id: 0}).toArray();
 
-const getLimitQuests = (start, offset) => {
-    return quests.find({}, {_id: 0}).skip(start).limit(offset).toArray();
+const getLimitQuests = (skip, limit) => {
+    return quests.find({}, {_id: 0}).skip(skip).limit(limit).toArray();
 };
 
 const getQuest = title => quests.find({title}, {_id: 0}).next();
