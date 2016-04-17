@@ -28,8 +28,10 @@ function getRandomPhoto(quest) {
 exports.index = (req, res) => {
     debug('index');
     const quests = questsModel(req.db);
-    const allQuests = quests.getAllQuests();
-    let choosenQuests = allQuests.slice(0, 6).forEach(filterFields(['url', 'title', 'photo']));
+    let questNum = req.cookies.questNum;
+    res.cookie('questNum', questNum + 10 , {maxAge: 1000000});
+    let choosenQuests = quests.getLimitQuests(questNum, 10);
+    choosenQuests = choosenQuests.forEach(filterFields(['url', 'title', 'photo']));
     res.render('authorization/authorization', {commonData: req.commonData, quests: choosenQuests});
 };
 
