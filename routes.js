@@ -9,6 +9,7 @@ module.exports = function (app) {
     app.post('/user/logout', users.logout);
     app.get('/getmorequests', pages.index);
     app.get('/', pages.index);
+    app.get('/auto', pages.auto);
     app.get('/reg', pages.reg);
     app.all('*', pages.error404);
 

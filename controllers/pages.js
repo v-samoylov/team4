@@ -32,19 +32,24 @@ exports.index = (req, res) => {
     let choosenQuests = quests.getLimitQuests(questNum, 10);
     choosenQuests = choosenQuests.forEach(filterFields(['url', 'title', 'photo']));
     if (questNum === 0) {
-        res.render('authorization/authorization',
+        res.render('index/index',
             {commonData: req.commonData, quests: choosenQuests});
     } else {
         res.json({quests: choosenQuests});
     }
 };
 
+exports.auto = (req, res) => {
+    debug('auto');
+    res.render('authorization/authorization');
+};
+
 exports.reg = (req, res) => {
     debug('reg');
-    res.render('registration/registration', {});
+    res.render('registration/registration');
 };
 
 exports.error404 = (req, res) => {
     debug('error404');
-    res.status(404).render('notFound/notFound', {});
+    res.status(404).render('notFound/notFound');
 };

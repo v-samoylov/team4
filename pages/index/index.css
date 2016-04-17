@@ -1,0 +1,35 @@
+html
+{
+    overflow-x: hidden;
+}
+
+body
+{
+    background-color: #e1dede !important;
+}
+
+.main_content
+{
+    text-align: center;
+}
+
+.quest_img
+{
+    width: 100%;
+    margin: 10px;
+}
+
+.quest_name
+{
+    margin: 10px;
+}
+
+p
+{
+    overflow: hidden;
+}
+
+.quest_name_a
+{
+    font-size: 80px;
+}
