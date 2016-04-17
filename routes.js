@@ -2,13 +2,12 @@
 
 const users = require('./controllers/users');
 const pages = require('./controllers/pages');
-const mainPage = require('./controllers/mainPage');
 
 module.exports = function (app) {
     app.post('/user/login', users.validate, users.login);
     app.post('/user/reg', users.validate, users.register);
     app.post('/user/logout', users.logout);
-    app.get('/', mainPage.getQuests, pages.index);
+    app.get('/', pages.index);
     app.get('/reg', pages.reg);
     app.all('*', pages.error404);
 
