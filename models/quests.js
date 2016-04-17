@@ -56,7 +56,7 @@ const isQuestValid = quest => {
     if (!description) {
         throw new Error('Отсутствует описание квеста');
     }
-    if (places.isArray() ||
+    if (!Array.isArray(places) ||
         places.length === 0) {
         throw new Error('Отсутствует данные о местах');
     }
