@@ -37,6 +37,7 @@ const isValidPlace = place => {
     return true;
 };
 
+/*  eslint quote-props: [1, "as-needed"]*/
 const isPlaceExist = (questTitle, placeTitle) => {
     return quests.find({title: questTitle, 'places.title': placeTitle}).next();
 };
@@ -114,7 +115,9 @@ const addCommentToPlace = (title, placeTitle, comment) => {
 
 const getAllQuests = () => quests.find({}, {_id: 0}).toArray();
 
-const getLimitQuests = (start, offset) => quests.find({}, {_id: 0}).skip(start).limit(offset).toArray();
+const getLimitQuests = (start, offset) => {
+    return quests.find({}, {_id: 0}).skip(start).limit(offset).toArray();
+};
 
 const getQuest = title => quests.find({title}, {_id: 0}).next();
 
