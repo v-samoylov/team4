@@ -39,7 +39,7 @@ const isValidPlace = place => {
 
 /*  eslint quote-props: [1, "as-needed"]*/
 const isPlaceExist = (questTitle, placeTitle) => {
-    return quests.find({title: questTitle, 'places.title': placeTitle}).next();
+    return quests.findOne({title: questTitle, 'places.title': placeTitle});
 };
 
 const isQuestValid = quest => {
@@ -56,7 +56,7 @@ const isQuestValid = quest => {
     if (!description) {
         throw new Error('Отсутствует описание квеста');
     }
-    if (Object.prototype.toString.call(places) !== '[object Array]' ||
+    if (places.isArray() ||
         places.length === 0) {
         throw new Error('Отсутствует данные о местах');
     }
@@ -64,7 +64,7 @@ const isQuestValid = quest => {
 };
 
 const isQuestExist = title => {
-    return quests.find({title}).next()
+    return quests.findOne({title})
         .then(foundQuest => {
             if (foundQuest) {
                 throw new Error('Квест с таким именем уже существует');
