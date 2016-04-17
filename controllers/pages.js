@@ -1,8 +1,42 @@
+'use strict';
+
 const debug = require('debug')('team4:controllers:pages');
+const questsModel = require('../models/quests.js');
+
+function filterFields(fields) {
+    return obj => {
+        let resObj = {};
+        fields.forEach(field => {
+            if (field === 'photo') {
+                resObj[field] = getRandomPhoto(obj);
+            } else if (obj.hasOwnProperty(field)) {
+                resObj[field] = obj[field];
+            }
+        });
+        return resObj;
+    };
+}
+
+function randInt(range) {
+    return Math.floor(Math.random() * range);
+}
+
+function getRandomPhoto(quest) {
+    return quest.places[randInt(quest.places.length)].photo;
+}
 
 exports.index = (req, res) => {
     debug('index');
-    res.render('index/index');
+    const quests = questsModel(req.db);
+    let questNum = req.body.hasOwnProperty('skip') ? req.body.skip : 0;
+    let choosenQuests = quests.getLimitQuests(questNum, 10);
+    choosenQuests = choosenQuests.forEach(filterFields(['url', 'title', 'photo']));
+    if (questNum === 0) {
+        res.render('index/index',
+            {commonData: req.commonData, quests: choosenQuests});
+    } else {
+        res.json({quests: choosenQuests});
+    }
 };
 
 exports.auto = (req, res) => {
