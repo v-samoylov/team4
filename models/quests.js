@@ -17,7 +17,8 @@ const createPlace = place => {
 };
 
 const isValidPlace = place => {
-    if (!place.title) {
+    let title = place.title;
+    if (!title) {
         throw new Error('Отсутствует название места');
     }
     if (!place.img) {
@@ -30,10 +31,14 @@ const isValidPlace = place => {
     if (typeof geo.latitude === 'undefined') {
         throw new Error('Отсутствует широта');
     }
-    if (typeof geo.latitude === 'undefined') {
+    if (typeof geo.longitude === 'undefined') {
         throw new Error('Отсутствует долгота');
     }
     return true;
+};
+
+const isPlaceExist = (questTitle, placeTitle) => {
+    return quests.find({title: questTitle, 'places.title': placeTitle}).next();
 };
 
 const isQuestValid = quest => {
@@ -79,12 +84,10 @@ const createQuest = quest => {
                 places,
                 url: toUrl(title),
                 comments: [],
-                likes: 0
+                likes: []
             });
         });
 };
-
-const addLikeToQuest = title => quests.updateOne({title}, {$inc: {likes: 1}});
 
 // Пока не древовидные
 const addCommentToQuest = (title, comment) => {
@@ -111,15 +114,35 @@ const addCommentToPlace = (title, placeTitle, comment) => {
 
 const getAllQuests = () => quests.find({}, {_id: 0}).toArray();
 
+const getLimitQuests = (start, offset) => quests.find({}, {_id: 0}).skip(start).limit(offset).toArray();
+
+const getQuest = title => quests.find({title}, {_id: 0}).next();
+
+const removeAllQuests = () => quests.remove({});
+
+const likeQuest = (title, user) => {
+    return getQuest(title)
+        .then(quest => {
+            if (quest.likes.indexOf(user) > -1) {
+                return quests.updateOne({title}, {$pull: {likes: user}});
+            }
+            return quests.updateOne({title}, {$push: {likes: user}});
+        });
+};
+
 module.exports = db => {
     quests = db.collection('quests');
     return {
         createQuest,
+        getQuest,
         getAllQuests,
-        addLikeToQuest,
+        likeQuest,
         addCommentToQuest,
         addLikeToPlace,
         addCommentToPlace,
-        addCheckinToPlace
+        addCheckinToPlace,
+        isPlaceExist,
+        getLimitQuests,
+        removeAllQuests
     };
 };
