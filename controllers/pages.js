@@ -28,13 +28,15 @@ function getRandomPhoto(quest) {
 exports.index = (req, res) => {
     debug('index');
     const quests = questsModel(req.db);
-    let questNum = req.hasOwnProperty(skip) ? req.skip : 0;
+    /* eslint no-undef: "off" */
+    let questNum = req.hasOwnProperty('skip') ? req.skip : 0;
     let choosenQuests = quests.getLimitQuests(questNum, 10);
     choosenQuests = choosenQuests.forEach(filterFields(['url', 'title', 'photo']));
     if (res.hasOwnProperty(skip)) {
         res.json({quests: choosenQuests});
     } else {
-        res.render('authorization/authorization', {commonData: req.commonData, quests: choosenQuests});
+        res.render('authorization/authorization',
+            {commonData: req.commonData, quests: choosenQuests});
     }
 };
 
