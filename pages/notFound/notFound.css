@@ -5,17 +5,19 @@ html
 
 body
 {
-    background-color: black !important;
+    background-color: #e1dede !important;
 }
 
 img
 {
     height: 400px;
 }
+
 .main_div
 {
     text-align: center;
 }
+
 p,
 a
 {

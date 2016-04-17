@@ -16,21 +16,15 @@
 </head>
 <body>
     {{> header/header }}
-    <div class="main_content">
-        <div class="top_line">
-            <a href={{quests.0.url}}><img src=data:image/{{quests.0.photo.type}};base64,{{quests.0.photo.data}}></a>
-            <a href={{quests.1.url}}><img src=data:image/{{quests.1.photo.type}};base64,{{quests.1.photo.data}}></a>
-            <a href={{quests.2.url}}><img src=data:image/{{quests.2.photo.type}};base64,{{quests.2.photo.data}}></a>
-        </div>
-        <div class="main_content_name">
-            <p>ФотоКвесты by Team4</p>
-        </div>
-        <div class="bottom_line">
-            <a href={{quests.3.url}}><img src=data:image/{{quests.3.photo.type}};base64,{{quests.3.photo.data}}></a>
-            <a href={{quests.4.url}}><img src=data:image/{{quests.4.photo.type}};base64,{{quests.4.photo.data}}></a>
-            <a href={{quests.5.url}}><img src=data:image/{{quests.5.photo.type}};base64,{{quests.5.photo.data}}></a>
-        </div>
-        <a class="getAllQuests" href="">Посмотреть все квесты</a>
+        <div id="listOfQuests" class="main_content">
+        {{#each quests}}
+            <div class="quest">
+                <div class="quest_name">
+                    <p class="quest_name_a"><a href={{url}}>{{title}}</a></p>
+                </div>
+                <img class="quest_img img-rounded" src={{photo}}>
+            </div>
+        {{/each}}
     </div>
     {{> footer/footer }}
 <script src="/index.js"></script>
