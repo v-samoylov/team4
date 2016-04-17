@@ -31,11 +31,11 @@ exports.index = (req, res) => {
     let questNum = req.body.hasOwnProperty('skip') ? req.body.skip : 0;
     let choosenQuests = quests.getLimitQuests(questNum, 10);
     choosenQuests = choosenQuests.forEach(filterFields(['url', 'title', 'photo']));
-    if (res.body.hasOwnProperty('skip')) {
-        res.json({quests: choosenQuests});
-    } else {
+    if (questNum === 0) {
         res.render('authorization/authorization',
             {commonData: req.commonData, quests: choosenQuests});
+    } else {
+        res.json({quests: choosenQuests});
     }
 };
 
