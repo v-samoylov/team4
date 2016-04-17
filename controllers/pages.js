@@ -1,4 +1,5 @@
 'use strict';
+
 const debug = require('debug')('team4:controllers:pages');
 const questsModel = require('../models/quests.js');
 
@@ -24,29 +25,14 @@ function getRandomPhoto(quest) {
     return quest.places[randInt(quest.places.length)].photo;
 }
 
-function getRandomQuest(quests) {
-    return quests[randInt(quests.length)];
-}
-
 exports.index = (req, res) => {
     debug('index');
     const quests = questsModel(req.db);
     const allQuests = quests.getAllQuests();
-    let choosenQuests = [];
-    if (allQuests.length >= 6) {
-        choosenQuests = allQuests.slice(0, 6).forEach(filterFields(['url', 'title', 'photo']));
-    } else {
-        for (let i = 0; i < 6; i++) {
-            choosenQuests.push(filterFields(['url', 'title', 'photo'])(getRandomQuest(allQuests)));
-        }
-    }
-    if (res.commonData) {
-        res.commonData.quests = choosenQuests;
-    } else {
-        res.commonData = {quests: choosenQuests};
-    }
-    res.render('authorization/authorization', {});
+    let choosenQuests = allQuests.slice(0, 6).forEach(filterFields(['url', 'title', 'photo']));
+    res.render('authorization/authorization', {commonData: req.commonData, quests: choosenQuests});
 };
+
 exports.reg = (req, res) => {
     debug('reg');
     res.render('registration/registration', {});
