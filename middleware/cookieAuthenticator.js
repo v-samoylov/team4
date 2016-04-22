@@ -8,20 +8,14 @@ const hash = require('../lib/hash.js');
 module.exports = () => {
     return (req, res, next) => {
         debug('check cookie');
-        if (req.commonData) {
-            req.commonData.user = {};
-        } else {
-            req.commonData = {user: {}};
-        }
         var userId = req.cookies.id;
         if (userId) {
             var isLoggedIn = hash.validate(userId, salt);
             var userName = userId.split('.')[0];
             if (isLoggedIn) {
-                req.commonData.user.name = userName;
+                req.commonData.user = userName;
             }
         }
         next();
     };
 };
-
