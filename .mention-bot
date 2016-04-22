@@ -1,5 +1,5 @@
 {
-    "maxReviewers": 2, // Maximum  number of people to ping in the PR message, default is 3
+    "maxReviewers": 3, // Maximum  number of people to ping in the PR message, default is 3
     "numFilesToCheck": 10, // Number of files to check against, default is 5
     "alwaysNotifyForPaths": [], // users will always be mentioned based on file glob
     "fallbackNotifyForPaths": [
