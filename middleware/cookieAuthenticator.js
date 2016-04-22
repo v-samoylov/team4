@@ -1,8 +1,9 @@
 'use strict';
 
-const hash = require('../lib/hash.js');
-const salt = require('config').get("hash").cookieSalt;
 const debug = require('debug')('team4:middleware:cookieAuthenticator');
+const salt = require('config').get("hash").cookieSalt;
+
+const hash = require('../lib/hash.js');
 
 module.exports = () => {
     return (req, res, next) => {

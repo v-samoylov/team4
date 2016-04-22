@@ -1,11 +1,13 @@
 'use strict';
 
-var validator = require('validator');
-var usersModel = require('../models/users.js');
-var hash = require('../lib/hash.js');
-const config = require('config');
 const debug = require('debug')('team4:controllers:users');
+const config = require('config');
+const validator = require('validator');
 const hashConfig = config.get("hash");
+
+const hash = require('../lib/hash.js');
+const usersModel = require('../models/users.js');
+
 const salt = hashConfig.cookieSalt;
 
 module.exports.logout = (req, res) => {
@@ -17,9 +19,9 @@ module.exports.logout = (req, res) => {
 module.exports.register = (req, res) => {
     debug('register');
     const users = usersModel(req.db);
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
+    let name = req.body.name;
+    let email = req.body.email;
+    let password = req.body.password;
     users.addUser({name, email, password}).then(
         () => {
             res.status(200).send('Registration was successfull');
@@ -33,11 +35,11 @@ module.exports.register = (req, res) => {
 module.exports.login = (req, res) => {
     debug('login');
     const users = usersModel(req.db);
-    var email = req.body.email;
-    var password = req.body.password;
+    let email = req.body.email;
+    let password = req.body.password;
     users.login({email, password}).then(
         result => {
-            var userId = hash.create(result.name, salt);
+            let userId = hash.create(result.name, salt);
             res.cookie('id', userId, {maxAge: 1000000});
             res.status(200).send('Successfully logged in');
         },

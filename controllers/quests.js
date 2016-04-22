@@ -1,6 +1,7 @@
 'use strict';
 
 const debug = require('debug')('team4:controllers:quests');
+
 const questsModel = require('../models/quests.js');
 
 module.exports.addQuest = (req, res) => {

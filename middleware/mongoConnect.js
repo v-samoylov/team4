@@ -1,9 +1,10 @@
 'use strict';
 
-const MongoClient = require('mongodb').MongoClient;
-const config = require('config');
 const debug = require('debug')('team4:middleware:mongo');
+const config = require('config');
 const dbConfig = config.get("db");
+const MongoClient = require('mongodb').MongoClient;
+
 const mongoUri = `mongodb://${dbConfig.login}:${dbConfig.password}` +
     `@${dbConfig.host}:${dbConfig.port}/${dbConfig.name}`;
 

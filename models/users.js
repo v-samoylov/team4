@@ -30,26 +30,28 @@ function getHash(password) {
 const login = user => {
     user.password = getHash(user.password);
     return usersCollection.find(user).toArray()
-    .then(
-        result => {
-            if (result.length) {
-                return result[0];
+        .then(
+            result => {
+                if (result.length) {
+                    return result[0];
+                }
+                throw errors.wrongData;
+            },
+            () => {
+                throw errors.mongoError;
             }
-            throw errors.wrongData;
-        },
-        () => {
-            throw errors.mongoError;
-        }
-    );
+        );
 };
 
 const addUser = newUser => {
     return isNameExist(newUser.name)
-    .then(() => {
-        newUser.password = getHash(newUser.password);
-        newUser.quests = [];
-        return usersCollection.insertOne(newUser);
-    });
+        .then(
+            () => {
+                newUser.password = getHash(newUser.password);
+                newUser.quests = [];
+                return usersCollection.insertOne(newUser);
+            }
+        );
 };
 
 function isNameExist(newName) {

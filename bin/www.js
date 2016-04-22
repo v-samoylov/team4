@@ -1,14 +1,17 @@
 #!/usr/bin/env node
+'use strict';
 
 /**
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('team4:server');
-var http = require('http');
+const debug = require('debug')('team4:server');
 const config = require('config');
 const serverConfig = config.get("server");
+const http = require('http');
+
+const app = require('../app');
+
 /**
  * Get port from environment and store in Express.
  */

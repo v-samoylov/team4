@@ -5,7 +5,8 @@
   "env": {
     "browser": true,
     "mocha": true,
-    "node": true
+    "node": true,
+    "jquery" : true
   },
   "extends": "xo",
   "rules": {
