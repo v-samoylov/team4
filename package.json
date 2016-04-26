@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www.js",
+    "build": "webpack --progress --colors",
+    "lint": "npm-run-all lint:*",
     "lint:js": "eslint --fix .",
     "lint:css": "stylelint **/*.css",
-    "lint": "npm-run-all lint:*",
+    "start": "node ./bin/www.js",
     "tests": "mocha tests --recursive --timeout 15000",
     "prepush": "npm run lint && npm run tests",
-    "build": "webpack"
+    "watch": "webpack --progress --colors --watch"
   },
   "dependencies": {
     "body-parser": "1.13.2",
@@ -17,13 +18,15 @@
     "cookie-parser": "1.3.5",
     "debug": "2.2.0",
     "express": "4.13.1",
+    "handlebars-layouts": "3.1.3",
     "hbs": "4.0.0",
     "mongodb": "2.1.7",
     "morgan": "1.6.1",
-    "transliteration": "^0.1.1",
+    "transliteration": "0.1.1",
     "validator": "5.1.0"
   },
   "devDependencies": {
+    "autoprefixer": "6.3.6",
     "chai": "3.5.0",
     "css-loader": "0.23.1",
     "eslint": "2.3.0",
@@ -38,7 +41,7 @@
     "stylelint": "5.0.0",
     "stylelint-config-standard": "4.0.0",
     "supertest": "1.2.0",
-    "webpack": "1.12.14"
+    "webpack": "1.13.0"
   },
   "engines": {
     "node": "4.4.0"
