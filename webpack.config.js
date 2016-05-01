@@ -11,7 +11,8 @@ module.exports = {
         authorization: './authorization/authorization.js',
         registration: './registration/registration.js',
         notFound: './notFound/notFound.js',
-        index: './index/index.js'
+        index: './index/index.js',
+        userPage: './userPage/userPage.js'
     },
     devtool: 'source-map',
     output: {

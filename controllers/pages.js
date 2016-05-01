@@ -2,7 +2,8 @@
 
 const debug = require('debug')('team4:controllers:pages');
 
-const questsModel = require('../models/quests.js');
+const questsModel = require('../models/quests');
+const randInt = require('../lib/random').randInt;
 
 function filterFields(fields) {
     return obj => {
@@ -18,10 +19,6 @@ function filterFields(fields) {
     };
 }
 
-function randInt(range) {
-    return Math.floor(Math.random() * range);
-}
-
 function getRandomPhoto(quest) {
     return quest.places[randInt(quest.places.length)].photo;
 }
@@ -30,13 +27,22 @@ exports.index = (req, res) => {
     debug('index');
     const quests = questsModel(req.db);
     let questNum = req.body.hasOwnProperty('skip') ? req.body.skip : 0;
-    let choosenQuests = quests.getLimitQuests(questNum, 10);
-    choosenQuests = choosenQuests.forEach(filterFields(['url', 'title', 'photo']));
-    if (questNum === 0) {
-        res.renderLayout('./pages/index/index.hbs',
-            {commonData: req.commonData, quests: choosenQuests});
+    quests.getLimitQuests(questNum, 10).then(chosenQuests => {
+        chosenQuests = chosenQuests.forEach(filterFields(['url', 'title', 'photo']));
+        if (questNum === 0) {
+            res.renderLayout('./pages/index/index.hbs', {quests: chosenQuests});
+        } else {
+            res.json({quests: chosenQuests});
+        }
+    });
+};
+
+exports.userPage = (req, res) => {
+    debug('userPage');
+    if (req.commonData.user === req.params.name) {
+        res.render('userPage/userPage', {});
     } else {
-        res.json({quests: choosenQuests});
+        res.message('no access').sendStatus(403);
     }
 };
 
