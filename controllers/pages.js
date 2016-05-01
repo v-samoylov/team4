@@ -51,6 +51,11 @@ exports.auth = (req, res) => {
     res.renderLayout('./pages/authorization/authorization.hbs');
 };
 
+exports.createQuest = (req, res) => {
+    debug('createQuest');
+    res.renderLayout('./pages/createQuest/createQuest.hbs');
+};
+
 exports.reg = (req, res) => {
     debug('reg');
     res.renderLayout('./pages/registration/registration.hbs');
