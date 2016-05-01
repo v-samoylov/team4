@@ -1,16 +1,18 @@
 "use strict";
 
-const env = require("habitat").load('./env.sample');
-const Flickr = require("flickrapi");
-const FlickrOptions = env.get("FLICKR");
 const path = require('path');
+
+const env = require('habitat').load('./env.sample');
+
+const Flickr = require('flickrapi');
+const FlickrOptions = env.get('FLICKR');
 
 Flickr.authenticate(FlickrOptions, function (error, api) {
     var uploadOptions = {
         photos: [
             {
                 title: 'test',
-                photo: path.join(__dirname, "/pic.png"),
+                photo: path.join(__dirname, '/pic.png'),
                 tags: ['suc'],
                 description: 'desc'
             }
@@ -24,7 +26,7 @@ Flickr.authenticate(FlickrOptions, function (error, api) {
         }
         const id = result[0];
 
-        /* eslint camelcase: ["error", {properties: "never"}]*/
+        /* eslint camelcase: ["error", {properties: "never"}] */
         api.photos.getInfo({photo_id: id}, (err, res) => {
             if (err) {
                 console.error(err);

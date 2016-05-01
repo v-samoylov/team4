@@ -14,9 +14,7 @@ module.exports = function (app) {
     app.get('/auth', pages.auth);
     app.get('/reg', pages.reg);
     app.get('/create-quest', pages.createQuest);
-    
     app.post('/upload', upload.array, upload.cb);
-
     app.all('*', pages.error404);
 
     app.use((err, req, res) => {
