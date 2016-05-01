@@ -30,29 +30,54 @@ function getHash(password) {
 const login = user => {
     user.password = getHash(user.password);
     return usersCollection.find(user).toArray()
-        .then(
-            result => {
-                if (result.length) {
-                    return result[0];
-                }
-                throw errors.wrongData;
-            },
-            () => {
-                throw errors.mongoError;
-            }
-        );
+            .then(
+                result => {
+                    if (result.length) {
+                        return result[0];
+                    }
+                    throw errors.wrongData;
+                },
+    () => {
+        throw errors.mongoError;
+    }
+);
 };
 
 const addUser = newUser => {
     return isNameExist(newUser.name)
-        .then(
-            () => {
-                newUser.password = getHash(newUser.password);
-                newUser.quests = [];
-                return usersCollection.insertOne(newUser);
-            }
-        );
+        .then(() => {
+            newUser.password = getHash(newUser.password);
+            newUser.finishedQuests = [];
+            newUser.inProgressQuests = [];
+            return usersCollection.insertOne(newUser);
+        });
 };
+
+function addQuestInProgress(name, title) {
+    return usersCollection.update({name}, {$push: {inProgressQuests: title}});
+}
+
+function removeQuestInProgress(name, title) {
+    return usersCollection.update({name}, {$pull: {inProgressQuests: title}});
+}
+
+function getQuestsInProgress(name) {
+    return usersCollection.find({name})
+       .toArray()
+       .then(user => user.inProgressQuests);
+}
+
+function getFinishedQuests(name) {
+    return usersCollection.find({name})
+        .toArray()
+        .then(user => user.finishedQuests);
+}
+
+function questFinish(name, title) {
+    return usersCollection.update({name},
+        {$pull: {inProgressQuests: title}},
+        {$push: {finishedQuests: title}});
+}
 
 function isNameExist(newName) {
     return new Promise((resolve, reject) => {
@@ -60,17 +85,23 @@ function isNameExist(newName) {
             if (err) {
                 reject(errors.mongoError);
             } else if (result.length) {
-                reject(errors.nameExist);
-            } else {
-                resolve();
-            }
+                    reject(errors.nameExist);
+                } else {
+                    resolve();
+                }
         });
     });
 }
 
 const operations = {
-    addUser: newUser => addUser(newUser),
-    login: user => login(user)
+    addUser,
+    login,
+    addQuestInProgress,
+    removeQuestInProgress,
+    questFinish,
+    getQuestsInProgress,
+    getFinishedQuests,
+    isNameExist
 };
 
 module.exports = db => {
