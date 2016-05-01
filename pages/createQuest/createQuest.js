@@ -92,6 +92,7 @@ $(function () {
 
     $('.js-create-quest-form').submit(function (e) {
         e.preventDefault();
-        // var formData = new FormData($(this)[0]);
+        var formData = new FormData($(this)[0]);
+        console.log(formData);
     });
 });

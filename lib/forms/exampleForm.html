@@ -1,24 +1,55 @@
 <form action="" method="post">
     <div class="form-group">
+        <!--Необходимое поле-->
         <div class="input-group">
-            <input name="title" class="form-control" placeholder="Title" type="text" required />
+            <input name="validate-text" class="form-control" placeholder="Validate" type="text" required />
             <span class="input-group-addon danger">
                 <span class="glyphicon glyphicon-remove"></span>
             </span>
         </div>
     </div>
     <div class="form-group">
+        <!--С проверкой почты-->
+        <div class="input-group" data-validate="email">
+            <input name="validate-email" class="form-control" placeholder="Validate Email" type="text" required>
+            <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <!--С проверкой длины-->
         <div class="input-group" data-validate="length" data-length="10">
-            <textarea name="desc" class="form-control resize-vertical" placeholder="Some text" type="text" required></textarea>
+            <textarea name="validate-length" class="form-control resize-vertical" placeholder="Length check" type="text" required></textarea>
             <span class="input-group-addon danger">
                 <span class="glyphicon glyphicon-remove"></span>
             </span>
         </div>
     </div>
-    <div class="text-center">
-        <button class="btn btn-info" type="button">
-            <span class="glyphicon glyphicon-plus"></span>
-        </button>
+    <div class="form-group">
+        <!--С проверкой числа-->
+        <div class="input-group" data-validate="number">
+            <input name="validate-number" class="form-control" placeholder="Validate Number" type="text" required>
+            <span class="input-group-addon danger">
+                <span class="glyphicon glyphicon-remove"></span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <!--Опциональное-->
+        <div class="input-group">
+            <input name="validate-optional" class="form-control" placeholder="Optional" type="text">
+            <span class="input-group-addon info">
+                <span class="glyphicon glyphicon-asterisk"></span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <!--Уже заполнено-->
+        <div class="input-group">
+            <input name="validate-text" class="form-control" placeholder="Already validated" value="Validated!" type="text" required>
+            <span class="input-group-addon danger">
+                <span class="glyphicon glyphicon-remove"></span>
+            </span>
+        </div>
     </div>
     <button type="submit" class="btn btn-success col-xs-12" disabled>Создать</button>
 </form>
