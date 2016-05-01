@@ -5,7 +5,7 @@ const debug = require('debug')('team4:controllers:quests');
 const questsModel = require('../models/quests.js');
 
 module.exports.addQuest = (req, res) => {
-    debug();
+    debug('add quest');
     questsModel.createQuest(req.body.quest).then(
         () => {
             res.status(200).send('Place added successfully');

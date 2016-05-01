@@ -1,0 +1,114 @@
+{{#extend "base"}}
+    {{#content "title"}}
+        <title>Создания квеста</title>
+    {{/content}}
+
+    {{#content "styles"}}
+        <link rel="stylesheet" href="/createQuest.css">
+    {{/content}}
+
+    {{#content "main"}}
+        <div class="container">
+            <div class="row">
+                <h2 class="text-center">Создание квеста</h2>
+                <div class="col-md-offset-4 col-md-4">
+                    <form action="" method="post" class="js-create-quest-form">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input name="title-quest" class="form-control" placeholder="Название квеста" type="text" required />
+                                <span class="input-group-addon danger">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group" data-validate="length" data-length="10">
+                                <textarea name="desc-quest" class="form-control resize-vertical" placeholder="Описание квеста" type="text" required></textarea>
+                                <span class="input-group-addon danger">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <h3>Места</h3>
+                        <div class="one-place hidden js-place js-place-template">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input name="title-place" class="form-control" placeholder="Название места" type="text" required />
+                                    <span class="input-group-addon danger">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group js-file-input-div">
+                                <div class="custom-image-preview js-custom-image-preview"></div>
+                                <div class="input-group">
+                                    <!-- don't give a name === doesn't send on POST/GET -->
+                                    <input name="image-place" class="form-control image-preview-filename js-image-preview-filename" disabled="disabled" type="text" required />
+                                    <span class="input-group-btn">
+                                        <!-- image-preview-clear button -->
+                                        <button class="btn btn-default image-preview-clear js-image-preview-clear" style="display:none" type="button">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                        <!-- image-preview-input -->
+                                        <div class="btn btn-default image-preview-input js-image-preview-input">
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                            <input accept="image/png, image/jpeg, image/gif" name="input-file-preview" type="file" />
+                                        </div>
+                                    </span>
+                                    <span class="input-group-addon danger">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="glyphicon glyphicon-trash remove-button js-remove-place"></span>
+                        </div>
+                        <div class="js-places">
+                            <div class="one-place js-place">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="title-place" class="form-control" placeholder="Название места" type="text" required />
+                                        <span class="input-group-addon danger">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group js-file-input-div">
+                                    <div class="custom-image-preview js-custom-image-preview"></div>
+                                    <div class="input-group">
+                                        <!-- don't give a name === doesn't send on POST/GET -->
+                                        <input name="image-place" class="form-control image-preview-filename js-image-preview-filename" disabled="disabled" type="text" required />
+                                        <span class="input-group-btn">
+                                            <!-- image-preview-clear button -->
+                                            <button class="btn btn-default image-preview-clear js-image-preview-clear" style="display:none" type="button">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                            <!-- image-preview-input -->
+                                            <div class="btn btn-default image-preview-input js-image-preview-input">
+                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                <input accept="image/png, image/jpeg, image/gif" name="input-file-preview" type="file" />
+                                            </div>
+                                        </span>
+                                        <span class="input-group-addon danger">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-info btn-circle btn-lg add-button js-add-place" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn btn-success col-xs-12" disabled>Создать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {{/content}}
+
+    {{#content "scripts"}}
+        <script src="/createQuest.js"></script>
+    {{/content}}
+{{/extend}}

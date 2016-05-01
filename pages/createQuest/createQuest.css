@@ -1,0 +1,125 @@
+.input-group-addon.primary
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(50, 118, 177);
+    border-color: rgb(40, 94, 142);
+}
+
+.input-group-addon.success
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(92, 184, 92);
+    border-color: rgb(76, 174, 76);
+}
+
+.input-group-addon.info
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(57, 179, 215);
+    border-color: rgb(38, 154, 188);
+}
+
+.input-group-addon.warning
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(240, 173, 78);
+    border-color: rgb(238, 162, 54);
+}
+
+.input-group-addon.danger
+{
+    color: rgb(255, 255, 255);
+    background-color: rgb(217, 83, 79);
+    border-color: rgb(212, 63, 58);
+}
+
+.custom-image-preview
+{
+    margin-bottom: 5px;
+}
+
+.image-preview-input
+{
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.image-preview-input input[type=file]
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.btn-circle
+{
+    padding: 6px 0;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+
+.btn-circle:focus,
+.btn-circle:active,
+.btn-circle:focus:active
+{
+    outline: none;
+}
+
+.btn-circle.btn-lg
+{
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+
+.btn-circle.btn-xl
+{
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+
+.resize-vertical
+{
+    resize: vertical;
+}
+
+.one-place
+{
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid;
+}
+
+.remove-button
+{
+    margin: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.add-button
+{
+    margin-bottom: 20px;
+}

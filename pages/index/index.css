@@ -1,25 +1,15 @@
-html
-{
-    overflow-x: hidden;
-}
-
-body
-{
-    background-color: #e1dede !important;
-}
-
-.main_content
+.main-content
 {
     text-align: center;
 }
 
-.quest_img
+.quest-img
 {
     width: 100%;
     margin: 10px;
 }
 
-.quest_name
+.quest-name
 {
     margin: 10px;
 }
@@ -29,7 +19,7 @@ p
     overflow: hidden;
 }
 
-.quest_name_a
+.quest-name-a
 {
     font-size: 80px;
 }

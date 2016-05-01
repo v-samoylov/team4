@@ -1,16 +1,16 @@
-.header_title
+.header-title
 {
     font-size: 50px;
     text-align: center;
 }
 
-.header_links_a
+.header-links-a
 {
     font-size: 40px;
     margin-right: 5px;
 }
 
-.header_search
+.header-search
 {
     font-size: 30px;
 }

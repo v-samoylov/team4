@@ -1,7 +1,5 @@
 require('./registration.css');
-require('../../blocks/header/header.js');
 
-/* global $: true*/
 $('#submit').click(function (e) {
     e.preventDefault();
     var name = $('#name').val();
@@ -10,12 +8,14 @@ $('#submit').click(function (e) {
     $.ajax({
         method: 'POST',
         url: '/user/reg',
-        data: {name: name, password: password, email: email}
+        data: {
+            name: name, password: password, email: email
+        }
     })
-        .done(function () {
-            window.location = '/';
-        })
-        .fail(function (msg) {
-            console.log(msg);
-        });
+    .done(function () {
+        window.location = '/';
+    })
+    .fail(function (msg) {
+        console.log(msg);
+    });
 });
