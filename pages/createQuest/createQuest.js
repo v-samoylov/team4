@@ -93,6 +93,13 @@ $(function () {
     $('.js-create-quest-form').submit(function (e) {
         e.preventDefault();
         var formData = new FormData($(this)[0]);
-        console.log(formData);
+        $.ajax({
+            url: '/upload',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     });
 });
