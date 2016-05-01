@@ -20,7 +20,7 @@ function filterFields(fields) {
 }
 
 function getRandomPhoto(quest) {
-    return quest.places[randInt(quest.places.length)].photo;
+    return quest.places[randInt(quest.places.length)].img;
 }
 
 exports.index = (req, res) => {
@@ -28,9 +28,10 @@ exports.index = (req, res) => {
     const quests = questsModel(req.db);
     let questNum = req.body.hasOwnProperty('skip') ? req.body.skip : 0;
     quests.getLimitQuests(questNum, 10).then(chosenQuests => {
-        chosenQuests = chosenQuests.forEach(filterFields(['url', 'title', 'photo']));
+        chosenQuests = chosenQuests.map(filterFields(['url', 'title', 'photo']));
         if (questNum === 0) {
-            res.renderLayout('./pages/index/index.hbs', {quests: chosenQuests});
+            res.renderLayout('./pages/index/index.hbs',
+                {quests: chosenQuests, commonData: req.commonData});
         } else {
             res.json({quests: chosenQuests});
         }
@@ -40,7 +41,7 @@ exports.index = (req, res) => {
 exports.userPage = (req, res) => {
     debug('userPage');
     if (req.commonData.user === req.params.name) {
-        res.render('userPage/userPage', {});
+        res.render('userPage/userPage', {commonData: req.commonData});
     } else {
         res.message('no access').sendStatus(403);
     }
@@ -48,15 +49,15 @@ exports.userPage = (req, res) => {
 
 exports.auth = (req, res) => {
     debug('auth');
-    res.renderLayout('./pages/authorization/authorization.hbs');
+    res.renderLayout('./pages/authorization/authorization.hbs', {commonData: req.commonData});
 };
 
 exports.reg = (req, res) => {
     debug('reg');
-    res.renderLayout('./pages/registration/registration.hbs');
+    res.renderLayout('./pages/registration/registration.hbs', {commonData: req.commonData});
 };
 
 exports.error404 = (req, res) => {
     debug('error404');
-    res.status(404).renderLayout('./pages/notFound/notFound.hbs');
+    res.status(404).renderLayout('./pages/notFound/notFound.hbs', {commonData: req.commonData});
 };
