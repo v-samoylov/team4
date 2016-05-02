@@ -9,5 +9,16 @@
     "login": "root",
     "password": "",
     "name": "team4hackaton"
+  },
+  "flickr": {
+    "api_key": "25ecee8eb8526a621d67c39f2b4b0d30",
+    "secret": "d500109b3fa5a601",
+    "user_name": "creepy",
+    "permissions": "write",
+    "callback": "oob",
+    "user_id": "140285164@N07",
+    "access_token": "72157666704319390-bcd6fa4b4adaeac6",
+    "access_token_secret": "4c96c2852c92f1ba"
+
   }
 }

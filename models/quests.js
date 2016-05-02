@@ -74,10 +74,10 @@ const isQuestExist = title => {
 };
 
 const createQuest = quest => {
-    isQuestValid(quest);
     let title = quest.title;
     return isQuestExist(title)
         .then(() => {
+            isQuestValid(quest);
             let places = quest.places.map(place => createPlace(place));
             return quests.insert({
                 author: quest.author,
@@ -88,7 +88,8 @@ const createQuest = quest => {
                 comments: [],
                 likes: []
             });
-        });
+        })
+        .then(res => res.ops[0].url);
 };
 
 // Пока не древовидные

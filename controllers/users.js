@@ -51,10 +51,6 @@ module.exports.login = (req, res) => {
 
 module.exports.validate = (req, res, next) => {
     debug('validate');
-    if (!req.body.password) {
-        res.status(400).send({message: 'Password is required', status: 'Error'});
-        return;
-    }
     if (!req.body.email) {
         res.status(400).send({message: 'Email is required', status: 'Error'});
         return;
@@ -62,6 +58,10 @@ module.exports.validate = (req, res, next) => {
     req.body.email = req.body.email.trim();
     if (!validator.isEmail(req.body.email)) {
         res.status(400).send({message: 'Email is not valid', status: 'Error'});
+        return;
+    }
+    if (!req.body.password) {
+        res.status(400).send({message: 'Password is required', status: 'Error'});
         return;
     }
     if (req.body.password.length > 30) {

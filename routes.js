@@ -1,8 +1,10 @@
 'use strict';
 
+const authRequired = require('./middleware/authRequired');
+
 const pages = require('./controllers/pages');
 const users = require('./controllers/users');
-const upload = require('./controllers/upload');
+const quests = require('./controllers/quests');
 
 module.exports = function (app) {
     app.get('/', pages.index);
@@ -13,10 +15,8 @@ module.exports = function (app) {
     app.get('/user/:name', pages.userPage);
     app.get('/auth', pages.auth);
     app.get('/reg', pages.reg);
-    app.get('/create-quest', pages.createQuest);
-    
-    app.post('/upload', upload.array, upload.cb);
-
+    app.get('/create-quest', authRequired, pages.createQuest);
+    app.post('/create-quest', authRequired, quests.upload, quests.create);
     app.all('*', pages.error404);
 
     app.use((err, req, res) => {
