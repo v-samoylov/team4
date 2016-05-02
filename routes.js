@@ -1,5 +1,7 @@
 'use strict';
 
+const authRequired = require('./middleware/authRequired');
+
 const pages = require('./controllers/pages');
 const users = require('./controllers/users');
 const upload = require('./controllers/upload');
@@ -13,8 +15,8 @@ module.exports = function (app) {
     app.get('/user/:name', pages.userPage);
     app.get('/auth', pages.auth);
     app.get('/reg', pages.reg);
-    app.get('/create-quest', pages.createQuest);
-    app.post('/upload', upload.array, upload.cb);
+    app.get('/create-quest', authRequired, pages.createQuest);
+    app.post('/upload', authRequired, upload.array, upload.cb);
     app.all('*', pages.error404);
 
     app.use((err, req, res) => {
