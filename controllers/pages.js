@@ -54,7 +54,7 @@ exports.auth = (req, res) => {
 
 exports.createQuest = (req, res) => {
     debug('createQuest');
-    res.renderLayout('./pages/createQuest/createQuest.hbs');
+    res.renderLayout('./pages/createQuest/createQuest.hbs', {commonData: req.commonData});
 };
 
 exports.reg = (req, res) => {
