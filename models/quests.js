@@ -135,7 +135,7 @@ const addLikeToPlace = (title, placeTitle) => {
 };
 
 const getTitle = url => {
-    return quests.findOne(url)
+    return quests.findOne({url})
         .then(quest => {
             if (!quest) {
                 throw new Error('quest does not exist');
