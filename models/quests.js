@@ -134,6 +134,16 @@ const addLikeToPlace = (title, placeTitle) => {
         {$inc: {'places.$.likes': 1}});
 };
 
+const getTitle = url => {
+    return quests.findOne({url})
+        .then(quest => {
+            if (!quest) {
+                throw new Error('quest does not exist');
+            }
+            return quest.title;
+        });
+};
+
 module.exports = db => {
     quests = db.collection('quests');
     return {
@@ -147,6 +157,7 @@ module.exports = db => {
         isPlaceExist,
         addCheckinToPlace,
         addCommentToPlace,
-        addLikeToPlace
+        addLikeToPlace,
+        getTitle
     };
 };

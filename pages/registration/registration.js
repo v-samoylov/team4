@@ -1,10 +1,12 @@
+'use strict';
+
 require('./registration.css');
 
-$('#submit').click(function (e) {
+$('#reg-form').submit(function (e) {
     e.preventDefault();
     var name = $('#name').val();
-    var password = $('#password').val();
     var email = $('#email').val();
+    var password = $('#password').val();
     $.ajax({
         method: 'POST',
         url: '/user/reg',
@@ -12,7 +14,8 @@ $('#submit').click(function (e) {
             name: name, password: password, email: email
         }
     })
-    .done(function () {
+    .done(function (msg) {
+        console.log(msg);
         window.location = '/';
     })
     .fail(function (msg) {
