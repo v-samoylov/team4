@@ -1,6 +1,7 @@
 'use strict';
 
 require('./createQuest.css');
+require('../../blocks/yandexMap/yandexMap.js');
 
 var validator = require('../../lib/forms/forms');
 

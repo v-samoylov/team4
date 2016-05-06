@@ -1,4 +1,5 @@
 {{#extend "base"}}
+
     {{#content "title"}}
         <title>Создания квеста</title>
     {{/content}}
@@ -67,12 +68,24 @@
                             <div class="one-place js-place">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" name="title-place" class="form-control" placeholder="Название места" required />
+                                        <input type="text" name="title-place" class="form-control" placeholder="Название места" required/>
                                         <span class="input-group-addon danger">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </span>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control address-place" placeholder="Адрес" required disabled/>
+                                        <span class="input-group-addon danger address-place">
+                                            <span class="glyphicon glyphicon-remove address-place"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                        <input type="text" class="form-control coordinates-place" placeholder="Координаты" disabled/>
+                                </div>
+                                {{> yandexMap/yandexMap }}
                                 <div class="form-group js-file-input-div">
                                     <div class="custom-image-preview js-custom-image-preview"></div>
                                     <div class="input-group">
