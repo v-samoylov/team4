@@ -1,12 +1,12 @@
 'use strict';
 
 var placemark = null;
-var setPlacemark = function(location, isCentered) {
+var setPlacemark = function (location, isCentered) {
     placemark ? myMap.geoObjects.remove(placemark) : null;
     var addressField = document.querySelector('.form-control.address-place');
     var coordinatesField = document.querySelector('.form-control.coordinates-place');
     var addressValiditySing = document.querySelector('.input-group-addon.address-place');
-    var cb = function(res) {
+    var cb = function (res) {
         var nearest = res.geoObjects.get(0);
         if (location instanceof Array) {
             var coords = location;
@@ -16,9 +16,9 @@ var setPlacemark = function(location, isCentered) {
         var address = nearest.properties.get('name');
         placemark = new ymaps.Placemark(coords);
         if (isCentered) {
-             myMap.setCenter(coords, 17);
+            myMap.setCenter(coords, 17);
         }
-        placemark.events.add('dblclick', function(evt) {
+        placemark.events.add('dblclick', function (evt) {
             evt.preventDefault();
             myMap.geoObjects.remove(placemark);
             placemark = null;
@@ -41,13 +41,13 @@ var setPlacemark = function(location, isCentered) {
 };
 ymaps.ready(init);
 var myMap;
-function init(){
+function init() {
     myMap = new ymaps.Map("map", {
         center: [56.85, 60.60],
         zoom: 10,
         controls: []
     });
-    myMap.events.add('click', function(evt) {
+    myMap.events.add('click', function (evt) {
         var coords = evt.get('coords');
         setPlacemark(coords);
     });
