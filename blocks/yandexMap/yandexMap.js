@@ -1,20 +1,24 @@
 'use strict';
 
+var myMap;
 var placemark = null;
 var setPlacemark = function (location, isCentered) {
-    placemark ? myMap.geoObjects.remove(placemark) : null;
+    if (placemark) {
+        myMap.geoObjects.remove(placemark);
+    }
     var addressField = document.querySelector('.form-control.address-place');
     var coordinatesField = document.querySelector('.form-control.coordinates-place');
     var addressValiditySing = document.querySelector('.input-group-addon.address-place');
     var cb = function (res) {
         var nearest = res.geoObjects.get(0);
+        var coords;
         if (location instanceof Array) {
-            var coords = location;
+            coords = location;
         } else {
-            var coords = nearest.geometry.getCoordinates();
+            coords = nearest.geometry.getCoordinates();
         }
         var address = nearest.properties.get('name');
-        placemark = new ymaps.Placemark(coords);
+        placemark = new ymaps.Placemark(coords); // eslint-disable-line
         if (isCentered) {
             myMap.setCenter(coords, 17);
         }
@@ -37,12 +41,11 @@ var setPlacemark = function (location, isCentered) {
         addressValiditySing.children[0].classList.remove('glyphicon-remove');
         addressValiditySing.children[0].classList.add('glyphicon-ok');
     };
-    ymaps.geocode(location).then(cb);
+    ymaps.geocode(location).then(cb); // eslint-disable-line
 };
-ymaps.ready(init);
-var myMap;
+ymaps.ready(init); // eslint-disable-line
 function init() {
-    myMap = new ymaps.Map("map", {
+    myMap = new ymaps.Map("map", { // eslint-disable-line
         center: [56.85, 60.60],
         zoom: 10,
         controls: []
@@ -57,7 +60,7 @@ var submitHandler = function () {
     var addressInputField = document.querySelector('.address-field');
     setPlacemark(addressInputField.value, true);
 };
-var currLocationHandler = function (checkbox) {
+var currLocationHandler = function () {
     var options = {
         enableHighAccuracy: true,
         maximumAge: 50000,
@@ -68,7 +71,9 @@ var currLocationHandler = function (checkbox) {
             var coords = [position.coords.latitude, position.coords.longitude];
             setPlacemark(coords, true);
         },
-        function (error) {console.log(error);},
+        function (error) {
+            console.log(error);
+        },
         options
     );
 };
