@@ -46,7 +46,7 @@ const login = user => {
 };
 
 const addUser = newUser => {
-    return isNameExist(newUser.name)
+    return isNameAvalible(newUser.name)
         .then(() => {
             newUser.password = getHash(newUser.password);
             newUser.finishedQuests = [];
@@ -91,7 +91,7 @@ function questFinish(name, title) {
         {$push: {finishedQuests: title}});
 }
 
-function isNameExist(newName) {
+function isNameAvalible(newName) {
     return new Promise((resolve, reject) => {
         usersCollection.find({name: newName}).toArray((err, result) => {
             if (err) {
@@ -105,6 +105,13 @@ function isNameExist(newName) {
     });
 }
 
+function isUserExist(user) {
+    return usersCollection
+        .find({user})
+        .toArray()
+        .then(users => users.length);
+}
+
 const operations = {
     addUser,
     login,
@@ -113,7 +120,7 @@ const operations = {
     questFinish,
     getQuestsInProgress,
     getFinishedQuests,
-    isNameExist
+    isUserExist
 };
 
 module.exports = db => {
