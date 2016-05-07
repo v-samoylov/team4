@@ -24,6 +24,8 @@ module.exports.register = (req, res) => {
     let password = req.body.password;
     users.addUser({name, email, password}).then(
         () => {
+            let userId = hash.create(name, salt);
+            res.cookie('id', userId, {maxAge: 60 * 24 * 60 * 1000});
             res.status(200).send('Registration was successfull');
         },
         error => {
@@ -40,7 +42,7 @@ module.exports.login = (req, res) => {
     users.login({email, password}).then(
         result => {
             let userId = hash.create(result.name, salt);
-            res.cookie('id', userId, {maxAge: 1000000});
+            res.cookie('id', userId, {maxAge: 60 * 24 * 60 * 1000});
             res.status(200).send('Successfully logged in');
         },
         error => {

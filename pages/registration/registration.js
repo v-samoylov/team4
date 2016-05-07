@@ -16,7 +16,17 @@ $('#reg-form').submit(function (e) {
     })
     .done(function (msg) {
         console.log(msg);
-        window.location = '/';
+        var prevLocation = document.createElement('a');
+        prevLocation.href = document.referrer;
+        if (
+            window.location.hostname !== prevLocation.hostname ||
+            !document.referrer ||
+            new Set(['/auth', '/reg']).has(prevLocation.pathname)
+        ) {
+            window.location = '/';
+        } else {
+            window.location = prevLocation.pathname;
+        }
     })
     .fail(function (msg) {
         console.log(msg);
