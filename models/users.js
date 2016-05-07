@@ -66,13 +66,23 @@ function removeQuestInProgress(name, title) {
 function getQuestsInProgress(name) {
     return usersCollection.find({name})
        .toArray()
-       .then(user => user.inProgressQuests);
+       .then(user => {
+           if (user.length) {
+               return user[0].inProgressQuests;
+           }
+           throw new Error('Пользователь не найден');
+       });
 }
 
 function getFinishedQuests(name) {
     return usersCollection.find({name})
         .toArray()
-        .then(user => user.finishedQuests);
+        .then(user => {
+            if (user.length) {
+                return user[0].finishedQuests;
+            }
+            throw new Error('Пользователь не найден');
+        });
 }
 
 function questFinish(name, title) {
