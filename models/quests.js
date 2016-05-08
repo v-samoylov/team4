@@ -37,8 +37,8 @@ const createPlace = place => {
         title: place.title,
         img: place.img,
         geo: place.geo,
-        checkins: 0,
-        likes: 0,
+        checkins: [],
+        likes: [],
         comments: []
     };
 };
@@ -129,10 +129,30 @@ const likeQuest = (title, user) => {
         });
 };
 
-const addLikeToPlace = (title, placeTitle) => {
-    return quests.updateOne(
-        {title, 'places.title': placeTitle},
-        {$inc: {'places.$.likes': 1}});
+const likePlace = (title, placeTitle, user) => {
+    return getQuest(title)
+        .then(quest => {
+            const place = quest.places.find(place => place.title === placeTitle);
+            if (!place) {
+                throw new Error('Нет такого места в квесте');
+            }
+            if (place.likes.indexOf(user) > -1) {
+                return quests.updateOne({title, 'places.title': placeTitle},
+                    {$pull: {'places.$.likes': user}});
+            }
+            return quests.updateOne({title, 'places.title': placeTitle},
+                {$push: {'places.$.likes': user}});
+        });
+};
+
+const getTitle = url => {
+    return quests.findOne({url})
+        .then(quest => {
+            if (!quest) {
+                throw new Error('quest does not exist');
+            }
+            return quest.title;
+        });
 };
 
 module.exports = db => {
@@ -148,6 +168,7 @@ module.exports = db => {
         isPlaceExist,
         addCheckinToPlace,
         addCommentToPlace,
-        addLikeToPlace
+        likePlace,
+        getTitle
     };
 };
