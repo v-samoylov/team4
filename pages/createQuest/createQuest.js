@@ -1,5 +1,42 @@
 'use strict';
 
+require('./createQuest.css');
+var validator = require('../../lib/forms/forms');
+
+var initMap = function (place) {
+    var myMap = new ymaps.Map(place.find('.map')[0], {
+        center: [56.85, 60.60],
+        zoom: 10,
+        controls: []
+    });
+    myMap.placemark = null;
+    myMap.events.add('click', function (evt) {
+        var coords = evt.get('coords');
+        setPlacemark(place, myMap, coords);
+    });
+    place.find('.location-search-button')[0].onclick = function () {
+        var addressInputField = place.find('.address-field')[0];
+        setPlacemark(place, myMap, addressInputField.value, true);
+    };
+    place.find('.current-location-search-button')[0].onclick = function () {
+        var options = {
+            enableHighAccuracy: true,
+            maximumAge: 50000,
+            timeout: 10000
+        };
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                var coords = [position.coords.latitude, position.coords.longitude];
+                setPlacemark(place, myMap, coords, true);
+            },
+            function (error) {
+                console.log(error);
+            },
+            options
+        );
+    };
+};
+
 var setPlacemark = function (place, map, location, isCentered) {
     if (map.placemark) {
         map.geoObjects.remove(map.placemark);
@@ -8,7 +45,7 @@ var setPlacemark = function (place, map, location, isCentered) {
     var addressField = place.find('.form-control.address-place')[0];
     var coordinatesField = place.find('.form-control.coordinates-place')[0];
     var addressValiditySing = place.find('.input-group-addon.address-place')[0];
-    console.log(addressField,coordinatesField,addressValiditySing)
+
     var cb = function (res) {
         var nearest = res.geoObjects.get(0);
         var coords;
@@ -44,17 +81,15 @@ var setPlacemark = function (place, map, location, isCentered) {
     ymaps.geocode(location).then(cb); // eslint-disable-line
 };
 
-require('./createQuest.css');
-var map = require('../../blocks/yandexMap/yandexMap.js');
-
-var validator = require('../../lib/forms/forms');
-var mapCounter = 1;
-
 var addQuestForm = {
     init: function () {
         this._collectData();
         validator.init();
         this._bindEvents();
+        this._$places.find('.js-place').find('.mapBox').append(this._$templateMap.clone());
+        ymaps.ready(function () {
+           initMap(this._$places.find('.js-place'));
+        }.bind(this));
     },
 
     _collectData: function () {
@@ -70,7 +105,6 @@ var addQuestForm = {
         this._$imagePreviewInputFile = $('.js-image-preview-input input:file');
         this._$imagePreviewClear = $('.js-image-preview-clear');
         this._$templateMap = $('.map-template').children();
-        this._$mapDiv = $('.map');
 
         $('.js-place-template').remove();
     },
@@ -85,7 +119,6 @@ var addQuestForm = {
     },
 
     _addPlace: function () {
-
         var newPlace = this._$templatePlace.clone();
         newPlace.find('.mapBox').append(this._$templateMap.clone());
 
@@ -95,37 +128,7 @@ var addQuestForm = {
             .fadeIn('medium');
         validator.init();
         validator.updateInputs();
-        var myMap = new ymaps.Map(newPlace.find('.map')[0], {
-            center: [56.85, 60.60],
-            zoom: 10,
-            controls: []
-        });
-        myMap.placemark = null;
-        myMap.events.add('click', function (evt) {
-            var coords = evt.get('coords');
-            setPlacemark(newPlace, myMap, coords);
-        });
-        newPlace.find('.location-search-button')[0].onclick = function () {
-            var addressInputField = newPlace.find('.address-field')[0];
-            setPlacemark(newPlace, myMap, addressInputField.value, true);
-        };
-        newPlace.find('.current-location-search-button')[0].onclick = function () {
-            var options = {
-                enableHighAccuracy: true,
-                maximumAge: 50000,
-                timeout: 10000
-            };
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    var coords = [position.coords.latitude, position.coords.longitude];
-                    setPlacemark(newPlace, myMap, coords, true);
-                },
-                function (error) {
-                    console.log(error);
-                },
-                options
-            );
-        };
+        initMap(newPlace);
     },
 
     _removePlace: function (event) {
@@ -174,13 +177,7 @@ $(function () {
     $('.js-create-quest-form').submit(function (e) {
         e.preventDefault();
         var formData = new FormData($(this)[0]);
-        var it = formData.keys();
-        var key = it.next();
-        while (!key.done) {
-            console.log(key.value);
-            key = it.next();
-        }
-        console.log(formData.get('geo-place'));
+
         $.ajax({
             url: '/upload',
             type: 'POST',

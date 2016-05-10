@@ -1,0 +1,75 @@
+.panel.main > .panel-body
+{
+    display: none;
+}
+
+.panel.main > .panel-heading:hover
+{
+    cursor: pointer;
+}
+
+.like
+{
+    width: 50px;
+    height: 50px;
+    color: #cbcbcb;
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.likes
+{
+    width: 100px;
+    margin: 20px;
+}
+
+.like:hover
+{
+    animation: pulse 0.6s linear;
+}
+
+#quest-like:checked + label
+{
+    color: #f00;
+}
+
+input[type="checkbox"]
+{
+    display: none;
+}
+
+#quest-title
+{
+    text-align: center;
+    width: 50%;
+    margin: 10px auto;
+    font-size: 50px;
+}
+
+.reg-ref,
+#start-quest
+{
+    margin: 20px auto;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+body > .panel
+{
+    width: 80%;
+    margin: auto;
+}
+
+@media screen and (max-device-width: 568px)
+{
+    .reg-ref
+    {
+        margin: 10px auto;
+        width: 100%;
+    }
+    body > .panel
+    {
+        width: 100%;
+    }
+}
