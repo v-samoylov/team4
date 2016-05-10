@@ -105,9 +105,9 @@ function isNameAvalible(newName) {
     });
 }
 
-function isUserExist(user) {
+function isUserExist(name) {
     return usersCollection
-        .find({user})
+        .find({name})
         .toArray()
         .then(users => users.length);
 }
