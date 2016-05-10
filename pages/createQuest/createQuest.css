@@ -123,3 +123,8 @@
 {
     margin-bottom: 20px;
 }
+
+.coordinates-place
+{
+    display: none;
+}
