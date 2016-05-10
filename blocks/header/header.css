@@ -3,6 +3,17 @@ header
     background: rgba(255, 255, 255, 0.5);
 }
 
+header a:hover
+{
+    text-decoration: none;
+    color: #337ab7;
+}
+
+header .navbar-nav
+{
+    margin: 0 0 10px 0;
+}
+
 header form
 {
     width: 250px;
@@ -11,7 +22,7 @@ header form
     cursor: pointer;
     margin: 30px 0 10px 15px;
     margin-left: 15px;
-    border: 1px solid;
+    border: 1px solid #999;
 }
 
 .search-btn
@@ -19,7 +30,7 @@ header form
     height: 40px;
     width: 40px;
     border: none;
-    background-color: #5cb85c;
+    background-color: #a8cc77;
 }
 
 header .glyphicon
@@ -72,8 +83,7 @@ hr
     border-color: #999;
 }
 
-.brand,
-.address-bar
+.brand
 {
     display: none;
 }
@@ -221,13 +231,19 @@ footer p
         line-height: normal;
     }
 
-    .navbar-nav
+    header .navbar-nav
     {
         display: table;
         float: none;
         margin: 0 auto;
         table-layout: fixed;
         font-size: 1.25em;
+    }
+
+    .box
+    {
+        margin: auto;
+        width: 75%;
     }
 }
 
