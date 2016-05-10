@@ -4,32 +4,38 @@
     {{/content}}
 
     {{#content "styles"}}
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         <link rel="stylesheet" href="/authorization.css">
     {{/content}}
 
     {{#content "main"}}
-        <form class="form-horizontal form-of-authorization" id="auth-form">
-            <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">Email</label>
-
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" placeholder="Email">
+        <div class="form">
+            <div class="form-box">
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>Войдите на наш сайт</h3>
+                        <p>Введите e-mail и пароль:</p>
+                    </div>
+                    <div class="form-top-right">
+                        <i class="fa fa-key"></i>
+                    </div>
+                </div>
+                <div class="form-bottom">
+                    <form role="form" action="" method="post" class="login-form" id="auth-form">
+                        <div class="form-group">
+                            <label class="sr-only" for="form-username">E-mail</label>
+                            <input type="text" name="form-username" placeholder="E-mail..." class="form-username form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="form-password">Пароль</label>
+                            <input type="password" name="form-password" placeholder="Пароль..." class="form-password form-control" id="password">
+                        </div>
+                        <button type="submit" class="btn">Вход</button>
+                        <a href="/reg" class="link-for-checkIn">Регистрация</a>
+                    </form>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Пароль</label>
-
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button class="btn btn-default" type="submit">Авторизация</button>
-                    <a href="/reg" class="link-for-checkIn">Регистрация</a>
-                </div>
-            </div>
-        </form>
+        </div>
     {{/content}}
 
     {{#content "scripts"}}
