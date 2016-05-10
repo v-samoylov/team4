@@ -3,40 +3,6 @@
 require('./createQuest.css');
 var validator = require('../../lib/forms/forms');
 
-var initMap = function (place) {
-    var myMap = new ymaps.Map(place.find('.map')[0], {
-        center: [56.85, 60.60],
-        zoom: 10,
-        controls: []
-    });
-    myMap.placemark = null;
-    myMap.events.add('click', function (evt) {
-        var coords = evt.get('coords');
-        setPlacemark(place, myMap, coords);
-    });
-    place.find('.location-search-button')[0].onclick = function () {
-        var addressInputField = place.find('.address-field')[0];
-        setPlacemark(place, myMap, addressInputField.value, true);
-    };
-    place.find('.current-location-search-button')[0].onclick = function () {
-        var options = {
-            enableHighAccuracy: true,
-            maximumAge: 50000,
-            timeout: 10000
-        };
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                var coords = [position.coords.latitude, position.coords.longitude];
-                setPlacemark(place, myMap, coords, true);
-            },
-            function (error) {
-                console.log(error);
-            },
-            options
-        );
-    };
-};
-
 var setPlacemark = function (place, map, location, isCentered) {
     if (map.placemark) {
         map.geoObjects.remove(map.placemark);
@@ -81,14 +47,49 @@ var setPlacemark = function (place, map, location, isCentered) {
     ymaps.geocode(location).then(cb); // eslint-disable-line
 };
 
+
+var initMap = function (place) {
+    var myMap = new ymaps.Map(place.find('.map')[0], { // eslint-disable-line
+        center: [56.85, 60.60],
+        zoom: 10,
+        controls: []
+    });
+    myMap.placemark = null;
+    myMap.events.add('click', function (evt) {
+        var coords = evt.get('coords');
+        setPlacemark(place, myMap, coords);
+    });
+    place.find('.location-search-button')[0].onclick = function () {
+        var addressInputField = place.find('.address-field')[0];
+        setPlacemark(place, myMap, addressInputField.value, true);
+    };
+    place.find('.current-location-search-button')[0].onclick = function () {
+        var options = {
+            enableHighAccuracy: true,
+            maximumAge: 50000,
+            timeout: 10000
+        };
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                var coords = [position.coords.latitude, position.coords.longitude];
+                setPlacemark(place, myMap, coords, true);
+            },
+            function (error) {
+                console.log(error);
+            },
+            options
+        );
+    };
+};
+
 var addQuestForm = {
     init: function () {
         this._collectData();
         validator.init();
         this._bindEvents();
         this._$places.find('.js-place').find('.mapBox').append(this._$templateMap.clone());
-        ymaps.ready(function () {
-           initMap(this._$places.find('.js-place'));
+        ymaps.ready(function () { // eslint-disable-line
+            initMap(this._$places.find('.js-place'));
         }.bind(this));
     },
 
