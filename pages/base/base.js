@@ -4,7 +4,7 @@ require('./base.css');
 require('../../blocks/header/header.css');
 require('../../blocks/footer/footer.css');
 
-$('.header-links-a.logout').click(function (e) {
+$('#logout').click(function (e) {
     e.preventDefault();
     $.ajax({
         method: 'POST',
