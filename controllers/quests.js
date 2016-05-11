@@ -8,9 +8,10 @@ const fs = require('fs');
 const flickr = require('../lib/flickr');
 const questsModel = require('../models/quests.js');
 
-module.exports.addQuest = (req, res) => {
+exports.addQuest = (req, res) => {
     debug('add quest');
-    questsModel.createQuest(req.body.quest).then(
+    let model = questsModel(req.db);
+    model.createQuest(req.body.quest).then(
         () => {
             res.status(200).send('Place added successfully');
         },

@@ -92,7 +92,6 @@ const createQuest = quest => {
         .then(res => res.ops[0].url);
 };
 
-// Пока не древовидные
 const addCheckinToPlace = (title, placeTitle) => {
     return quests.updateOne(
         {title, 'places.title': placeTitle},
