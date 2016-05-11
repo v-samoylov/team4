@@ -1,16 +1,17 @@
 'use strict';
 
 require('./createQuest.css');
+require('../../blocks/yandexMap/yandexMap.css');
+
 var validator = require('../../lib/forms/forms');
 
-var setPlacemark = function (place, map, location, isCentered) {
-    if (map.placemark) {
-        map.geoObjects.remove(map.placemark);
-        map.placemark = null;
+var setPlacemark = function (place, location, isCentered) {
+    if (place.map.placemark) {
+        place.map.geoObjects.remove(place.map.placemark);
+        place.map.placemark = null;
     }
-    var addressField = place.find('.form-control.address-place')[0];
-    var coordinatesField = place.find('.form-control.coordinates-place')[0];
-    var addressValiditySing = place.find('.input-group-addon.address-place')[0];
+    var addressField = place.find('.form-control.address-place');
+    var coordinatesField = place.find('.form-control.coordinates-place');
 
     var cb = function (res) {
         var nearest = res.geoObjects.get(0);
@@ -21,49 +22,40 @@ var setPlacemark = function (place, map, location, isCentered) {
             coords = nearest.geometry.getCoordinates();
         }
         var address = nearest.properties.get('name');
-        map.placemark = new ymaps.Placemark(coords); // eslint-disable-line
+        place.map.placemark = new ymaps.Placemark(coords); // eslint-disable-line
         if (isCentered) {
-            map.setCenter(coords, 17);
+            place.map.setCenter(coords, 17);
         }
-        map.placemark.events.add('dblclick', function (evt) {
+        place.map.placemark.events.add('dblclick', function (evt) {
             evt.preventDefault();
-            map.geoObjects.remove(map.placemark);
-            map.placemark = null;
-            addressField.value = "";
-            coordinatesField.value = "";
-            addressValiditySing.classList.remove('success');
-            addressValiditySing.classList.add('danger');
-            addressValiditySing.children[0].classList.remove('glyphicon-ok');
-            addressValiditySing.children[0].classList.add('glyphicon-remove');
+            place.map.geoObjects.remove(place.map.placemark);
+            place.map.placemark = null;
+            addressField.val("").change();
+            coordinatesField.val("");
         });
-        map.geoObjects.add(map.placemark);
-        addressField.value = address;
-        coordinatesField.value = coords;
-        addressValiditySing.classList.remove('danger');
-        addressValiditySing.classList.add('success');
-        addressValiditySing.children[0].classList.remove('glyphicon-remove');
-        addressValiditySing.children[0].classList.add('glyphicon-ok');
+        place.map.geoObjects.add(place.map.placemark);
+        addressField.val(address).change();
+        coordinatesField.val(coords);
     };
     ymaps.geocode(location).then(cb); // eslint-disable-line
 };
 
-
 var initMap = function (place) {
-    var myMap = new ymaps.Map(place.find('.map')[0], { // eslint-disable-line
+    place.map = new ymaps.Map(place.find('.ymap')[0], { // eslint-disable-line
         center: [56.85, 60.60],
         zoom: 10,
         controls: []
     });
-    myMap.placemark = null;
-    myMap.events.add('click', function (evt) {
+    place.map.placemark = null;
+    place.map.events.add('click', function (evt) {
         var coords = evt.get('coords');
-        setPlacemark(place, myMap, coords);
+        setPlacemark(place, coords);
     });
-    place.find('.location-search-button')[0].onclick = function () {
+    place.find('.location-search-button').click(function () {
         var addressInputField = place.find('.address-field')[0];
-        setPlacemark(place, myMap, addressInputField.value, true);
-    };
-    place.find('.current-location-search-button')[0].onclick = function () {
+        setPlacemark(place, addressInputField.value, true);
+    });
+    place.find('.current-location-search-button').click(function () {
         var options = {
             enableHighAccuracy: true,
             maximumAge: 50000,
@@ -72,14 +64,14 @@ var initMap = function (place) {
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 var coords = [position.coords.latitude, position.coords.longitude];
-                setPlacemark(place, myMap, coords, true);
+                setPlacemark(place, coords, true);
             },
             function (error) {
                 console.log(error);
             },
             options
         );
-    };
+    });
 };
 
 var addQuestForm = {
