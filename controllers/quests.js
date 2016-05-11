@@ -23,7 +23,9 @@ exports.addQuest = (req, res) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        if (!fs.statSync('tmp/').isDirectory()) {
+        try {
+            fs.accessSync('tmp/', fs.F_OK);
+        } catch (e) {
             fs.mkdirSync('tmp/');
         }
         const dir = 'tmp/' + tr.slugify(req.body['title-quest'], {lowercase: true, separator: '-'});

@@ -121,28 +121,32 @@ const getLimitQuests = (skip, limit) => {
 const likeQuest = (title, user) => {
     return getQuest(title)
         .then(quest => {
+            const options = {returnOriginal: false};
             if (quest.likes.indexOf(user) > -1) {
-                return quests.updateOne({title}, {$pull: {likes: user}});
+                return quests.findOneAndUpdate({title}, {$pull: {likes: user}}, options);
             }
-            return quests.updateOne({title}, {$push: {likes: user}});
+            return quests.findOneAndUpdate({title}, {$push: {likes: user}}, options);
+        })
+        .then(quest => {
+            return quest.likes.length;
         });
 };
 
-const likePlace = (title, placeTitle, user) => {
-    return getQuest(title)
-        .then(quest => {
-            const place = quest.places.find(place => place.title === placeTitle);
-            if (!place) {
-                throw new Error('Нет такого места в квесте');
-            }
-            if (place.likes.indexOf(user) > -1) {
-                return quests.updateOne({title, 'places.title': placeTitle},
-                    {$pull: {'places.$.likes': user}});
-            }
-            return quests.updateOne({title, 'places.title': placeTitle},
-                {$push: {'places.$.likes': user}});
-        });
-};
+// const likePlace = (title, placeTitle, user) => {
+//     return getQuest(title)
+//         .then(quest => {
+//             const place = quest.places.find(place => place.title === placeTitle);
+//             if (!place) {
+//                 throw new Error('Нет такого места в квесте');
+//             }
+//             if (place.likes.indexOf(user) > -1) {
+//                 return quests.updateOne({title, 'places.title': placeTitle},
+//                     {$pull: {'places.$.likes': user}});
+//             }
+//             return quests.updateOne({title, 'places.title': placeTitle},
+//                 {$push: {'places.$.likes': user}});
+//         });
+// };
 
 const getTitle = url => {
     return quests.findOne({url})
@@ -167,7 +171,6 @@ module.exports = db => {
         isPlaceExist,
         addCheckinToPlace,
         addCommentToPlace,
-        likePlace,
         getTitle
     };
 };
