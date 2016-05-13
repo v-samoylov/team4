@@ -1,11 +1,11 @@
-
 <div class="ymap"></div>
-<input
-    type="text"
-    value="город Екатеринбург, "
-    class="form-control address-field"
-/>
-<span>Поиск по адресу/координатам</span>
-<input type='button' class="location-search-button" value="Поиск" /><br/>
-<span>Определить текущее местоположение</span>
-<input type='button' class="current-location-search-button" value="Поиск" />
+<br>
+<div class="input-group">
+    <input type="text" class="form-control js-address-field" placeholder="Введите адрес">
+    <span class="input-group-btn">
+        <button class="btn btn-primary js-location-search-button" type="button">Найти</button>
+        <button class="btn btn-secondary js-current-location-search-button" type="button">
+            <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+        </button>
+    </span>
+</div>
