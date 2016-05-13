@@ -37,22 +37,23 @@ var addQuestForm = {
             'change', this._$imagePreviewInputFile.selector, this._showPreview.bind(this)
         );
         this._$form.on('click', this._$imagePreviewClear.selector, this._clearPreview.bind(this));
-        ymaps.ready(function () { // eslint-disable-line
-            this._initMap(this._$places.find('.js-place'));
-        }.bind(this));
+        ymaps.ready( // eslint-disable-line
+            function () {
+                this._initMap(this._$places.find('.js-place'));
+            }.bind(this)
+        );
     },
 
     _addPlace: function () {
-        var newPlace = this._$templatePlace.clone();
-        newPlace.find('.mapBox').append(this._$templateMap.clone());
+        var $newPlace = this._$templatePlace.clone();
 
-        newPlace
-            .hide()
-            .appendTo(this._$places)
-            .fadeIn('medium');
+        $newPlace.find('.mapBox').append(this._$templateMap.clone());
+        $newPlace.hide().appendTo(this._$places).fadeIn('medium');
+
         validator.init();
         validator.updateInputs();
-        this._initMap(newPlace);
+
+        this._initMap($newPlace);
     },
 
     _removePlace: function (event) {
@@ -95,37 +96,46 @@ var addQuestForm = {
     },
 
     _initMap: function (place) {
-        place.map = new ymaps.Map(place.find('.ymap')[0], { // eslint-disable-line
-            center: [56.85, 60.60],
-            zoom: 10,
-            controls: []
-        });
+        place.map = new ymaps.Map( // eslint-disable-line
+            place.find('.ymap')[0],
+            {
+                center: [56.85, 60.60],
+                zoom: 10,
+                controls: []
+            }
+        );
         place.map.placemark = null;
-        place.map.events.add('click', function (evt) {
-            var coords = evt.get('coords');
-            this._setPlacemark(place, coords);
-        }.bind(this));
-        place.find('.location-search-button').click(function () {
-            var addressInputField = place.find('.address-field');
-            this._setPlacemark(place, addressInputField.val(), true);
-        }.bind(this));
-        place.find('.current-location-search-button').click(function () {
-            var options = {
-                enableHighAccuracy: true,
-                maximumAge: 50000,
-                timeout: 10000
-            };
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    var coords = [position.coords.latitude, position.coords.longitude];
-                    this._setPlacemark(place, coords, true);
-                }.bind(this),
-                function (error) {
-                    console.log(error);
-                },
-                options
-            );
-        }.bind(this));
+        place.map.events.add(
+            'click', function (e) {
+                var coords = e.get('coords');
+                this._setPlacemark(place, coords);
+            }.bind(this)
+        );
+        place.find('.js-location-search-button').click(
+            function () {
+                var addressInputField = place.find('.js-address-field');
+                this._setPlacemark(place, addressInputField.val(), true);
+            }.bind(this)
+        );
+        place.find('.js-current-location-search-button').click(
+            function () {
+                var options = {
+                    enableHighAccuracy: true,
+                    maximumAge: 50000,
+                    timeout: 10000
+                };
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        var coords = [position.coords.latitude, position.coords.longitude];
+                        this._setPlacemark(place, coords, true);
+                    }.bind(this),
+                    function (error) {
+                        console.log(error);
+                    },
+                    options
+                );
+            }.bind(this)
+        );
     },
 
     _setPlacemark: function (place, location, isCentered) {
