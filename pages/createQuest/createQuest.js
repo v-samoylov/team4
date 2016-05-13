@@ -37,24 +37,6 @@ var addQuestForm = {
             'change', this._$imagePreviewInputFile.selector, this._showPreview.bind(this)
         );
         this._$form.on('click', this._$imagePreviewClear.selector, this._clearPreview.bind(this));
-<<<<<<< HEAD
-        ymaps.ready(function () { // eslint-disable-line
-            this._initMap(this._$places.find('.js-place'));
-        }.bind(this));
-    },
-
-    _addPlace: function () {
-        var newPlace = this._$templatePlace.clone();
-        newPlace.find('.mapBox').append(this._$templateMap.clone());
-
-        newPlace
-            .hide()
-            .appendTo(this._$places)
-            .fadeIn('medium');
-        validator.init();
-        validator.updateInputs();
-        this._initMap(newPlace);
-=======
         ymaps.ready( // eslint-disable-line
             function () {
                 this._initMap(this._$places.find('.js-place'));
@@ -72,7 +54,6 @@ var addQuestForm = {
         validator.updateInputs();
 
         this._initMap($newPlace);
->>>>>>> 66ebf90768a4e2c2a869c7ac885be00093175cde
     },
 
     _removePlace: function (event) {
