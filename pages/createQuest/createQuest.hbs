@@ -10,9 +10,9 @@
 
     {{#content "styles"}}
         {{#if commonData.isDev}}
-            <link rel="stylesheet" href="//dream-team-4.surge.sh/createQuest.css">
-        {{else}}
             <link rel="stylesheet" href="/createQuest.css">
+        {{else}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/createQuest.css">
         {{/if}}
     {{/content}}
 
@@ -131,6 +131,10 @@
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="/createQuest.js"></script>
+        {{#if commonData.isDev}}
+            <script src="/createQuest.js"></script>
+        {{else}}
+            <script src="//dream-team-4.surge.sh/createQuest.js"></script>
+        {{/if}}
     {{/content}}
 {{/extend}}
