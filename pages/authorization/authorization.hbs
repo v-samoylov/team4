@@ -6,9 +6,9 @@
     {{#content "styles"}}
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         {{#if commonData.isDev}}
-            <link rel="stylesheet" href="//dream-team-4.surge.sh/authorization.css">
-        {{else}}
             <link rel="stylesheet" href="/authorization.css">
+        {{else}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/authorization.css">
         {{/if}}
     {{/content}}
 
@@ -43,6 +43,10 @@
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="/authorization.js"></script>
+        {{#if commonData.isDev}}
+            <script src="/authorization.js"></script>
+        {{else}}
+            <script src="//dream-team-4.surge.sh/authorization/authorization.js"></script>
+        {{/if}}
     {{/content}}
 {{/extend}}

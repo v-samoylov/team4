@@ -1,41 +1,24 @@
-.input-group-addon.primary
+.fix-box
 {
-    color: rgb(255, 255, 255);
-    background-color: rgb(50, 118, 177);
-    border-color: rgb(40, 94, 142);
+    padding-bottom: 60px;
 }
 
-.input-group-addon.success
+.resize-vertical
 {
-    color: rgb(255, 255, 255);
-    background-color: rgb(92, 184, 92);
-    border-color: rgb(76, 174, 76);
+    resize: vertical;
 }
 
-.input-group-addon.info
+.one-place
 {
-    color: rgb(255, 255, 255);
-    background-color: rgb(57, 179, 215);
-    border-color: rgb(38, 154, 188);
-}
-
-.input-group-addon.warning
-{
-    color: rgb(255, 255, 255);
-    background-color: rgb(240, 173, 78);
-    border-color: rgb(238, 162, 54);
-}
-
-.input-group-addon.danger
-{
-    color: rgb(255, 255, 255);
-    background-color: rgb(217, 83, 79);
-    border-color: rgb(212, 63, 58);
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid;
 }
 
 .custom-image-preview
 {
-    margin-bottom: 5px;
+    margin: 5px 0;
 }
 
 .image-preview-input
@@ -59,11 +42,6 @@
     cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0);
-}
-
-.coordinates-place
-{
-    display: none;
 }
 
 .btn-circle
@@ -104,19 +82,6 @@
     border-radius: 35px;
 }
 
-.resize-vertical
-{
-    resize: vertical;
-}
-
-.one-place
-{
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid;
-}
-
 .remove-button
 {
     margin: 15px;
@@ -127,9 +92,4 @@
 .add-button
 {
     margin-bottom: 20px;
-}
-
-.create-button
-{
-    margin-bottom: 30px;
 }

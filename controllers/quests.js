@@ -170,7 +170,7 @@ exports.create = (req, res) => {
             console.log('create quest:', quest);
             return questsModel(req.db).createQuest(quest);
         })
-        .then(url => res.redirect('quest/' + url))
+        .then(url => res.send({url: 'quest/' + url}))
         .catch(err => {
             console.error(err.message);
             res.status(500).send(err.message);

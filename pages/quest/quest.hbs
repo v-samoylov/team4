@@ -5,9 +5,9 @@
 
     {{#content "styles"}}
         {{#if commonData.isDev}}
-            <link rel="stylesheet" href="//dream-team-4.surge.sh/quest.css">
-        {{else}}
             <link rel="stylesheet" href="/quest.css">
+        {{else}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/quest.css">
         {{/if}}
     {{/content}}
 
@@ -56,6 +56,10 @@
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="/quest.js"></script>
+        {{#if commonData.isDev}}
+            <script src="/quest.js"></script>
+        {{else}}
+            <script src="//dream-team-4.surge.sh/quest.js"></script>
+        {{/if}}
     {{/content}}
 {{/extend}}
