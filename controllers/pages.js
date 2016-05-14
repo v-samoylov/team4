@@ -30,7 +30,7 @@ exports.index = (req, res) => {
     let questNum = req.body.hasOwnProperty('skip') ? parseInt(req.body.skip, 10) : 0;
     let questLimit = req.body.hasOwnProperty('get') ? parseInt(req.body.get, 10) : 5;
     quests.getLimitQuests(questNum, questLimit).then(chosenQuests => {
-        chosenQuests = chosenQuests.map(filterFields(['url', 'title']));
+        chosenQuests = chosenQuests.map(filterFields(['url', 'photo', 'title']));
         if (questNum === 0) {
             res.renderLayout('./pages/index/index.hbs',
                 {quests: chosenQuests, commonData: req.commonData});
@@ -58,6 +58,7 @@ exports.userPage = (req, res) => {
         })
         .then(users.getFinishedQuests)
         .then(finished => {
+            finished = finished.map(filterFields(['url', 'title']));
             if (finished.length !== 0) {
                 Object.assign(response, {finished: finished});
             }
@@ -65,6 +66,7 @@ exports.userPage = (req, res) => {
         })
         .then(users.getQuestsInProgress)
         .then(inProcess => {
+            inProcess = inProcess.map(filterFields(['url', 'title']));
             if (inProcess.length !== 0) {
                 Object.assign(response, {inProcess: inProcess});
             }
