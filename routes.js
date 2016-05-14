@@ -16,7 +16,7 @@ module.exports = function (app) {
     app.get('/user/:name', pages.userPage);
     app.get('/auth', pages.auth);
     app.get('/reg', pages.reg);
-    app.get('/get-more-quests', pages.index);
+    app.post('/get-more-quests', pages.index);
     app.get('/quest/:name', quests.quest);
     app.post('/like-quest', authRequired, quests.likeQuest);
     app.post('/place-comment', authRequired, quests.addCommentToPlace);
