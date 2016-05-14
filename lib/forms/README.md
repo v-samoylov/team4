@@ -1,4 +1,4 @@
-# Формочки by Savi
+# Формочки by Savi (Bootstrap snippet)
 
 ## Использование:
 

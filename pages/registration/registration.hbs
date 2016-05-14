@@ -6,9 +6,9 @@
     {{#content "styles"}}
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         {{#if commonData.isDev}}
-            <link rel="stylesheet" href="//dream-team-4.surge.sh/registration.css">
-        {{else}}
             <link rel="stylesheet" href="/registration.css">
+        {{else}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/registration.css">
         {{/if}}
     {{/content}}
 
@@ -49,7 +49,11 @@
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="/registration.js"></script>
+        {{#if commonData.isDev}}
+            <script src="/registration.js"></script>
+        {{else}}
+            <script src="//dream-team-4.surge.sh/registration.js"></script>
+        {{/if}}
     {{/content}}
 {{/extend}}
 
