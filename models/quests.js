@@ -37,8 +37,8 @@ const createPlace = place => {
         title: place.title,
         img: place.img,
         geo: place.geo,
-        checkins: 0,
-        likes: 0,
+        checkins: [],
+        likes: [],
         comments: []
     };
 };
@@ -74,10 +74,10 @@ const isQuestExist = title => {
 };
 
 const createQuest = quest => {
-    isQuestValid(quest);
     let title = quest.title;
     return isQuestExist(title)
         .then(() => {
+            isQuestValid(quest);
             let places = quest.places.map(place => createPlace(place));
             return quests.insert({
                 author: quest.author,
@@ -88,10 +88,10 @@ const createQuest = quest => {
                 comments: [],
                 likes: []
             });
-        });
+        })
+        .then(res => res.ops[0].url);
 };
 
-// Пока не древовидные
 const addCheckinToPlace = (title, placeTitle) => {
     return quests.updateOne(
         {title, 'places.title': placeTitle},
@@ -121,18 +121,32 @@ const getLimitQuests = (skip, limit) => {
 const likeQuest = (title, user) => {
     return getQuest(title)
         .then(quest => {
+            const options = {returnOriginal: false};
             if (quest.likes.indexOf(user) > -1) {
-                return quests.updateOne({title}, {$pull: {likes: user}});
+                return quests.findOneAndUpdate({title}, {$pull: {likes: user}}, options);
             }
-            return quests.updateOne({title}, {$push: {likes: user}});
+            return quests.findOneAndUpdate({title}, {$push: {likes: user}}, options);
+        })
+        .then(quest => {
+            return quest.likes.length;
         });
 };
 
-const addLikeToPlace = (title, placeTitle) => {
-    return quests.updateOne(
-        {title, 'places.title': placeTitle},
-        {$inc: {'places.$.likes': 1}});
-};
+// const likePlace = (title, placeTitle, user) => {
+//     return getQuest(title)
+//         .then(quest => {
+//             const place = quest.places.find(place => place.title === placeTitle);
+//             if (!place) {
+//                 throw new Error('Нет такого места в квесте');
+//             }
+//             if (place.likes.indexOf(user) > -1) {
+//                 return quests.updateOne({title, 'places.title': placeTitle},
+//                     {$pull: {'places.$.likes': user}});
+//             }
+//             return quests.updateOne({title, 'places.title': placeTitle},
+//                 {$push: {'places.$.likes': user}});
+//         });
+// };
 
 const getTitle = url => {
     return quests.findOne({url})
@@ -157,7 +171,6 @@ module.exports = db => {
         isPlaceExist,
         addCheckinToPlace,
         addCommentToPlace,
-        addLikeToPlace,
         getTitle
     };
 };

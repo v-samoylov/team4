@@ -1,25 +1,26 @@
-.main-content
+.more-btn
 {
-    text-align: center;
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
 }
 
-.quest-img
+#list-of-quests .btn-default
 {
-    width: 100%;
-    margin: 10px;
+    background-color: #a8cc77;
+    background-image: none;
+    text-shadow: none;
 }
 
-.quest-name
+@media screen and (min-width: 768px)
 {
-    margin: 10px;
+    .img-box
+    {
+        margin: auto;
+        overflow: hidden;
+        width: 90%;
+    }
 }
 
-p
-{
-    overflow: hidden;
-}
-
-.quest-name-a
-{
-    font-size: 80px;
-}
