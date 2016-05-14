@@ -145,6 +145,12 @@ exports.create = (req, res) => {
     flickr(dir)
         .then(urls => {
             const body = req.body;
+            const positions = body['geo-place'].split(',');
+            console.log(positions);
+            const geo = {
+                latitude: positions[0],
+                longitude: positions[1]
+            };
             let placeTitle = body['title-place'];
             if (!Array.isArray(placeTitle)) {
                 placeTitle = [placeTitle];
@@ -157,14 +163,14 @@ exports.create = (req, res) => {
                     return {
                         title,
                         img: urls[i],
-                        geo: {latitude: 0, longitude: 0}
+                        geo
                     };
                 })
             };
             console.log('create quest:', quest);
             return questsModel(req.db).createQuest(quest);
         })
-        .then(url => res.redirect(url))
+        .then(url => res.redirect('quest/' + url))
         .catch(err => {
             console.error(err.message);
             res.status(500).send(err.message);

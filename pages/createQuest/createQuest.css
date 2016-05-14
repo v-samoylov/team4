@@ -61,6 +61,11 @@
     filter: alpha(opacity=0);
 }
 
+.coordinates-place
+{
+    display: none;
+}
+
 .btn-circle
 {
     padding: 6px 0;
@@ -122,4 +127,8 @@
 .add-button
 {
     margin-bottom: 20px;
+}
+
+.create-button {
+    margin-bottom: 30px;
 }
