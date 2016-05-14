@@ -10,7 +10,7 @@ var addQuestForm = {
         this._collectData();
         validator.init();
         this._bindEvents();
-        this._$places.find('.js-place').find('.mapBox').append(this._$templateMap.clone());
+        this._$places.find('.js-place').find('.js-map-box').append(this._$templateMap.clone());
     },
 
     _collectData: function () {
@@ -23,9 +23,10 @@ var addQuestForm = {
         this._$fileInputDiv = $('.js-file-input-div');
         this._$customImagePreview = $('.js-custom-image-preview');
         this._$imagePreviewFileName = $('.js-image-preview-filename');
+        this._$imagePreviefFileNameIcon = ('.js-fix-glyphicon');
         this._$imagePreviewInputFile = $('.js-image-preview-input input:file');
         this._$imagePreviewClear = $('.js-image-preview-clear');
-        this._$templateMap = $('.map-template').children();
+        this._$templateMap = $('.js-map-template').children();
 
         $('.js-place-template').remove();
     },
@@ -47,7 +48,7 @@ var addQuestForm = {
     _addPlace: function () {
         var $newPlace = this._$templatePlace.clone();
 
-        $newPlace.find('.mapBox').append(this._$templateMap.clone());
+        $newPlace.find('.js-map-box').append(this._$templateMap.clone());
         $newPlace.hide().appendTo(this._$places).fadeIn('medium');
 
         validator.init();
@@ -68,6 +69,7 @@ var addQuestForm = {
         var $parent = $input.closest(this._$fileInputDiv.selector);
         var $previewPlace = $parent.find(this._$customImagePreview.selector);
         var $fileName = $parent.find(this._$imagePreviewFileName.selector);
+        var $icon = $parent.find(this._$imagePreviefFileNameIcon);
         var $clearBtn = $parent.find(this._$imagePreviewClear.selector);
         var $img = $('<img/>', {width: '100%'});
 
@@ -79,6 +81,7 @@ var addQuestForm = {
             $fileName.val(file.name);
             $img.attr('src', this.result);
             $previewPlace.empty().append($img);
+            $icon.attr('style', 'right: 80px');
             validator.updateInputs();
         };
 
@@ -143,8 +146,8 @@ var addQuestForm = {
             place.map.geoObjects.remove(place.map.placemark);
             place.map.placemark = null;
         }
-        var addressField = place.find('.form-control.address-place');
-        var coordinatesField = place.find('.form-control.coordinates-place');
+        var addressField = place.find('.form-control.js-address-place');
+        var coordinatesField = place.find('.form-control.js-coordinates-place');
 
         var cb = function (res) {
             var nearest = res.geoObjects.get(0);

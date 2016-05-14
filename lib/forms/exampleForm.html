@@ -1,54 +1,44 @@
 <form action="" method="post">
-    <div class="form-group">
+    <div class="form-group has-feedback has-error">
         <!--Необходимое поле-->
-        <div class="input-group">
+        <div class="js-input-group">
             <input name="validate-text" class="form-control" placeholder="Validate text" type="text" required />
-            <span class="input-group-addon danger">
-                <span class="glyphicon glyphicon-remove"></span>
-            </span>
+            <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group has-feedback has-error">
         <!--С проверкой почты-->
-        <div class="input-group" data-validate="email">
+        <div class="js-input-group" data-validate="email">
             <input name="validate-email" class="form-control" placeholder="Validate Email" type="text" required>
-            <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
+            <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group has-feedback has-error">
         <!--С проверкой длины-->
-        <div class="input-group" data-validate="length" data-length="10">
-            <textarea name="validate-length" class="form-control resize-vertical" placeholder="Validate length" type="text" required></textarea>
-            <span class="input-group-addon danger">
-                <span class="glyphicon glyphicon-remove"></span>
-            </span>
+        <div class="js-input-group" data-validate="length" data-length="10">
+            <textarea name="validate-length" class="form-control resize-vertical" placeholder="Validate length" required></textarea>
+            <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group has-feedback has-error">
         <!--С проверкой числа-->
-        <div class="input-group" data-validate="number">
+        <div class="js-input-group" data-validate="number">
             <input name="validate-number" class="form-control" placeholder="Validate Number" type="text" required>
-            <span class="input-group-addon danger">
-                <span class="glyphicon glyphicon-remove"></span>
-            </span>
+            <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group has-feedback has-success">
         <!--Опциональное-->
-        <div class="input-group">
+        <div class="js-input-group">
             <input name="validate-optional" class="form-control" placeholder="Optional" type="text">
-            <span class="input-group-addon info">
-                <span class="glyphicon glyphicon-asterisk"></span>
-            </span>
+            <span class="form-control-feedback glyphicon glyphicon-ok" aria-hidden="true"></span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group has-feedback has-success">
         <!--Уже заполнено-->
-        <div class="input-group">
+        <div class="js-input-group">
             <input name="validate-text" class="form-control" placeholder="Already validated" value="Validated!" type="text" required>
-            <span class="input-group-addon danger">
-                <span class="glyphicon glyphicon-remove"></span>
-            </span>
+            <span class="form-control-feedback glyphicon glyphicon-ok" aria-hidden="true"></span>
         </div>
     </div>
     <button type="submit" class="btn btn-success col-xs-12" disabled>Отправить</button>

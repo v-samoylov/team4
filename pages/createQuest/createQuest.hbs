@@ -19,126 +19,112 @@
     {{#content "main"}}
         <div class="container">
             <div class="row">
-                <h2 class="text-center">Создание квеста</h2>
-                <div class="col-md-offset-4 col-md-4">
-                    <form action="" method="post" class="js-create-quest-form" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input type="text" name="title-quest" class="form-control" placeholder="Название квеста" required />
-                                <span class="input-group-addon danger">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group" data-validate="length" data-length="10">
-                                <textarea type="text" name="desc-quest" class="form-control resize-vertical" placeholder="Описание квеста" required></textarea>
-                                <span class="input-group-addon danger">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <hr>
-                        <h3>Места</h3>
-                        <div class="map-template hidden">
-                            {{> yandexMap/yandexMap}}
-                        </div>
-                        <div class="one-place hidden js-place js-place-template">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" name="title-place" class="form-control" placeholder="Название места" required />
-                                    <span class="input-group-addon danger">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </span>
+                <div class="box fix-box">
+                    <h2 class="text-center">Создание квеста</h2>
+                    <div class="col-lg-12">
+                        <form action="" method="post" class="js-create-quest-form">
+                            <div class="form-group has-feedback has-error">
+                                <div class="js-input-group">
+                                    <input type="text" name="title-quest" class="form-control" placeholder="Название квеста" required/>
+                                    <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control address-place" placeholder="Адрес" required disabled/>
-                                    <span class="input-group-addon danger address-place">
-                                        <span class="glyphicon glyphicon-remove address-place"></span>
-                                    </span>
+                            <div class="form-group has-feedback has-error">
+                                <div class="js-input-group" data-validate="length" data-length="10">
+                                    <textarea type="text" name="desc-quest" class="form-control resize-vertical" placeholder="Описание квеста" required></textarea>
+                                    <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                    <input type="text" name="geo-place" class="form-control coordinates-place" placeholder="Координаты"/>
+                            <hr>
+                            <h3>Места</h3>
+                            <div class="hidden js-map-template">
+                                {{> yandexMap/yandexMap}}
                             </div>
-                            <div class="mapBox"></div>
-                            <div class="form-group js-file-input-div">
-                                <div class="custom-image-preview js-custom-image-preview"></div>
-                                <div class="input-group">
-                                    <!-- don't give a name === doesn't send on POST/GET -->
-                                    <input type="text" name="image-place" class="form-control image-preview-filename js-image-preview-filename" disabled="disabled" required />
-                                    <span class="input-group-btn">
-                                        <!-- image-preview-clear button -->
-                                        <button type="button" class="btn btn-default image-preview-clear js-image-preview-clear" style="display:none">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                        <!-- image-preview-input -->
-                                        <div class="btn btn-default image-preview-input js-image-preview-input">
-                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                            <input accept="image/png, image/jpeg, image/gif" type="file" name="input-file-preview" />
-                                        </div>
-                                    </span>
-                                    <span class="input-group-addon danger">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            <span class="glyphicon glyphicon-trash remove-button js-remove-place"></span>
-                        </div>
-                        <div class="js-places">
-                            <div class="one-place js-place">
-                                <div class="form-group">
-                                    <div class="input-group">
+                            <div class="one-place hidden js-place js-place-template">
+                                <div class="form-group has-feedback has-error">
+                                    <div class="js-input-group">
                                         <input type="text" name="title-place" class="form-control" placeholder="Название места" required/>
-                                        <span class="input-group-addon danger">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </span>
+                                        <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control address-place" placeholder="Адрес" required disabled/>
-                                        <span class="input-group-addon danger address-place">
-                                            <span class="glyphicon glyphicon-remove address-place"></span>
-                                        </span>
+                                <div class="form-group has-feedback has-error">
+                                    <div class="js-input-group">
+                                        <input type="text" class="form-control js-address-place" placeholder="Адрес" required disabled/>
+                                        <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                        <input type="text" name="geo-place" class="form-control coordinates-place" placeholder="Координаты"/>
+                                <div class="form-group has-feedback">
+                                    <input type="text" name="geo-place" class="form-control js-coordinates-place" style="display: none" placeholder="Координаты"/>
                                 </div>
-                                <div class="mapBox"></div>
-                                <div class="form-group js-file-input-div">
+                                <div class="js-map-box"></div>
+                                <div class="form-group has-feedback has-error js-file-input-div">
                                     <div class="custom-image-preview js-custom-image-preview"></div>
-                                    <div class="input-group">
+                                    <div class="input-group js-input-group">
                                         <!-- don't give a name === doesn't send on POST/GET -->
-                                        <input type="text" name="image-place" class="form-control image-preview-filename js-image-preview-filename" disabled="disabled" required />
+                                        <input type="text" name="image-place" class="form-control image-preview-filename js-image-preview-filename" style="width: 99.8%" required disabled/>
+                                        <span class="form-control-feedback glyphicon glyphicon-remove js-fix-glyphicon" style="right: 40px;" aria-hidden="true"></span>
                                         <span class="input-group-btn">
                                             <!-- image-preview-clear button -->
-                                            <button type="button" class="btn btn-default image-preview-clear js-image-preview-clear" style="display:none">
+                                            <button type="button" class="btn btn-default image-preview-clear js-image-preview-clear" style="display: none">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button>
                                             <!-- image-preview-input -->
                                             <div class="btn btn-default image-preview-input js-image-preview-input">
                                                 <span class="glyphicon glyphicon-folder-open"></span>
-                                                <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" />
+                                                <input accept="image/png, image/jpeg, image/gif" type="file" name="input-file-preview" />
                                             </div>
-                                        </span>
-                                        <span class="input-group-addon danger">
-                                            <span class="glyphicon glyphicon-remove"></span>
                                         </span>
                                     </div>
                                 </div>
+                                <span class="glyphicon glyphicon-trash remove-button js-remove-place"></span>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="button" class="btn btn-info btn-circle btn-lg add-button js-add-place">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </div>
-                        <button type="submit" class="btn btn-success col-xs-12 create-button" disabled>Создать</button>
-                    </form>
+                            <div class="js-places">
+                                <div class="one-place js-place">
+                                    <div class="form-group has-feedback has-error">
+                                        <div class="js-input-group">
+                                            <input type="text" name="title-place" class="form-control" placeholder="Название места" required/>
+                                            <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback has-error">
+                                        <div class="js-input-group">
+                                            <input type="text" class="form-control js-address-place" placeholder="Адрес" required disabled/>
+                                            <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <input type="text" name="geo-place" class="form-control js-coordinates-place" style="display: none" placeholder="Координаты"/>
+                                    </div>
+                                    <div class="js-map-box"></div>
+                                    <div class="form-group has-feedback has-error js-file-input-div">
+                                        <div class="custom-image-preview js-custom-image-preview"></div>
+                                        <div class="input-group js-input-group">
+                                            <!-- don't give a name === doesn't send on POST/GET -->
+                                            <input type="text" name="image-place" class="form-control image-preview-filename js-image-preview-filename" style="width: 99.8%" required disabled/>
+                                            <span class="form-control-feedback glyphicon glyphicon-remove js-fix-glyphicon" style="right: 40px;" aria-hidden="true"></span>
+                                            <span class="input-group-btn">
+                                                <!-- image-preview-clear button -->
+                                                <button type="button" class="btn btn-default image-preview-clear js-image-preview-clear" style="display: none">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                                <!-- image-preview-input -->
+                                                <div class="btn btn-default image-preview-input js-image-preview-input">
+                                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                                    <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-info btn-circle btn-lg add-button js-add-place">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </div>
+                            <button type="submit" class="btn btn-success col-xs-12 create-button" disabled>Создать</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
