@@ -182,7 +182,7 @@ $(function () {
         var formData = new FormData($(this)[0]);
 
         $.ajax({
-            url: '/upload',
+            url: '/create-quest',
             type: 'POST',
             data: formData,
             cache: false,
