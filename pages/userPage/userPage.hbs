@@ -1,44 +1,69 @@
 {{#extend "base"}}
     {{#content "title"}}
-        <title>Страница пользователя</title>
+        <title>{{username}}</title>
     {{/content}}
 
     {{#content "styles"}}
-        <link rel="stylesheet" href="/userPage.css">
+        {{#if commonData.isDev}}
+            <link rel="stylesheet" href="/userPage.css">
+        {{else}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/userPage.css">
+        {{/if}}
     {{/content}}
 
-
     {{#content "main"}}
-        <div>
-            <h1 id="username">
-                {{commonData.user.name}}
-            </h1>
-        </div>
-
-        <div id="in_process">
-            <h2>В процессе</h2>
-            <ul>
-                {{#each quests.inprocess}}
-                    <li>
-                        <a href="{{url}}">{{title}}</a>
-                    </li>
-                {{/each}}
-            </ul>
-        </div>
-
-        <div id="finished">
-            <h2>Завершенные</h2>
-            <ul>
-                {{#each quests.finished}}
-                    <li>
-                        <a href="{{url}}">{{title}}</a>
-                    </li>
-                {{/each}}
-            </ul>
+        <div class="main-content">
+            <div class="page-header">
+                <h1 id="username">{{username}}</h1>
+            </div>
+            <div class="panel main panel-primary">
+                <div id="inProcess-title" class="panel-heading">
+                    <h3 class="panel-title">Завершенные</h3>
+                </div>
+                <div class="panel-body quest">
+                    {{#if finished}}
+                        {{#each finished}}
+                            <h2><a href={{url}}>{{title}}</a></h2>
+                        {{/each}}
+                    {{else}}
+                        <div>
+                            {{#if self}}
+                                Вы еще не прошли ни одного квеста
+                            {{else}}
+                                Пользователь еще не прошел ни одного квеста
+                            {{/if}}
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="panel main panel-primary">
+                <div id="inProcess-title" class="panel-heading">
+                    <h3 class="panel-title">В процессе</h3>
+                </div>
+                <div class="panel-body quest">
+                    {{#if inProcess}}
+                        {{#each inProcess}}
+                            <h2><a href={{url}}>{{title}}</a></h2>
+                        {{/each}}
+                    {{else}}
+                        <div>
+                            {{#if self}}
+                                Сейчас вы не проходите ни одного квеста
+                            {{else}}
+                                Сейчас пользователь не проходит ни одного квеста
+                            {{/if}}
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
         </div>
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="/userPage.js"></script>
+        {{#if commonData.isDev}}
+            <script src="/userPage.js"></script>
+        {{else}}
+            <link rel="script" href="//dream-team-4.surge.sh/userPage.js">
+        {{/if}}
     {{/content}}
 {{/extend}}

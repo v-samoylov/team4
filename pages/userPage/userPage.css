@@ -1,0 +1,33 @@
+.panel.main > .panel-body
+{
+    display: none;
+}
+
+.panel.main > .panel-heading:hover
+{
+    cursor: pointer;
+}
+
+body .main-content .panel
+{
+    width: 80%;
+    margin: 10px auto;
+}
+
+#username
+{
+    text-align: center;
+    width: 90%;
+    margin: 10px auto;
+    font-size: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-device-width: 568px)
+{
+    body .main-content .panel
+    {
+        width: 100%;
+    }
+}

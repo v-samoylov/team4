@@ -5,7 +5,11 @@
 
     {{#content "styles"}}
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
-        <link rel="stylesheet" href="../registration.css">
+        {{#if commonData.isDev}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/registration.css">
+        {{else}}
+            <link rel="stylesheet" href="/registration.css">
+        {{/if}}
     {{/content}}
 
     {{#content "main"}}
