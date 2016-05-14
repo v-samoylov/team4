@@ -26,14 +26,14 @@ function getRandomPhoto(quest) {
 exports.index = (req, res) => {
     debug('index');
     const quests = questsModel(req.db);
-    let questNum = req.body.hasOwnProperty('skip') ? req.body.skip : 0;
+    let questNum = req.body.hasOwnProperty('skip') ? parseInt(req.body.skip, 10) : 0;
     quests.getLimitQuests(questNum, 10).then(chosenQuests => {
         chosenQuests = chosenQuests.map(filterFields(['url', 'title', 'photo']));
         if (questNum === 0) {
             res.renderLayout('./pages/index/index.hbs',
                 {quests: chosenQuests, commonData: req.commonData});
         } else {
-            res.json({quests: chosenQuests});
+            res.status(200).json({quests: chosenQuests});
         }
     });
 };

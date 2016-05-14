@@ -4,7 +4,11 @@
     {{/content}}
 
     {{#content "styles"}}
-        <link rel="stylesheet" href="/index.css">
+        {{#if commonData.isDev}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/index.css">
+        {{else}}
+            <link rel="stylesheet" href="/index.css">
+        {{/if}}
     {{/content}}
 
     {{#content "main"}}
