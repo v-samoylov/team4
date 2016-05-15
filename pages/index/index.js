@@ -2,7 +2,6 @@
 
 require('./index.css');
 var skip = 3;
-
 /* global $: true*/
 $('#getMore').click(function (e) {
     e.preventDefault();
