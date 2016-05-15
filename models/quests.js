@@ -142,16 +142,6 @@ const likeQuest = (title, user) => {
 //         });
 // };
 
-const getTitle = url => {
-    return quests.findOne({url})
-        .then(quest => {
-            if (!quest) {
-                throw new Error('quest does not exist');
-            }
-            return quest.title;
-        });
-};
-
 const addCheckinToPlace = (title, placeTitle, user) => {
     getQuest(title)
         .then(quest => {
@@ -170,6 +160,16 @@ const addCheckinToPlace = (title, placeTitle, user) => {
             return quests.updateOne(
                 {title, 'places.title': placeTitle},
                 {$push: {'places.$.checkins': user}});
+        });
+};
+
+const getTitle = url => {
+    return quests.findOne({url})
+        .then(quest => {
+            if (!quest) {
+                throw new Error('quest does not exist');
+            }
+            return quest.title;
         });
 };
 
