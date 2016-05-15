@@ -148,12 +148,18 @@ exports.create = (req, res) => {
     flickr(dir)
         .then(urls => {
             const body = req.body;
-            const positions = body['geo-place'].split(',');
-            console.log(positions);
-            const geo = {
-                latitude: positions[0],
-                longitude: positions[1]
-            };
+            let geo = body['geo-place'];
+            if (!Array.isArray(geo)) {
+                geo = [geo];
+            }
+            geo = geo.map(str => {
+                const positions = str.split(',');
+                return {
+                    latitude: positions[0],
+                    longitude: positions[1]
+                };
+            });
+            console.log(geo);
             let placeTitle = body['title-place'];
             if (!Array.isArray(placeTitle)) {
                 placeTitle = [placeTitle];
@@ -166,7 +172,7 @@ exports.create = (req, res) => {
                     return {
                         title,
                         img: urls[i],
-                        geo
+                        geo: geo[i]
                     };
                 })
             };
