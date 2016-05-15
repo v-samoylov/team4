@@ -40,9 +40,12 @@ h5,
 h6
 {
     text-transform: uppercase;
-    font-family: "Josefin Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
     letter-spacing: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-size: 22px;
 }
 
 p
@@ -157,6 +160,7 @@ footer p
 
 .search-dropdown
 {
+    width: calc(100% - 15px);
     margin-left: 15px !important;
 }
 

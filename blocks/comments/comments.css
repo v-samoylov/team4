@@ -3,6 +3,18 @@
     display: none;
 }
 
+.panel.main > .panel-heading
+{
+    background-image: none;
+    background-color: #7ec2c0;
+    border: none;
+}
+
+.panel.main
+{
+    border-color: #7ec2c0;
+}
+
 .panel.main > .panel-heading:hover
 {
     cursor: pointer;
@@ -11,6 +23,7 @@
 .comment-list .panel
 {
     position: relative;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .comment-list .panel > .panel-heading::after,
@@ -18,7 +31,7 @@
 {
     position: absolute;
     top: 11px;
-    left: -16px;
+    left: -15px;
     right: 100%;
     width: 0;
     height: 0;
@@ -52,3 +65,16 @@
 {
     padding: 0;
 }
+
+.comment-list .row
+{
+    margin: 0;
+}
+
+.send-com
+{
+    margin: 20px 5px 20px 0;
+    padding: 10px;
+    background-image: none;
+}
+

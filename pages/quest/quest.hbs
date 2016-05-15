@@ -33,19 +33,17 @@
                         </div>
                         <hr>
                     </div>
-
+                    <h3 class="description-title">О квесте:</h3>
                     <div class="description">{{description}}</div>
 
                     {{#if commonData.user}}
-                        {{#if inProgress}}
-                            <div class="message">Вы проходиете квест</div>
-                        {{else}}
+                        {{#unless inProgress}}
                             {{#if finished}}
                                 <div class="finished">Вы успешно прошли квест</div>
                             {{else}}
                                 <button class="btn btn-default btn-lg" id="start-quest">Начать квест</button>
                             {{/if}}
-                        {{/if}}
+                        {{/unless}}
                     {{else}}
                         <form class="reg-ref" method="get" action="/reg">
                             <button class="btn btn-default btn-lg" type="submit">Зарегистрироваться чтобы пройти квест</button>

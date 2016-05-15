@@ -1,21 +1,54 @@
 .place
 {
-    width: 80%;
+    width: 100%;
     margin: auto;
+}
+
+.img img
+{
+    width: 100%;
+    max-width: 100%;
+}
+
+.img
+{
+    overflow: hidden;
+    margin: 5% auto 0;
+    width: 90%;
 }
 
 .place-title
 {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
-    width: 50%;
+    width: 100%;
     margin: 10px auto;
-    font-size: 50px;
 }
 
-@media screen and (max-device-width: 568px)
+.check-in.success-checkIn
 {
+    background-color: #c09853;
+}
+
+@media screen and (min-width: 768px)
+{
+
     .place
     {
+        width: 80%;
+        margin: auto;
+    }
+
+    .img
+    {
+        margin: 10% auto 0;
+        width: 80%;
+        max-height: 600px;
+    }
+
+    .img img
+    {
         width: 100%;
+        border: 1px solid #ddd;
     }
 }

@@ -144,6 +144,7 @@ const upload = multer({storage: storage});
 exports.upload = upload.array('input-file-preview');
 
 exports.create = (req, res) => {
+    debug('create');
     const dir = 'tmp/' + tr.slugify(req.body['title-quest'], {lowercase: true, separator: '-'});
     flickr(dir)
         .then(urls => {
