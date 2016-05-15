@@ -8,9 +8,9 @@ const app = require('../app.js');
 module.exports = () => {
     return (req, res, next) => {
         debug('add renderLayout func');
-        res.renderLayout = (path, context) => {
+        res.renderLayout = (path, context = {}) => {
             let template = app.hbs.handlebars.compile(fs.readFileSync(path, 'utf8'));
-            return res.send(template(context));
+            return res.send(template(Object.assign(context, {commonData: req.commonData})));
         };
         next();
     };

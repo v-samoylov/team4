@@ -7,3 +7,51 @@ body
     background-size: cover;
     -o-background-size: cover;
 }
+
+input::-webkit-input-placeholder
+{
+    text-indent: 0;
+    transition: text-indent 0.3s ease;
+}
+
+input::-moz-placeholder
+{
+    text-indent: 0;
+    transition: text-indent 0.3s ease;
+}
+
+input:-moz-placeholder
+{
+    text-indent: 0;
+    transition: text-indent 0.3s ease;
+}
+
+input:-ms-input-placeholder
+{
+    text-indent: 0;
+    transition: text-indent 0.3s ease;
+}
+
+input:focus::-webkit-input-placeholder
+{
+    text-indent: 1000px;
+    transition: text-indent 0.3s ease;
+}
+
+input:focus::-moz-placeholder
+{
+    text-indent: 1000px;
+    transition: text-indent 0.3s ease;
+}
+
+input:focus:-moz-placeholder
+{
+    text-indent: 1000px;
+    transition: text-indent 0.3s ease;
+}
+
+input:focus:-ms-input-placeholder
+{
+    text-indent: 1000px;
+    transition: text-indent 0.3s ease;
+}
