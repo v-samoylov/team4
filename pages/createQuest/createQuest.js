@@ -1,7 +1,7 @@
 'use strict';
 
 require('./createQuest.css');
-require('../../blocks/yandexMap/yandexMap.css');
+require('../../blocks/yandexMap/yandexMap.js');
 
 var validator = require('../../lib/forms/forms');
 
@@ -200,13 +200,17 @@ $(function () {
         e.preventDefault();
         var formData = new FormData($(this)[0]);
 
-        $.ajax({
-            url: '/create-quest',
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        });
+        $
+            .ajax({
+                url: '/create-quest',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+            .done(function (res) {
+                window.location = res.url;
+            });
     });
 });

@@ -8,6 +8,7 @@ const quests = require('./controllers/quests');
 
 module.exports = function (app) {
     app.get('/', pages.index);
+    app.get('/popular', pages.index);
     app.post('/user/login', users.validate, users.login);
     app.post('/user/reg', users.validate, users.register);
     app.post('/user/logout', users.logout);
@@ -23,6 +24,8 @@ module.exports = function (app) {
     app.post('/quest-comment', authRequired, quests.addCommentToQuest);
     app.get('/create-quest', authRequired, pages.createQuest);
     app.post('/create-quest', authRequired, quests.upload, quests.create);
+    app.post('/get-quest-titles', pages.getTitles);
+    app.get('/search', pages.search);
     app.all('*', pages.error404);
 
     app.use((err, req, res) => {
