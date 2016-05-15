@@ -94,8 +94,12 @@ module.exports.startQuest = (req, res) => {
     const users = usersModel(req.db);
     const quests = questsModel(req.db);
     let user = req.commonData.user;
-    users.addQuestInProgress(user, title)
-        .then(() => quests.getQuest(title))
-        .then(quest => res.status(200).send({url: quest.url}))
+    let url;
+    quests.getQuest(title)
+        .then(quest => {
+            url = quest.url;
+            users.addQuestInProgress(user, quest)
+                .then(() => res.status(200).send({url}));
+        })
         .catch(res.status(400));
 };

@@ -63,7 +63,6 @@ exports.likeQuest = (req, res) => {
     model
         .likeQuest(questName, user)
         .then(count => {
-            console.log(count);
             res.status(200).send({count});
         })
         .catch(err => console.error(err));
