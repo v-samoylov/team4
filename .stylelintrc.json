@@ -7,7 +7,6 @@
     "block-closing-brace-newline-before": "always"
   },
   "ignoreFiles": [
-    "public/*",
-    "blocks/header/horsey.css"
+    "public/*"
   ]
 }

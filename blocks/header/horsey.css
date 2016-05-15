@@ -1,4 +1,5 @@
-.sey-list {
+.sey-list
+{
   display: none;
   position: absolute;
   padding: 0;
@@ -9,24 +10,34 @@
   color: #333;
   transition: left 0.1s ease-in-out;
 }
-.sey-show {
+
+.sey-show
+{
   display: block;
 }
-.sey-hide {
+
+.sey-hide
+{
   display: none;
 }
-.sey-item {
+
+.sey-item
+{
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   padding: 7px;
 }
-.sey-item:hover {
+
+.sey-item:hover
+{
   background-color: #444;
   color: #fff;
 }
-.sey-selected {
+
+.sey-selected
+{
   background-color: #333;
   color: #fff;
 }
