@@ -1,9 +1,8 @@
 'use strict';
-require('../../blocks/place/place.css');
-require('../../blocks/place/place.js');
-require('../../blocks/comments/comments.css');
-require('../../blocks/comments/comments.js');
+
 require('./quest.css');
+require('../../blocks/place/place.js');
+require('../../blocks/comments/comments.js');
 
 $('.panel.main .panel-heading').each(function () {
     $(this).click(function () {

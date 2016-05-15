@@ -1,3 +1,7 @@
+'use strict';
+
+require('./comments.css');
+
 $('.commentForm').each(function () {
     $(this).submit(function (event) {
         event.preventDefault();
