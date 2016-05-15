@@ -18,7 +18,7 @@ $('.commentForm').each(function () {
             commentSection.append('<div class="row"><div class="col-sm-5">' +
                 '<div class="panel panel-default"><div class="panel-heading">' +
                 '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>' +
-                '<strong>msg.author</strong></div><div class="panel-body">' +
+                '<strong>' + msg.author + '</strong></div><div class="panel-body">' +
                 msg.text + '</div></div></div></div>');
             form.find('textarea').val('');
         })

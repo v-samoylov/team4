@@ -12,47 +12,58 @@
     {{/content}}
 
     {{#content "main"}}
-        <div class="page-header">
-            <h1 id="quest-title">{{title}}</h1>
-        </div>
-        <div class="panel main panel-primary">
-            <div id="des-title" class="panel-heading">
-                <h3 class="panel-title">Описание</h3>
+        <div class="container">
+
+            <div class="row">
+                <div class="box">
+                    <div class="quest-head">
+                        <h2 class="quest-title" id="quest-title">{{title}}</h2>
+
+                        <div class="likes">
+                            {{#if commonData.user}}
+                                {{#if liked}}
+                                    <input type="checkbox" id="quest-like" checked>
+                                {{else}}
+                                    <input type="checkbox" id="quest-like">
+                                {{/if}}
+                                <label class="like" for="quest-like" onmousedown="return false">❤</label>
+                            {{else}}
+                                <span class="like" onmousedown="return false">❤</span>
+                            {{/if}}
+                            <span id="likes-count" class="badge">{{likes.length}}</span>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="description">{{description}}</div>
+
+                    {{#if commonData.user}}
+                        {{#if inProgress}}
+                            <div class="message">Вы проходиете квест</div>
+                        {{else}}
+                            {{#if finished}}
+                                <div class="finished">Вы успешно прошли квест</div>
+                            {{else}}
+                                <button class="btn btn-default btn-lg" id="start-quest">Начать квест</button>
+                            {{/if}}
+                        {{/if}}
+                    {{else}}
+                        <form class="reg-ref" method="get" action="/reg">
+                            <button class="btn btn-default btn-lg" type="submit">Зарегестрироваться чтобы пройти квест</button>
+                        </form>
+                    {{/if}}
+
+                    <div id="list-of-places">
+                        {{#each places}}
+                            {{>place/place this user =../commonData.user quest =../title inProgress=../inProgress}}
+                        {{/each}}
+                    </div>
+
+                    {{> comments/comments this user =../commonData.user}}
+
+                </div>
             </div>
-            <div class="panel-body description">{{description}}</div>
         </div>
-        {{#if commonData.user}}
-            {{#if inProgress}}
-                <div class="message">Вы проходиете квест</div>
-            {{else}}
-                {{#if finished}}
-                    <div class="finished">Вы успешно прошли квест</div>
-                {{else}}
-                    <button class="btn btn-success btn-lg" id="start-quest">Начать квест</button>
-                {{/if}}
-            {{/if}}
-        {{else}}
-            <form class="reg-ref" method="get" action="/reg">
-                <button class="btn btn-success btn-lg" type="submit">Зарегестрироваться чтобы пройти квест</button>
-            </form>
-        {{/if}}
-        <div class="likes">
-            {{#if commonData.user}}
-                {{#if liked}}
-                    <input type="checkbox" id="quest-like" checked>
-                {{else}}
-                    <input type="checkbox" id="quest-like">
-                {{/if}}
-                <label class="like" for="quest-like" onmousedown="return false">❤</label>
-            {{else}}
-                <span class="like" onmousedown="return false">❤</span>
-            {{/if}}
-            <span id="likes-count" class="badge">{{likes.length}}</span>
-        </div>
-        {{#each places}}
-           {{>place/place this user =../commonData.user quest =../title}}
-        {{/each}}
-        {{> comments/comments this user =../commonData.user}}
     {{/content}}
 
     {{#content "scripts"}}

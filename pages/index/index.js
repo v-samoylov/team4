@@ -10,10 +10,13 @@ $('#getMore').click(function (e) {
     $.ajax({
         method: "POST",
         url: "/get-more-quests",
-        data: {skip: skip + 10}
+        data: {
+            skip: skip,
+            get: 3
+        }
     })
         .done(function (data) {
-            skip += 10;
+            skip += data.quests.length;
             data.quests.forEach(function (quest) {
                 var newElem = $('<div></div>', {
                     class: 'col-lg-12 text-center'

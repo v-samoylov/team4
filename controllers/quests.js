@@ -7,6 +7,7 @@ const tr = require('transliteration');
 const fs = require('fs');
 const flickr = require('../lib/flickr');
 const questsModel = require('../models/quests.js');
+const questInfo = require('../lib/getQuestInfo');
 
 exports.addQuest = (req, res) => {
     debug('add quest');
@@ -22,15 +23,15 @@ exports.addQuest = (req, res) => {
 };
 
 exports.quest = (req, res) => {
-    let questName = req.params.name;
-    debug(`get quest ${questName}`);
+    let questUrl = req.params.name;
+    debug(`get quest ${questUrl}`);
     let user = req.commonData.user;
     let commonData = {commonData: req.commonData};
     let model = questsModel(req.db);
     if (user) {
         model
-            .getTitle(questName)
-            .then(model.getQuest)
+            .getTitle(questUrl)
+            .then(questName => questInfo(req.db, questName, user))
             .then(quest => {
                 console.log(quest);
                 let response = Object.assign(quest, commonData);
@@ -39,7 +40,7 @@ exports.quest = (req, res) => {
             .catch(err => res.error(err));
     } else {
         model
-            .getTitle(questName)
+            .getTitle(questUrl)
             .then(model.getQuest)
             .then(quest => {
                 console.log(quest);
@@ -51,7 +52,7 @@ exports.quest = (req, res) => {
 };
 
 exports.likeQuest = (req, res) => {
-    let questName = req.params.name;
+    let questName = req.body.title;
     debug(`like quest ${questName}`);
     let model = questsModel(req.db);
     let user = req.commonData.user;
@@ -62,8 +63,10 @@ exports.likeQuest = (req, res) => {
     model
         .likeQuest(questName, user)
         .then(count => {
+            console.log(count);
             res.status(200).send({count});
-        });
+        })
+        .catch(err => console.error(err));
 };
 
 exports.addCommentToPlace = (req, res) => {

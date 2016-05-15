@@ -7,6 +7,7 @@ const hashConfig = config.get("hash");
 
 const hash = require('../lib/hash.js');
 const usersModel = require('../models/users.js');
+const questsModel = require('../models/quests.js');
 
 const salt = hashConfig.cookieSalt;
 
@@ -85,4 +86,16 @@ module.exports.validate = (req, res, next) => {
         }
     }
     next();
+};
+
+module.exports.startQuest = (req, res) => {
+    let title = req.body.title;
+    debug(`start quest ${title}`);
+    const users = usersModel(req.db);
+    const quests = questsModel(req.db);
+    let user = req.commonData.user;
+    users.addQuestInProgress(user, title)
+        .then(() => quests.getQuest(title))
+        .then(quest => res.status(200).send({url: quest.url}))
+        .catch(res.status(400));
 };
