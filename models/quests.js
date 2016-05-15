@@ -92,27 +92,6 @@ const createQuest = quest => {
         .then(res => res.ops[0].url);
 };
 
-const addCheckinToPlace = (title, placeTitle, user) => {
-    getQuest(title)
-        .then(quest => {
-            if (!quest) {
-                throw new Error('Нет квеста с названием ' + title);
-            }
-            const place = quest.places[placeTitle];
-            if (!place) {
-                throw new Error('В квесте нет места с названием ' + placeTitle);
-            }
-            if (place.checkins.indexOf(user) > -1) {
-                throw new Error('Вы уже зачекинены');
-            }
-        })
-        .then(() => {
-            return quests.updateOne(
-                {title, 'places.title': placeTitle},
-                {$push: {'places.$.checkins': user}});
-        });
-};
-
 const addCommentToPlace = (title, placeTitle, comment) => {
     return quests.updateOne(
         {title, 'places.title': placeTitle},
@@ -170,6 +149,27 @@ const getTitle = url => {
                 throw new Error('quest does not exist');
             }
             return quest.title;
+        });
+};
+
+const addCheckinToPlace = (title, placeTitle, user) => {
+    getQuest(title)
+        .then(quest => {
+            if (!quest) {
+                throw new Error('Нет квеста с названием ' + title);
+            }
+            const place = quest.places[placeTitle];
+            if (!place) {
+                throw new Error('В квесте нет места с названием ' + placeTitle);
+            }
+            if (place.checkins.indexOf(user) > -1) {
+                throw new Error('Вы уже зачекинены');
+            }
+        })
+        .then(() => {
+            return quests.updateOne(
+                {title, 'places.title': placeTitle},
+                {$push: {'places.$.checkins': user}});
         });
 };
 
