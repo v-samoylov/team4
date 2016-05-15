@@ -6,8 +6,8 @@
                 <h3 class="place-title">{{title}}</h3>
                 {{> comments/comments this place=true}}
                 {{#if inProgress}}
-                    {{#unless check-in}}
-                        <button class="btn btn-success check-in">Check-in</button>
+                    {{#unless checkIn}}
+                        <button data-name="{{quest}}#{{title}}" class="btn btn-success check-in">Check-in</button>
                     {{/unless}}
                 {{/if}}
             </div>

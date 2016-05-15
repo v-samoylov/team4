@@ -5,6 +5,7 @@ const debug = require('debug')('team4:controllers:pages');
 const questsModel = require('../models/quests');
 const userModel = require('../models/users');
 const randInt = require('../lib/random').randInt;
+const fuzzy = require('fuzzysearch');
 
 function filterFields(fields) {
     return obj => {
@@ -96,4 +97,54 @@ exports.reg = (req, res) => {
 exports.error404 = (req, res) => {
     debug('error404');
     res.status(404).renderLayout('./pages/notFound/notFound.hbs', {commonData: req.commonData});
+};
+
+exports.getTitles = (req, res) => {
+    debug('getTitles');
+    questsModel(req.db)
+        .getAllQuests()
+            .then(quests => {
+                res.status(200).json({quests: quests.map(quest => quest.title)});
+            })
+            .catch(err => {
+                console.error(err);
+                res.statusCode(500);
+            });
+};
+
+exports.search = (req, res) => {
+    debug('search');
+    const quests = questsModel(req.db);
+    const query = req.query.query;
+    if (typeof query !== 'string') {
+        res.end();
+    }
+    quests
+        .getQuest(query)
+        .then(quest => {
+            if (quest) {
+                res.redirect('/quest/' + quest.url);
+                throw new Error('');
+            }
+        })
+        .then(() => quests.getAllQuests())
+        .then(quests => quests.filter(quest => {
+            return fuzzy(query, quest.title);
+        }))
+        .then(quests => {
+            console.log('count found quest ', quests.length);
+            if (quests.length === 0) {
+                res.status(404).renderLayout('./pages/notFound/notFound.hbs',
+                    {commonData: req.commonData});
+                throw new Error('');
+            }
+            return quests;
+        })
+        .then(quests => {
+            const filteredQuests = quests
+                .map(filterFields(['url', 'photo', 'title']))
+                .slice(0, 10);
+            res.renderLayout('./pages/index/index.hbs',
+                {quests: filteredQuests, commonData: req.commonData});
+        });
 };

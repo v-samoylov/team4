@@ -92,4 +92,29 @@
 .add-button
 {
     margin-bottom: 20px;
+    background-color: #5bc0de;
+    background-image: none;
+}
+
+.js-location-search-button
+{
+    background-image: none;
+}
+
+.create-button
+{
+    width: 100%;
+    letter-spacing: 1px;
+    padding: 5px;
+    text-transform: lowercase;
+}
+
+@media screen and (min-width: 768px)
+{
+    .create-button
+    {
+        width: 50%;
+        font-size: 25px;
+        padding: 10px;
+    }
 }
