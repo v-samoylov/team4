@@ -132,8 +132,7 @@ exports.search = (req, res) => {
         .then(quests => {
             console.log('count found quest ', quests.length);
             if (quests.length === 0) {
-                res.status(404).renderLayout('./pages/notFound/notFound.hbs',
-                    {commonData: req.commonData});
+                res.status(404).renderLayout('./pages/notFound/notFound.hbs');
                 throw new Error('');
             }
             return quests;
@@ -143,59 +142,6 @@ exports.search = (req, res) => {
                 .map(filterFields(['url', 'photo', 'title']))
                 .slice(0, 10);
             res.renderLayout('./pages/index/index.hbs',
-                {quests: filteredQuests, commonData: req.commonData});
+                {quests: filteredQuests});
         });
-<<<<<<< HEAD
-};
-
-exports.getTitles = (req, res) => {
-    debug('getTitles');
-    questsModel(req.db)
-        .getAllQuests()
-            .then(quests => {
-                res.status(200).json({quests: quests.map(quest => quest.title)});
-            })
-            .catch(err => {
-                console.error(err);
-                res.statusCode(500);
-            });
-};
-
-exports.search = (req, res) => {
-    debug('search');
-    const quests = questsModel(req.db);
-    const query = req.query.query;
-    if (typeof query !== 'string') {
-        res.end();
-    }
-    quests
-        .getQuest(query)
-        .then(quest => {
-            if (quest) {
-                res.redirect('/quest/' + quest.url);
-                throw new Error('');
-            }
-        })
-        .then(() => quests.getAllQuests())
-        .then(quests => quests.filter(quest => {
-            return fuzzy(query, quest.title);
-        }))
-        .then(quests => {
-            console.log('count found quest ', quests.length);
-            if (quests.length === 0) {
-                res.status(404).renderLayout('./pages/notFound/notFound.hbs',
-                    {commonData: req.commonData});
-                throw new Error('');
-            }
-            return quests;
-        })
-        .then(quests => {
-            const filteredQuests = quests
-                .map(filterFields(['url', 'photo', 'title']))
-                .slice(0, 10);
-            res.renderLayout('./pages/index/index.hbs',
-                {quests: filteredQuests, commonData: req.commonData});
-        });
-=======
->>>>>>> 7498c5d795f56393b9ff04a7db8d95b7f8eaa0a2
 };
