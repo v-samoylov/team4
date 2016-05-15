@@ -2,7 +2,6 @@
 
 require('./header.css');
 require('./horsey.css');
-require('./horsey.js');
 
 var $searchField = $('.search-field');
 
