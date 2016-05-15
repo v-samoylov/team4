@@ -29,7 +29,7 @@ exports.index = (req, res) => {
     debug('index');
     const quests = questsModel(req.db);
     let questNum = req.body.hasOwnProperty('skip') ? parseInt(req.body.skip, 10) : 0;
-    let questLimit = req.body.hasOwnProperty('get') ? parseInt(req.body.get, 10) : 5;
+    let questLimit = req.body.hasOwnProperty('get') ? parseInt(req.body.get, 10) : 3;
     quests.getLimitQuests(questNum, questLimit).then(chosenQuests => {
         chosenQuests = chosenQuests.map(filterFields(['url', 'photo', 'title']));
         if (questNum === 0) {
