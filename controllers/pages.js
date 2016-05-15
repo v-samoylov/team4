@@ -30,7 +30,9 @@ exports.index = (req, res) => {
     const quests = questsModel(req.db);
     let questNum = req.body.hasOwnProperty('skip') ? parseInt(req.body.skip, 10) : 0;
     let questLimit = req.body.hasOwnProperty('get') ? parseInt(req.body.get, 10) : 3;
-    quests.getLimitQuests(questNum, questLimit).then(chosenQuests => {
+    let filter = req.url === '/popular' ? 'likesCount' : '';
+    quests.getLimitQuestsSorted(questNum, questLimit, filter).then(chosenQuests => {
+        console.log(chosenQuests.map(filterFields(['title', 'likesCount'])));
         chosenQuests = chosenQuests.map(filterFields(['url', 'photo', 'title']));
         if (questNum === 0) {
             res.renderLayout('./pages/index/index.hbs',
@@ -49,31 +51,22 @@ exports.userPage = (req, res) => {
     };
     users.isUserExist(req.params.name)
         .then(users => {
-            if (users > 0) {
+            if (users) {
                 return req.params.name;
             }
             res.renderLayout('./pages/notFound/notFound.hbs');
             throw new Error('это как return, только следующий then не будет работать');
         })
-        .then(users.getFinishedQuests)
-        .then(finished => {
-            finished = finished.map(filterFields(['url', 'title']));
-            if (finished.length !== 0) {
-                Object.assign(response, {finished: finished});
-            }
-            return req.params.name;
-        })
-        .then(users.getQuestsInProgress)
-        .then(inProcess => {
-            inProcess = inProcess.map(filterFields(['url', 'title']));
-            if (inProcess.length !== 0) {
-                Object.assign(response, {inProcess: inProcess});
-            }
-            if (req.params.name === response.commonData.user) {
-                Object.assign(response, {self: true});
-            }
-            console.log(response);
+        .then(users.getPublicUserData)
+        .then(user => {
+            let finished = user.finishedQuests.map(filterFields(['url', 'title', 'photo']));
+            let inProcess = user.inProgressQuests.map(filterFields(['url', 'title', 'photo']));
+            let created = user.createdQuests.map(filterFields(['url', 'title', 'photo']));
+            Object.assign(response, {finished, inProcess, created});
             res.renderLayout('./pages/userPage/userPage.hbs', response);
+        })
+        .catch(() => {
+            res.status(500).renderLayout('./pages/notFound/notFound.hbs');
         });
 };
 
