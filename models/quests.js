@@ -93,7 +93,7 @@ const createQuest = quest => {
 };
 
 const addCheckinToPlace = (title, placeTitle, user) => {
-    quests.getQuest(title)
+    getQuest(title)
         .then(quest => {
             if (!quest) {
                 throw new Error('Нет квеста с названием ' + title);
