@@ -1,0 +1,12 @@
+{{#each arr}}
+    <div class="col-xs-6 text-center img-contaner">
+        <div class="quest-img center-block">
+            <a href="/quest/{{url}}"><img src={{photo}} alt={{title}}></a>
+        </div>
+        <h3>{{title}}</h3>
+        {{#if created}}
+            <button type="submit" data-name="{{title}}" class="search-btn"><span class="glyphicon glyphicon-pencil"></span></button>
+            <button type="submit" data-name="{{title}}" class="search-btn"><span class="glyphicon glyphicon-trash"></span></button>
+        {{/if}}
+    </div>
+{{/each}}
