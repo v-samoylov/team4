@@ -1,3 +1,5 @@
+'use strict';
+
 require('./header.css');
 require('./horsey.css');
 
