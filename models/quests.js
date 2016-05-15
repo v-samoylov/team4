@@ -106,7 +106,11 @@ const getAllQuests = () => quests.find({}, {_id: 0}).toArray();
 
 const removeAllQuests = () => quests.remove({});
 
-const getQuest = title => quests.find({title}, {_id: 0}).next();
+const removeQuest = title => quests.remove({title});
+
+const getQuest = title => quests.find({title}).next();
+
+const getQuestsById = ids => quests.find({_id: {$in: ids}});
 
 const getLimitQuests = (skip, limit) => {
     return quests.find({}, {_id: 0}).skip(skip).limit(limit).toArray();
@@ -143,24 +147,29 @@ const likeQuest = (title, user) => {
 // };
 
 const addCheckinToPlace = (title, placeTitle, user) => {
-    getQuest(title)
+    return getQuest(title)
         .then(quest => {
             if (!quest) {
+                console.error('Нет квеста с названием ' + title);
                 throw new Error('Нет квеста с названием ' + title);
             }
-            const place = quest.places[placeTitle];
+            const place = quest.places.find(place => place.title === placeTitle);
             if (!place) {
+                console.error('В квесте нет места с названием ' + placeTitle);
                 throw new Error('В квесте нет места с названием ' + placeTitle);
             }
             if (place.checkins.indexOf(user) > -1) {
+                console.error('Вы уже зачекинены');
                 throw new Error('Вы уже зачекинены');
             }
-        })
-        .then(() => {
-            return quests.updateOne(
+            return quests.findOneAndUpdate(
                 {title, 'places.title': placeTitle},
-                {$push: {'places.$.checkins': user}});
-        });
+                {$push: {'places.$.checkins': user}},
+                {returnOriginal: false});
+        })
+        .then(res => res.value.places
+            .find(place => place.title === placeTitle)
+            .checkins.length);
 };
 
 const getTitle = url => {
@@ -179,8 +188,10 @@ module.exports = db => {
         createQuest,
         getAllQuests,
         removeAllQuests,
+        removeQuest,
         getLimitQuests,
         getQuest,
+        getQuestsById,
         addCommentToQuest,
         likeQuest,
         isPlaceExist,
