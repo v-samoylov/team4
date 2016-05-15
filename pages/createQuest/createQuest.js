@@ -43,22 +43,6 @@ var addQuestForm = {
                 this._initMap(this._$places.find('.js-place'));
             }.bind(this)
         );
-        $(document).ready(function () {
-            $('.combobox').combobox();
-            $('.combobox').keyup(function () {
-                ymaps.geocode($('.combobox').val()).then(function (res) {
-                    console.log('POP');
-                    $('.combobox').empty();
-                    res.geoObjects.forEach(function (geoObject) {
-                        $('.combobox').append('<option value="'+geoObject.geometry.getCoordinates()+'">'+geoObject.properties.get('name')+'</option>');
-                    });
-                    $('.combobox').combobox();
-                });
-            });
-            $('.combobox').change(function () {
-                console.log('POP');
-            });
-        });
     },
 
     _addPlace: function () {
