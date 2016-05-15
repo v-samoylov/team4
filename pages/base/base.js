@@ -1,7 +1,6 @@
 'use strict';
 
 require('./base.css');
-require('../../blocks/header/horsey.js');
 require('../../blocks/header/header.js');
 require('../../blocks/footer/footer.js');
 
