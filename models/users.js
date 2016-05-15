@@ -51,6 +51,7 @@ const addUser = newUser => {
             newUser.password = getHash(newUser.password);
             newUser.finishedQuests = [];
             newUser.inProgressQuests = [];
+            newUser.createdQuests = [];
             return usersCollection.insertOne(newUser);
         });
 };
@@ -83,6 +84,10 @@ function getFinishedQuests(name) {
             }
             throw new Error('Пользователь не найден');
         });
+}
+
+function getPublicUserData(name) {
+    return usersCollection.find({name}, {_id: 0, password: 0}).next();
 }
 
 function questFinish(name, quest) {
@@ -120,7 +125,8 @@ const operations = {
     questFinish,
     getQuestsInProgress,
     getFinishedQuests,
-    isUserExist
+    isUserExist,
+    getPublicUserData
 };
 
 module.exports = db => {

@@ -98,6 +98,8 @@ module.exports.startQuest = (req, res) => {
     quests.getQuest(title)
         .then(quest => {
             url = quest.url;
+            let img = quest.places[0].img;
+            quest.img = img;
             users.addQuestInProgress(user, quest)
                 .then(() => res.status(200).send({url}));
         })
