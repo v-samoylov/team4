@@ -8,6 +8,12 @@
     cursor: pointer;
 }
 
+.quest-title
+{
+    text-align: center;
+    margin: 0;
+}
+
 .like
 {
     width: 50px;
@@ -19,13 +25,8 @@
 
 .likes
 {
-    width: 100px;
-    margin: 20px;
-}
-
-.like:hover
-{
-    animation: pulse 0.6s linear;
+    width: 80px;
+    margin: auto;
 }
 
 #quest-like:checked + label
@@ -38,38 +39,19 @@ input[type="checkbox"]
     display: none;
 }
 
-#quest-title
+@media screen and (min-width: 768px)
 {
-    text-align: center;
-    width: 50%;
-    margin: 10px auto;
-    font-size: 50px;
-}
-
-.reg-ref,
-#start-quest
-{
-    margin: 20px auto;
-    width: 50%;
-    display: flex;
-    justify-content: center;
-}
-
-body > .panel
-{
-    width: 80%;
-    margin: auto;
-}
-
-@media screen and (max-device-width: 568px)
-{
-    .reg-ref
+    .quest-title
     {
-        margin: 10px auto;
-        width: 100%;
+        font-size: 40px;
+        margin-left: 30%;
+        margin-right: 40px;
+        display: inline-block;
     }
-    body > .panel
+
+    .likes
     {
-        width: 100%;
+        display: inline-block;
+        margin: 0;
     }
 }

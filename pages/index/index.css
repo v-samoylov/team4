@@ -12,6 +12,8 @@
     background-color: #a8cc77;
     background-image: none;
     text-shadow: none;
+    letter-spacing: 1px;
+    text-transform: lowercase;
 }
 
 @media screen and (min-width: 768px)

@@ -17,18 +17,40 @@ $('.panel.main .panel-heading').each(function () {
 });
 
 $('#quest-like').change(function () {
-    var name = $('#quest-title').html();
+    var title = $('#quest-title').html();
+    var valueInput = $('#likes-count');
+    var oldValue = Number($(valueInput).html());
+    var newValue = $(this).prop('checked') ? oldValue + 1 : Math.max(0, oldValue - 1);
+    $(valueInput).html(newValue);
+    var checkbox = $(this);
+    $(checkbox).prop('disabled', true);
     $.ajax({
         method: 'POST',
         url: '/like-quest/',
-        data: {
-            name: name
-        }
+        data: {title}
     })
     .done(function (respond) {
-        $('#likes-count').html(respond.count);
+        $(checkbox).prop('disabled', false);
+        $(valueInput).html(respond.count);
     })
     .fail(function (msg) {
+        $(valueInput).html(oldValue);
+        $(this).prop('checked', !$(this).prop('checked'));
         console.log(msg);
     });
+});
+
+$('#start-quest').click(function () {
+    var title = $('#quest-title').html();
+    $.ajax({
+        method: 'POST',
+        url: '/start-quest/',
+        data: {title}
+    })
+        .done(function (respond) {
+            window.location = '/quest/' + respond.url;
+        })
+        .fail(function (msg) {
+            console.log(msg);
+        });
 });
