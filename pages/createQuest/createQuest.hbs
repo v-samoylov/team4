@@ -2,9 +2,6 @@
 
     {{#content "head-scripts" mode="append"}}
         <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-        <script type="text/javascript" src="bootstrap-combobox.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="bootstrap-combobox.css">
     {{/content}}
 
     {{#content "title"}}
@@ -136,6 +133,8 @@
     {{#content "scripts"}}
         {{#if commonData.isDev}}
             <script src="/createQuest.js"></script>
+            <script type="text/javascript" src="bootstrap-combobox.js"></script>
+            <link rel="stylesheet" type="text/css" href="bootstrap-combobox.css">
         {{else}}
             <script src="//dream-team-4.surge.sh/createQuest.js"></script>
         {{/if}}

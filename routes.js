@@ -15,8 +15,10 @@ module.exports = function (app) {
     app.get('/auth', pages.auth);
     app.get('/reg', pages.reg);
     app.post('/get-more-quests', pages.index);
+    app.post('/start-quest', authRequired, users.startQuest);
     app.get('/quest/:name', quests.quest);
-    app.post('/like-quest', authRequired, quests.likeQuest);
+    app.post('/quest/checkin', quests.checkin);
+    app.post('/like-quest', quests.likeQuest);
     app.post('/place-comment', authRequired, quests.addCommentToPlace);
     app.post('/quest-comment', authRequired, quests.addCommentToQuest);
     app.get('/create-quest', authRequired, pages.createQuest);
