@@ -19,12 +19,13 @@
     {{#content "main"}}
         <div class="container">
             <div class="row">
-                <div class="box fix-box">
+                <div class="box">
                     <h2 class="text-center">Создание квеста</h2>
                     <div class="col-lg-12">
-                        <form action="" method="post" class="js-create-quest-form">
+                        <form role="form" action="" method="post" class="js-create-quest-form">
                             <div class="form-group has-feedback has-error">
                                 <div class="js-input-group">
+                                    <label class="sr-only" for="title-quest">Название квеста</label>
                                     <input type="text" name="title-quest" class="form-control" placeholder="Название квеста" required/>
                                     <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </div>
@@ -49,7 +50,7 @@
                                 </div>
                                 <div class="form-group has-feedback has-error">
                                     <div class="js-input-group">
-                                        <input type="text" class="form-control js-address-place" placeholder="Адрес" required disabled/>
+                                        <input type="text" name="address-place" class="form-control js-address-place" placeholder="Адрес" required disabled/>
                                         <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                     </div>
                                 </div>
@@ -117,12 +118,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center">
+                            <div class="text-center" style="height: 130px;">
                                 <button type="button" class="btn btn-info btn-circle btn-lg add-button js-add-place">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
+                                <br>
+                                <button type="submit" class="btn btn-success col-md-6 col-md-offset-3 create-button" disabled>
+                                    Создать
+                                </button>
                             </div>
-                            <button type="submit" class="btn btn-success col-md-6 col-md-offset-3 create-button" disabled>Создать</button>
                         </form>
                     </div>
                 </div>
