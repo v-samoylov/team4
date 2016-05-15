@@ -186,3 +186,26 @@ exports.create = (req, res) => {
             res.status(500).send(err.message);
         });
 };
+
+exports.checkin = (req, res) => {
+    var quests = req.db.collection('quests');
+    quests.findOne({title: req.body.quest}).then(function (quest) {
+        for (var i = 0; i < quest.places.length; i++) {
+            if (quest.places[i].title === req.body.place) {
+                var place = quest.places[i];
+                break;
+            }
+        }
+        if (place) {
+            var userLatitude = parseFloat(req.body.latitude);
+            var userLongitude = parseFloat(req.body.longitude);
+            var distance = geolib.getDistance(
+                {latitude: userLatitude, longitude: userLongitude},
+                {latitude: place.geo.latitude, longitude: place.geo.longitude}
+            );
+            if (distance <= 30) {
+                questsModel.addCheckinToPlace(quest.title, place.title, req.commonData.user);
+            }
+        }
+    });
+};
