@@ -145,6 +145,7 @@ exports.search = (req, res) => {
             res.renderLayout('./pages/index/index.hbs',
                 {quests: filteredQuests, commonData: req.commonData});
         });
+<<<<<<< HEAD
 };
 
 exports.getTitles = (req, res) => {
@@ -195,4 +196,6 @@ exports.search = (req, res) => {
             res.renderLayout('./pages/index/index.hbs',
                 {quests: filteredQuests, commonData: req.commonData});
         });
+=======
+>>>>>>> 7498c5d795f56393b9ff04a7db8d95b7f8eaa0a2
 };

@@ -1,5 +1,9 @@
 require('./header.css');
+<<<<<<< HEAD
 require('./horsey.css');
+=======
+require('../../public/horsey.css');
+>>>>>>> 7498c5d795f56393b9ff04a7db8d95b7f8eaa0a2
 
 var $searchField = $('.search-field');
 
