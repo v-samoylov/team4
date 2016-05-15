@@ -46,9 +46,11 @@ exports.index = (req, res) => {
 exports.userPage = (req, res) => {
     debug('userPage');
     let users = userModel(req.db);
+    let quests = questsModel(req.db);
     var response = {
         username: req.params.name
     };
+    let user;
     users.isUserExist(req.params.name)
         .then(users => {
             if (users) {
@@ -58,10 +60,30 @@ exports.userPage = (req, res) => {
             throw new Error('это как return, только следующий then не будет работать');
         })
         .then(users.getPublicUserData)
-        .then(user => {
-            let finished = user.finishedQuests.map(filterFields(['url', 'title', 'photo']));
-            let inProcess = user.inProgressQuests.map(filterFields(['url', 'title', 'photo']));
-            let created = user.createdQuests.map(filterFields(['url', 'title', 'photo']));
+        .then(userInfo => {
+            user = userInfo;
+            let finished = user.finishedQuests;
+            let inProcess = user.inProgressQuests;
+            let created = user.createdQuests;
+            return finished.concat(inProcess).concat(created);
+        })
+        .then(quests.getQuestsById)
+        .then(questsInfo => {
+            let finished = user.finishedQuests.forEach(quest => {
+                return questsInfo.find(q => {
+                    return q._id === quest;
+                });
+            }).map(filterFields(['title', 'photo', 'url']));
+            let inProcess = user.inProgressQuests.forEach(quest => {
+                return questsInfo.find(q => {
+                    return q._id === quest;
+                });
+            }).map(filterFields(['title', 'photo', 'url']));
+            let created = user.createdQuests.forEach(quest => {
+                return questsInfo.find(q => {
+                    return q._id === quest;
+                });
+            }).map(filterFields(['title', 'photo', 'url']));
             Object.assign(response, {finished, inProcess, created});
             res.renderLayout('./pages/userPage/userPage.hbs', response);
         })
