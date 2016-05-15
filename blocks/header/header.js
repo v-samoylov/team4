@@ -9,24 +9,25 @@ var $searchField = $('.search-field');
 horsey($searchField[0], {
     suggestions: function (value, done) {
         var items = ['test quest'];
+
         $.ajax({
             url: '/get-quest-titles',
             type: 'POST',
             data: {get: 100}
         })
-            .done(function (res) {
-                items = res.quests;
-                done(items);
-            });
+        .done(function (res) {
+            items = res.quests;
+            done(items);
+        });
     },
-    appendTo: $('.search-line')[0],
+
+    appendTo: $('.search')[0],
     limit: 2
 });
 
 $searchField
     .bind('horsey-filter', function () {
-        $('.sey-list')
-            .addClass('dropdown-menu search-dropdown');
+        $('.sey-list').addClass('dropdown-menu search-dropdown');
     });
 
 $('.search').submit(function (e) {

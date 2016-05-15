@@ -4,7 +4,7 @@ require('./index.css');
 
 var skip = 3;
 
-/* global $: true*/
+/* global $: true */
 $('#getMore').click(function (e) {
     e.preventDefault();
     $.ajax({

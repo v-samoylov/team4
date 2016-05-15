@@ -157,6 +157,7 @@ footer p
 
 .search-dropdown
 {
+    width: calc(100% - 15px);
     margin-left: 15px !important;
 }
 
