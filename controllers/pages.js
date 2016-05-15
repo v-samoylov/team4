@@ -132,8 +132,7 @@ exports.search = (req, res) => {
         .then(quests => {
             console.log('count found quest ', quests.length);
             if (quests.length === 0) {
-                res.status(404).renderLayout('./pages/notFound/notFound.hbs',
-                    {commonData: req.commonData});
+                res.status(404).renderLayout('./pages/notFound/notFound.hbs');
                 throw new Error('');
             }
             return quests;
@@ -143,6 +142,6 @@ exports.search = (req, res) => {
                 .map(filterFields(['url', 'photo', 'title']))
                 .slice(0, 10);
             res.renderLayout('./pages/index/index.hbs',
-                {quests: filteredQuests, commonData: req.commonData});
+                {quests: filteredQuests});
         });
 };
