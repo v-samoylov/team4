@@ -22,6 +22,8 @@ module.exports = function (app) {
     app.post('/quest-comment', authRequired, quests.addCommentToQuest);
     app.get('/create-quest', authRequired, pages.createQuest);
     app.post('/create-quest', authRequired, quests.upload, quests.create);
+    app.post('/get-quest-titles', pages.getTitles);
+    app.get('/search', pages.search);
     app.all('*', pages.error404);
 
     app.use((err, req, res) => {

@@ -1,9 +1,7 @@
 'use strict';
 
 require('./index.css');
-require('../../blocks/header/header.js');
 var skip = 3;
-
 /* global $: true*/
 $('#getMore').click(function (e) {
     e.preventDefault();

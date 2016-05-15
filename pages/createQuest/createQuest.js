@@ -184,13 +184,17 @@ $(function () {
         e.preventDefault();
         var formData = new FormData($(this)[0]);
 
-        $.ajax({
-            url: '/create-quest',
-            type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
-        });
+        $
+            .ajax({
+                url: '/create-quest',
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+            .done(function (res) {
+                window.location = res.url;
+            });
     });
 });

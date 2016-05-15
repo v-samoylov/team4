@@ -127,8 +127,8 @@ const likeQuest = (title, user) => {
             }
             return quests.findOneAndUpdate({title}, {$push: {likes: user}}, options);
         })
-        .then(quest => {
-            return quest.value.likes.length;
+        .then(res => {
+            return res.value.likes.length;
         });
 };
 
