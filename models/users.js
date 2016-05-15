@@ -56,12 +56,12 @@ const addUser = newUser => {
         });
 };
 
-function addQuestInProgress(name, quest) {
-    return usersCollection.update({name}, {$push: {inProgressQuests: quest}});
+function addQuestInProgress(name, questId) {
+    return usersCollection.update({name}, {$push: {inProgressQuests: questId}});
 }
 
-function removeQuestInProgress(name, title) {
-    return usersCollection.update({name}, {$pull: {inProgressQuests: {title}}});
+function removeQuestInProgress(name, questId) {
+    return usersCollection.update({name}, {$pull: {inProgressQuests: questId}});
 }
 
 function getQuestsInProgress(name) {
@@ -90,10 +90,10 @@ function getPublicUserData(name) {
     return usersCollection.find({name}, {_id: 0, password: 0}).next();
 }
 
-function questFinish(name, quest) {
+function questFinish(name, questId) {
     return usersCollection.update({name},
-        {$pull: {inProgressQuests: {title: quest.title}}},
-        {$push: {finishedQuests: quest}});
+        {$pull: {inProgressQuests: questId}},
+        {$push: {finishedQuests: questId}});
 }
 
 function isNameAvalible(newName) {
