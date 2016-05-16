@@ -17,8 +17,7 @@
             <div class="form-box">
                 <div class="form-top">
                     <div class="form-top-left">
-                        <h3>Войдите на наш сайт</h3>
-                        <p>Введите e-mail и пароль:</p>
+                        <h3>Вход</h3>
                     </div>
                     <div class="form-top-right">
                         <i class="fa fa-key"></i>
@@ -26,15 +25,22 @@
                 </div>
                 <div class="form-bottom">
                     <form role="form" action="" method="post" class="login-form" id="auth-form">
-                        <div class="form-group">
-                            <label class="sr-only" for="form-username">E-mail</label>
-                            <input type="text" name="form-username" placeholder="E-mail..." class="form-username form-control" id="email">
+                        <div class="form-group has-feedback has-error">
+                            <div class="js-input-group" data-validate="email">
+                                <label class="sr-only" for="form-username">E-mail</label>
+                                <input name="form-username" class="form-control" placeholder="Email" type="text" id="email" required>
+                                <span class="form-control-feedback glyphicon glyphicon-remove" style="top: 10px;" aria-hidden="true"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="form-password">Пароль</label>
-                            <input type="password" name="form-password" placeholder="Пароль..." class="form-password form-control" id="password">
+                        <div class="form-group has-feedback has-error">
+                            <div class="js-input-group">
+                                <label class="sr-only" for="form-password">Пароль</label>
+                                <input name="form-password" class="form-control" placeholder="Пароль" type="password" id="password" required>
+                                <span class="form-control-feedback glyphicon glyphicon-remove" style="top: 10px;" aria-hidden="true"></span>
+                            </div>
                         </div>
-                        <button type="submit" class="btn">Вход</button>
+                        <p class="bg-danger danger-message"></p>
+                        <button type="submit" class="btn" disabled>Вход</button>
                         <a href="/reg" class="link-for-checkIn">Регистрация</a>
                     </form>
                 </div>

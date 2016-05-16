@@ -1,6 +1,9 @@
 'use strict';
 
 const crypto = require('crypto');
+const translit = require('transliteration');
+
+const toUrl = title => translit.slugify(title, {lowercase: true, separator: '-'});
 
 let usersCollection;
 let salt = 'dreamTeam';
@@ -51,16 +54,18 @@ const addUser = newUser => {
             newUser.password = getHash(newUser.password);
             newUser.finishedQuests = [];
             newUser.inProgressQuests = [];
+            newUser.createdQuests = [];
+            newUser.url = toUrl(newUser.name);
             return usersCollection.insertOne(newUser);
         });
 };
 
-function addQuestInProgress(name, title) {
-    return usersCollection.update({name}, {$push: {inProgressQuests: title}});
+function addQuestInProgress(name, questId) {
+    return usersCollection.update({name}, {$push: {inProgressQuests: questId}});
 }
 
-function removeQuestInProgress(name, title) {
-    return usersCollection.update({name}, {$pull: {inProgressQuests: title}});
+function removeQuestInProgress(name, questId) {
+    return usersCollection.update({name}, {$pull: {inProgressQuests: questId}});
 }
 
 function getQuestsInProgress(name) {
@@ -85,10 +90,14 @@ function getFinishedQuests(name) {
         });
 }
 
-function questFinish(name, title) {
+function getPublicUserData(name) {
+    return usersCollection.find({name}, {_id: 0, password: 0}).next();
+}
+
+function questFinish(name, questId) {
     return usersCollection.update({name},
-        {$pull: {inProgressQuests: title}},
-        {$push: {finishedQuests: title}});
+        {$pull: {inProgressQuests: questId}},
+        {$push: {finishedQuests: questId}});
 }
 
 function isNameAvalible(newName) {
@@ -120,7 +129,8 @@ const operations = {
     questFinish,
     getQuestsInProgress,
     getFinishedQuests,
-    isUserExist
+    isUserExist,
+    getPublicUserData
 };
 
 module.exports = db => {

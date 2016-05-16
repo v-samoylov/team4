@@ -1,3 +1,9 @@
+body .main-content .panel
+{
+    width: 80%;
+    margin: 10px auto;
+}
+
 .panel.main > .panel-body
 {
     display: none;
@@ -6,12 +12,6 @@
 .panel.main > .panel-heading:hover
 {
     cursor: pointer;
-}
-
-body .main-content .panel
-{
-    width: 80%;
-    margin: 10px auto;
 }
 
 #username
@@ -24,10 +24,69 @@ body .main-content .panel
     text-overflow: ellipsis;
 }
 
-@media screen and (max-device-width: 568px)
+.quest .btn-default
+{
+    background-color: #a8cc77;
+    background-image: none;
+    text-shadow: none;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+}
+
+.col-xs-6.img-contaner
+{
+    padding: 5px;
+}
+
+.quest-img
+{
+    height: 140px;
+    width: 140px;
+    overflow: hidden;
+    border: 1px solid grey;
+}
+
+img
+{
+    width: 90%;
+    height: 90%;
+}
+
+h3
+{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.box
+{
+    padding-top: 3px !important;
+}
+
+p
+{
+    font-size: 30px;
+}
+
+@media screen and (min-width: 500px)
 {
     body .main-content .panel
     {
         width: 100%;
+    }
+
+    .quest-img
+    {
+        height: 250px;
+        width: 250px;
+        overflow: hidden;
+        border: 1px solid grey;
+    }
+
+    img
+    {
+        width: 100%;
+        height: 100%;
     }
 }

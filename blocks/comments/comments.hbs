@@ -6,15 +6,13 @@
         <section class="comment-list">
             {{#each comments}}
                 <div class="row">
-                    <div class="col-sm-5">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                <strong>{{author}}</strong>
-                            </div>
-                            <div class="panel-body">
-                                {{text}}
-                            </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <a class="user-link" href="/user/{{url}}"> {{author}}</a>
+                        </div>
+                        <div class="panel-body">
+                            {{text}}
                         </div>
                     </div>
                 </div>
@@ -28,10 +26,10 @@
              {{/if}}
                 <label for="comment">Комментарий:</label>
                 <textarea class="new-comment form-control" rows="5" id="comment" required></textarea>
-                <button type="submit" class="btn btn-info" disabled>Добавить комментарий</button>
+                <button type="submit" class="btn btn-info send-com" disabled>Добавить комментарий</button>
             </form>
         {{else}}
-            <div class="disable-comment">Оставлять комментарии могут только зарегестрированные пользователи</div>
+            <div class="disable-comment">Оставлять комментарии могут только зарегистрированные пользователи</div>
         {{/if}}
     </div>
 </div>
