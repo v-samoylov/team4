@@ -220,7 +220,7 @@ exports.create = (req, res) => {
         });
 };
 
-exports.checkin = (req) => {
+exports.checkin = req => {
     var quests = req.db.collection('quests');
     quests.findOne({title: req.body.quest}).then(function (quest) {
         var place = null;
