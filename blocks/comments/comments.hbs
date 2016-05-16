@@ -1,35 +1,36 @@
-<div class="panel main panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Комментарии</h3>
-    </div>
-    <div class="panel-body">
-        <section class="comment-list">
-            {{#each comments}}
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                            <a class="user-link" href="/user/{{url}}"> {{author}}</a>
-                        </div>
-                        <div class="panel-body">
-                            {{text}}
+<div data-toggle="collapse" class="comment-icon" data-target="#{{quest}}-{{title}}-comments">
+    <span class="glyphicon glyphicon-comment"></span>
+</div>
+<div class="collapse" id="{{quest}}-{{title}}-comments">
+    <div class="panel main panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Комментарии</h3>
+        </div>
+        <div class="panel-body">
+            <section class="comment-list">
+                {{#each comments}}
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                <a class="user-link" href="/user/{{url}}"> {{author}}</a>
+                            </div>
+                            <div class="panel-body">
+                                {{text}}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {{/each}}
-            </section>
-        {{#if user}}
-             {{#if place}}
+                {{/each}}
+                </section>
+            {{#if user}}
                 <form action='/place-comment' class="commentForm" data-name="{{quest}}#{{title}}" method="post">
-             {{else}}
-                <form action='/quest-comment' class="commentForm" data-name="{{title}}" method="post">
-             {{/if}}
-                <label for="comment">Комментарий:</label>
-                <textarea class="new-comment form-control" rows="5" id="comment" required></textarea>
-                <button type="submit" class="btn btn-info send-com" disabled>Добавить комментарий</button>
-            </form>
-        {{else}}
-            <div class="disable-comment">Оставлять комментарии могут только зарегистрированные пользователи</div>
-        {{/if}}
+                    <label for="comment">Комментарий:</label>
+                    <textarea class="new-comment form-control" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-info send-com" disabled>Добавить комментарий</button>
+                </form>
+            {{else}}
+                <div class="disable-comment">Оставлять комментарии могут только зарегистрированные пользователи</div>
+            {{/if}}
+        </div>
     </div>
 </div>
