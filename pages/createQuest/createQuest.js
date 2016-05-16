@@ -122,7 +122,7 @@ var addQuestForm = {
         place.map.events.add(
             'dblclick', function (e) {
                 e.preventDefault();
-            }.bind(this)
+            }
         );
 
         place.find('.js-location-search-button').click(
@@ -154,7 +154,6 @@ var addQuestForm = {
     },
 
     _setPlacemark: function (place, location, isCentered) {
-
         var addressField = place.find('.form-control.js-address-place');
         var coordinatesField = place.find('.form-control.js-coordinates-place');
 
@@ -177,8 +176,8 @@ var addQuestForm = {
                 }
                 placemark.geometry.setCoordinates(coords);
             } else {
-                placemark = new ymaps.Placemark(coords);
-                placemark.events.add('dblclick', function (evt) {
+                placemark = new ymaps.Placemark(coords); // eslint-disable-line
+                placemark.events.add('dblclick', function () {
                     placemark.options.set('visible', false);
                     addressField.val('').change();
                     coordinatesField.val('');
