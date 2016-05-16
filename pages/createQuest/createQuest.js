@@ -122,6 +122,11 @@ var addQuestForm = {
                 this._setPlacemark(place, coords);
             }.bind(this)
         );
+        place.map.events.add(
+            'dblclick', function (e) {
+                e.preventDefault();
+            }.bind(this)
+        );
 
         place.find('.js-location-search-button').click(
             function () {
@@ -152,10 +157,6 @@ var addQuestForm = {
     },
 
     _setPlacemark: function (place, location, isCentered) {
-        if (place.map.placemark) {
-            place.map.geoObjects.remove(place.map.placemark);
-            place.map.placemark = null;
-        }
 
         var addressField = place.find('.form-control.js-address-place');
         var coordinatesField = place.find('.form-control.js-coordinates-place');
@@ -172,21 +173,26 @@ var addQuestForm = {
 
             var address = nearest.properties.get('name');
 
-            place.map.placemark = new ymaps.Placemark(coords); // eslint-disable-line
+            var placemark = place.map.geoObjects.get(0);
+            if (placemark) {
+                if (!placemark.options.get('visible')) {
+                    placemark.options.set('visible', true);
+                }
+                placemark.geometry.setCoordinates(coords);
+            } else {
+                placemark = new ymaps.Placemark(coords);
+                placemark.events.add('dblclick', function (evt) {
+                    placemark.options.set('visible', false);
+                    addressField.val('').change();
+                    coordinatesField.val('');
+                });
+                place.map.geoObjects.add(placemark);
+            }
 
             if (isCentered) {
                 place.map.setCenter(coords, 17);
             }
 
-            place.map.placemark.events.add('dblclick', function (evt) {
-                evt.preventDefault();
-                place.map.geoObjects.remove(place.map.placemark);
-                place.map.placemark = null;
-                addressField.val('').change();
-                coordinatesField.val('');
-            });
-
-            place.map.geoObjects.add(place.map.placemark);
             addressField.val(address).change();
             coordinatesField.val(coords);
         };
