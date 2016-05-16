@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/urfu-2015/team4.svg?branch=master)](https://travis-ci.org/urfu-2015/team4)
 
 # PhotoQuest 44
-> 0.0.1a
+> 0.1.0a
 
 ![circle](https://cloud.githubusercontent.com/assets/4165695/13728695/78d6ac82-e942-11e5-8e1d-d9c456fba919.gif)
 

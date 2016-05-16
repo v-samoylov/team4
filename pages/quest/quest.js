@@ -1,9 +1,8 @@
 'use strict';
-require('../../blocks/place/place.css');
-require('../../blocks/place/place.js');
-require('../../blocks/comments/comments.css');
-require('../../blocks/comments/comments.js');
+
 require('./quest.css');
+require('../../blocks/place/place.js');
+require('../../blocks/comments/comments.js');
 
 $('.panel.main .panel-heading').each(function () {
     $(this).click(function () {
@@ -17,18 +16,54 @@ $('.panel.main .panel-heading').each(function () {
 });
 
 $('#quest-like').change(function () {
-    var name = $('#quest-title').html();
+    var title = $('#quest-title').html();
+    var valueInput = $('#likes-count');
+    var oldValue = Number($(valueInput).html());
+    var newValue = $(this).prop('checked') ? oldValue + 1 : Math.max(0, oldValue - 1);
+    $(valueInput).html(newValue);
+    var checkbox = $(this);
+    $(checkbox).prop('disabled', true);
     $.ajax({
         method: 'POST',
         url: '/like-quest/',
-        data: {
-            name: name
-        }
+        data: {title}
     })
     .done(function (respond) {
-        $('#likes-count').html(respond.count);
+        $(checkbox).prop('disabled', false);
+        $(valueInput).html(respond.count);
     })
     .fail(function (msg) {
+        $(valueInput).html(oldValue);
+        $(this).prop('checked', !$(this).prop('checked'));
         console.log(msg);
     });
+});
+
+/*  eslint quote-props: [1, "as-needed"] */
+$('#start-quest').click(function () {
+    var title = $('#quest-title').html();
+    var button = this;
+    $(button).css('display', 'none');
+    $.ajax({
+        method: 'POST',
+        url: '/start-quest/',
+        data: {title}
+    })
+        .done(function () {
+            $(button).remove();
+            $('.place .caption').each(function () {
+                var name = $(this).data('name');
+                var checkIn = $('<button></button>', {
+                    class: 'btn btn-success check-in',
+                    text: 'Check-in',
+                    'data-name': name
+                });
+                $(this).append(checkIn);
+            });
+           // window.location = '/quest/' + respond.url;
+        })
+        .fail(function (msg) {
+            $(button).css('display', 'inline-block');
+            console.log(msg);
+        });
 });

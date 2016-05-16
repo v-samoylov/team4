@@ -21,7 +21,11 @@ $('.check-in').each(function () {
                         longitude: position.coords.longitude
                     }
                 });
-            }
+            },
+            function (error) {
+                console.log(error);
+            },
+            options
         );
     });
 });
