@@ -1,25 +1,27 @@
 $('.check-in').each(function () {
     $(this).click(function () {
-        var names = $(this).data('name').split('#');
-        var questName = names[0];
-        var placeName = names[1];
+        var name = $(this).data('name');
         var options = {
             enableHighAccuracy: true,
             maximumAge: 50000,
             timeout: 10000
         };
         navigator.geolocation.getCurrentPosition(
-
             function (position) {
                 $.ajax({
                     url: '/quest/checkin/',
                     type: 'POST',
                     data: {
-                        quest: questName,
-                        place: placeName,
+                        name: name,
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude
                     }
+                })
+                .done(function () {
+                    console.log('Check-in');
+                })
+                .fail(function (err) {
+                    console.log(err);
                 });
             },
             function (error) {

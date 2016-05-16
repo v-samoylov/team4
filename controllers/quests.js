@@ -10,6 +10,7 @@ const tr = require('transliteration');
 const flickr = require('../lib/flickr');
 const questsModel = require('../models/quests.js');
 const questInfo = require('../lib/getQuestInfo');
+const userModel = require('../models/users.js');
 const geolib = require('geolib');
 
 exports.addQuest = (req, res) => {
@@ -40,7 +41,6 @@ exports.quest = (req, res) => {
             .then(quest => {
                 console.log(quest);
                 let response = Object.assign(quest, commonData);
-
                 res.status(200).renderLayout('./pages/quest/quest.hbs', response);
             })
             .catch(err => res.error(err));
@@ -51,7 +51,6 @@ exports.quest = (req, res) => {
             .then(quest => {
                 console.log(quest);
                 let response = Object.assign(quest, commonData);
-
                 res.status(200).renderLayout('./pages/quest/quest.hbs', response);
             })
             .catch(err => res.error(err));
@@ -86,7 +85,7 @@ exports.addCommentToPlace = (req, res) => {
     let author = req.commonData.user;
     let text = req.body.text;
     let model = questsModel(req.db);
-
+    let userMod = userModel(req.db);
     if (!author) {
         res.status(401);
 
@@ -94,10 +93,14 @@ exports.addCommentToPlace = (req, res) => {
     }
 
     let comment = {author, text};
-
-    model
-        .addCommentToPlace(questName, placeName, comment)
-        .then(() => res.status(200).send(comment));
+    userMod
+        .getPublicUserData(author)
+        .then(user => {
+            comment.url = user.url;
+            return model.addCommentToPlace(questName, placeName, comment);
+        })
+        .then(() => res.status(200).send(comment))
+        .catch(err => console.error(err));
 };
 
 exports.addCommentToQuest = (req, res) => {
@@ -106,7 +109,7 @@ exports.addCommentToQuest = (req, res) => {
     let author = req.commonData.user;
     let text = req.body.text;
     let model = questsModel(req.db);
-
+    let userMod = userModel(req.db);
     if (!author) {
         res.status(401);
 
@@ -114,10 +117,14 @@ exports.addCommentToQuest = (req, res) => {
     }
 
     let comment = {author, text};
-
-    model
-        .addCommentToQuest(questName, comment)
-        .then(() => res.status(200).send(comment));
+    userMod
+        .getPublicUserData(author)
+        .then(user => {
+            comment.url = user.url;
+            return model.addCommentToQuest(questName, comment);
+        })
+        .then(() => res.status(200).send(comment))
+        .catch(err => console.error(err));
 };
 
 const storage = multer.diskStorage({
@@ -225,26 +232,34 @@ exports.create = (req, res) => {
         });
 };
 
-exports.checkin = req => {
-    var quests = req.db.collection('quests');
-    quests.findOne({title: req.body.quest}).then(function (quest) {
-        var place = null;
-        for (var i = 0; i < quest.places.length; i++) {
-            if (quest.places[i].title === req.body.place) {
-                place = quest.places[i];
-                break;
-            }
-        }
-        if (place) {
-            var userLatitude = parseFloat(req.body.latitude);
-            var userLongitude = parseFloat(req.body.longitude);
-            var distance = geolib.getDistance(
+exports.checkin = (req, res) => {
+    debug(`checkIn`);
+    const model = questsModel(req.db);
+
+    let name = req.body.name.split('#');
+    let questName = name[0];
+    let placeName = name[1];
+    let userLatitude = parseFloat(req.body.latitude);
+    let userLongitude = parseFloat(req.body.longitude);
+    model.getQuest(questName)
+        .then(quest => quest.places.find(place => place.title === placeName))
+        .then(place => {
+            let distance = geolib.getDistance(
                 {latitude: userLatitude, longitude: userLongitude},
                 {latitude: place.geo.latitude, longitude: place.geo.longitude}
             );
-            if (distance <= 30) {
-                questsModel.addCheckinToPlace(quest.title, place.title, req.commonData.user);
+
+            if (distance > 30) {
+                res.status(400).send('Вы слишком далеко от места');
+                return;
             }
-        }
-    });
+
+            model
+                .addCheckinToPlace(questName, placeName, req.commonData.user)
+                .then(() => res.status(200));
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).send(err);
+        });
 };

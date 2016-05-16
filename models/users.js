@@ -1,6 +1,9 @@
 'use strict';
 
 const crypto = require('crypto');
+const translit = require('transliteration');
+
+const toUrl = title => translit.slugify(title, {lowercase: true, separator: '-'});
 
 let usersCollection;
 let salt = 'dreamTeam';
@@ -10,12 +13,10 @@ const errors = {
         code: 1,
         message: 'Имя уже существует'
     },
-
     mongoError: {
         code: 2,
         message: 'Ошибка Mongo'
     },
-
     wrongData: {
         code: 1,
         message: 'Неверные логин/пароль'
@@ -31,7 +32,6 @@ function getHash(password) {
 
 const login = user => {
     user.password = getHash(user.password);
-
     return usersCollection
         .find(user)
         .toArray()
@@ -40,7 +40,6 @@ const login = user => {
                 if (result.length) {
                     return result[0];
                 }
-
                 throw errors.wrongData;
             },
             () => {
@@ -56,7 +55,7 @@ const addUser = newUser => {
             newUser.finishedQuests = [];
             newUser.inProgressQuests = [];
             newUser.createdQuests = [];
-
+            newUser.url = toUrl(newUser.name);
             return usersCollection.insertOne(newUser);
         });
 };
@@ -76,7 +75,6 @@ function getQuestsInProgress(name) {
            if (user.length) {
                return user[0].inProgressQuests;
            }
-
            throw new Error('Пользователь не найден');
        });
 }
@@ -88,7 +86,6 @@ function getFinishedQuests(name) {
             if (user.length) {
                 return user[0].finishedQuests;
             }
-
             throw new Error('Пользователь не найден');
         });
 }
@@ -138,6 +135,5 @@ const operations = {
 
 module.exports = db => {
     usersCollection = db.collection('users');
-
     return operations;
 };

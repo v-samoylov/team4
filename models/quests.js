@@ -127,7 +127,7 @@ const removeQuest = title => quests.remove({title});
 
 const getQuest = title => quests.find({title}).next();
 
-const getQuestsById = ids => quests.find({_id: {$in: ids}});
+const getQuestsById = ids => quests.find({_id: {$in: ids}}).toArray();
 
 const getLimitQuests = (skip, limit) => {
     return quests.find({}, {_id: 0}).skip(skip).limit(limit).toArray();

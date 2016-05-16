@@ -4,7 +4,7 @@ require('./quest.css');
 require('../../blocks/place/place.js');
 require('../../blocks/comments/comments.js');
 
-$('.panel.main .panel-heading').each(function () {
+$('.panel.main > .panel-heading').each(function () {
     $(this).click(function () {
         var last = $(this).next();
 
