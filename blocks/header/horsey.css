@@ -32,12 +32,12 @@
 
 .sey-item:hover
 {
-    background-color: #444;
+    background-color: #a8cc77;
     color: #fff;
 }
 
 .sey-selected
 {
-    background-color: #333;
+    background-color: seagreen;
     color: #fff;
 }
