@@ -1,3 +1,9 @@
+body .main-content .panel
+{
+    width: 80%;
+    margin: 10px auto;
+}
+
 .panel.main > .panel-body
 {
     display: none;
@@ -6,11 +12,6 @@
 .panel.main > .panel-heading:hover
 {
     cursor: pointer;
-}
-
-body .main-content .panel
-{
-    width: 80%;
 }
 
 #username

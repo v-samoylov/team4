@@ -91,10 +91,13 @@ var addQuestForm = {
     _clearPreview: function (event) {
         var $button = $(event.target);
         var $parent = $button.closest(this._$fileInputDiv.selector);
-        $parent.find(this._$customImagePreview).empty();
+        var $icon = $parent.find(this._$imagePreviefFileNameIcon);
+
+        $parent.find(this._$customImagePreview.selector).empty();
         $parent.find(this._$imagePreviewFileName.selector).val('');
         $parent.find(this._$imagePreviewInputFile.selector).val('');
         $parent.find(this._$imagePreviewClear.selector).hide();
+        $icon.attr('style', 'right: 40px');
         validator.updateInputs();
     },
 
@@ -107,19 +110,23 @@ var addQuestForm = {
                 controls: []
             }
         );
+
         place.map.placemark = null;
+
         place.map.events.add(
             'click', function (e) {
                 var coords = e.get('coords');
                 this._setPlacemark(place, coords);
             }.bind(this)
         );
+
         place.find('.js-location-search-button').click(
             function () {
                 var addressInputField = place.find('.js-address-field');
                 this._setPlacemark(place, addressInputField.val(), true);
             }.bind(this)
         );
+
         place.find('.js-current-location-search-button').click(
             function () {
                 var options = {
@@ -146,22 +153,28 @@ var addQuestForm = {
             place.map.geoObjects.remove(place.map.placemark);
             place.map.placemark = null;
         }
+
         var addressField = place.find('.form-control.js-address-place');
         var coordinatesField = place.find('.form-control.js-coordinates-place');
 
         var cb = function (res) {
             var nearest = res.geoObjects.get(0);
             var coords;
+
             if (location instanceof Array) {
                 coords = location;
             } else {
                 coords = nearest.geometry.getCoordinates();
             }
+
             var address = nearest.properties.get('name');
+
             place.map.placemark = new ymaps.Placemark(coords); // eslint-disable-line
+
             if (isCentered) {
                 place.map.setCenter(coords, 17);
             }
+
             place.map.placemark.events.add('dblclick', function (evt) {
                 evt.preventDefault();
                 place.map.geoObjects.remove(place.map.placemark);
@@ -169,6 +182,7 @@ var addQuestForm = {
                 addressField.val('').change();
                 coordinatesField.val('');
             });
+
             place.map.geoObjects.add(place.map.placemark);
             addressField.val(address).change();
             coordinatesField.val(coords);
@@ -180,21 +194,34 @@ var addQuestForm = {
 $(function () {
     addQuestForm.init();
 
+    var boxForm = $('.box');
+    var boxLoadingGif = $('.box.loading-gif');
+    var errorMessage = $('.bg-danger.danger-message');
+
     $('.js-create-quest-form').submit(function (e) {
         e.preventDefault();
+
         var formData = new FormData($(this)[0]);
 
-        $
-            .ajax({
-                url: '/create-quest',
-                type: 'POST',
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false
-            })
-            .done(function (res) {
-                window.location = res.url;
-            });
+        boxForm.hide();
+        boxLoadingGif.show();
+        errorMessage.hide();
+
+        $.ajax({
+            url: '/create-quest',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        })
+        .done(function (res) {
+            window.location = res.url;
+        })
+        .fail(function (res) {
+            boxForm.show();
+            boxLoadingGif.hide();
+            errorMessage.empty().append(res.responseText).show();
+        });
     });
 });

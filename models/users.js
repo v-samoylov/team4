@@ -1,6 +1,9 @@
 'use strict';
 
 const crypto = require('crypto');
+const translit = require('transliteration');
+
+const toUrl = title => translit.slugify(title, {lowercase: true, separator: '-'});
 
 let usersCollection;
 let salt = 'dreamTeam';
@@ -52,6 +55,7 @@ const addUser = newUser => {
             newUser.finishedQuests = [];
             newUser.inProgressQuests = [];
             newUser.createdQuests = [];
+            newUser.url = toUrl(newUser.name);
             return usersCollection.insertOne(newUser);
         });
 };

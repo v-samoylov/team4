@@ -65,29 +65,31 @@ exports.userPage = (req, res) => {
             let finished = user.finishedQuests;
             let inProcess = user.inProgressQuests;
             let created = user.createdQuests;
-            return finished.concat(inProcess).concat(created);
+            return finished.concat(inProcess, created);
         })
         .then(quests.getQuestsById)
         .then(questsInfo => {
-            let finished = user.finishedQuests.forEach(quest => {
-                return questsInfo.find(q => {
-                    return q._id === quest;
-                });
-            }).map(filterFields(['title', 'photo', 'url']));
-            let inProcess = user.inProgressQuests.forEach(quest => {
-                return questsInfo.find(q => {
-                    return q._id === quest;
-                });
-            }).map(filterFields(['title', 'photo', 'url']));
-            let created = user.createdQuests.forEach(quest => {
-                return questsInfo.find(q => {
-                    return q._id === quest;
-                });
-            }).map(filterFields(['title', 'photo', 'url']));
+            let finished = questsInfo
+                .filter(quest => {
+                    return user.finishedQuests.find(q => q.equals(quest._id));
+                })
+                .map(filterFields(['title', 'photo', 'url']));
+            let inProcess = questsInfo
+                .filter(quest => {
+                    return user.inProgressQuests.find(q => q.equals(quest._id));
+                })
+                .map(filterFields(['title', 'photo', 'url']));
+            let created = questsInfo
+                .filter(quest => {
+                    return user.createdQuests.find(q => q.equals(quest._id));
+                })
+                .map(filterFields(['title', 'photo', 'url']));
+            response.self = req.commonData.user === response.username;
             Object.assign(response, {finished, inProcess, created});
             res.renderLayout('./pages/userPage/userPage.hbs', response);
         })
-        .catch(() => {
+        .catch(err => {
+            console.log(err);
             res.status(500).renderLayout('./pages/notFound/notFound.hbs');
         });
 };

@@ -2,16 +2,21 @@
 
 const debug = require('debug')('team4:controllers:quests');
 
+const fs = require('fs');
+const crypto = require('crypto');
 const multer = require('multer');
 const tr = require('transliteration');
-const fs = require('fs');
+
 const flickr = require('../lib/flickr');
 const questsModel = require('../models/quests.js');
 const questInfo = require('../lib/getQuestInfo');
+const userModel = require('../models/users.js');
+const geolib = require('geolib');
 
 exports.addQuest = (req, res) => {
     debug('add quest');
     let model = questsModel(req.db);
+
     model.createQuest(req.body.quest).then(
         () => {
             res.status(200).send('Place added successfully');
@@ -28,6 +33,7 @@ exports.quest = (req, res) => {
     let user = req.commonData.user;
     let commonData = {commonData: req.commonData};
     let model = questsModel(req.db);
+
     if (user) {
         model
             .getTitle(questUrl)
@@ -56,8 +62,10 @@ exports.likeQuest = (req, res) => {
     debug(`like quest ${questName}`);
     let model = questsModel(req.db);
     let user = req.commonData.user;
+
     if (!user) {
         res.status(401);
+
         return;
     }
     model
@@ -77,14 +85,22 @@ exports.addCommentToPlace = (req, res) => {
     let author = req.commonData.user;
     let text = req.body.text;
     let model = questsModel(req.db);
+    let userMod = userModel(req.db);
     if (!author) {
         res.status(401);
+
         return;
     }
+
     let comment = {author, text};
-    model
-        .addCommentToPlace(questName, placeName, comment)
-        .then(() => res.status(200).send(comment));
+    userMod
+        .getPublicUserData(author)
+        .then(user => {
+            comment.url = user.url;
+            return model.addCommentToPlace(questName, placeName, comment);
+        })
+        .then(() => res.status(200).send(comment))
+        .catch(err => console.error(err));
 };
 
 exports.addCommentToQuest = (req, res) => {
@@ -93,14 +109,22 @@ exports.addCommentToQuest = (req, res) => {
     let author = req.commonData.user;
     let text = req.body.text;
     let model = questsModel(req.db);
+    let userMod = userModel(req.db);
     if (!author) {
         res.status(401);
+
         return;
     }
+
     let comment = {author, text};
-    model
-        .addCommentToQuest(questName, comment)
-        .then(() => res.status(200).send(comment));
+    userMod
+        .getPublicUserData(author)
+        .then(user => {
+            comment.url = user.url;
+            return model.addCommentToQuest(questName, comment);
+        })
+        .then(() => res.status(200).send(comment))
+        .catch(err => console.error(err));
 };
 
 const storage = multer.diskStorage({
@@ -110,7 +134,11 @@ const storage = multer.diskStorage({
         } catch (e) {
             fs.mkdirSync('tmp/');
         }
-        const dir = 'tmp/' + tr.slugify(req.body['title-quest'], {lowercase: true, separator: '-'});
+
+        const dir = 'tmp/' + crypto.createHash('md5').update(
+                tr.slugify(req.body['title-quest'], {lowercase: true, separator: '-'})
+            ).digest('hex');
+
         fs.mkdir(dir, e => {
             if (!e || (e && e.code === 'EEXIST')) {
                 cb(null, dir);
@@ -121,21 +149,27 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         let fileNumber = req.fileNumber;
+
         if (fileNumber) {
             ++req.fileNumber;
         } else {
             fileNumber = 0;
             req.fileNumber = 1;
         }
+
         const titles = req.body['title-place'];
+
         let fileName;
+
         if (Array.isArray(titles)) {
             fileName = req.body['title-place'][fileNumber];
         } else {
             fileName = req.body['title-place'];
         }
+
         const fileType = file.originalname.replace(/.+(\.\w{3,4})$/, '$1');
-        cb(null, fileName + fileType);
+
+        cb(null, crypto.createHash('md5').update(fileName).digest('hex') + fileType);
     }
 });
 
@@ -145,26 +179,36 @@ exports.upload = upload.array('input-file-preview');
 
 exports.create = (req, res) => {
     debug('create');
-    const dir = 'tmp/' + tr.slugify(req.body['title-quest'], {lowercase: true, separator: '-'});
+    const dir = 'tmp/' + crypto.createHash('md5').update(
+            tr.slugify(req.body['title-quest'], {lowercase: true, separator: '-'})
+        ).digest('hex');
+
     flickr(dir)
         .then(urls => {
             const body = req.body;
+
             let geo = body['geo-place'];
+
             if (!Array.isArray(geo)) {
                 geo = [geo];
             }
+
             geo = geo.map(str => {
                 const positions = str.split(',');
+
                 return {
                     latitude: positions[0],
                     longitude: positions[1]
                 };
             });
+
             console.log(geo);
             let placeTitle = body['title-place'];
+
             if (!Array.isArray(placeTitle)) {
                 placeTitle = [placeTitle];
             }
+
             const quest = {
                 author: req.commonData.user,
                 title: body['title-quest'],
@@ -177,6 +221,7 @@ exports.create = (req, res) => {
                     };
                 })
             };
+
             console.log('create quest:', quest);
             return questsModel(req.db).createQuest(quest);
         })
@@ -184,5 +229,37 @@ exports.create = (req, res) => {
         .catch(err => {
             console.error(err.message);
             res.status(500).send(err.message);
+        });
+};
+
+exports.checkin = (req, res) => {
+    debug(`checkIn`);
+    const model = questsModel(req.db);
+
+    let name = req.body.name.split('#');
+    let questName = name[0];
+    let placeName = name[1];
+    let userLatitude = parseFloat(req.body.latitude);
+    let userLongitude = parseFloat(req.body.longitude);
+    model.getQuest(questName)
+        .then(quest => quest.places.find(place => place.title === placeName))
+        .then(place => {
+            let distance = geolib.getDistance(
+                {latitude: userLatitude, longitude: userLongitude},
+                {latitude: place.geo.latitude, longitude: place.geo.longitude}
+            );
+
+            if (distance > 30) {
+                res.status(400).send('Вы слишком далеко от места');
+                return;
+            }
+
+            model
+                .addCheckinToPlace(questName, placeName, req.commonData.user)
+                .then(() => res.status(200));
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).send(err);
         });
 };
