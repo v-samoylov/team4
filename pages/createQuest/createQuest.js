@@ -43,9 +43,6 @@ var addQuestForm = {
                 this._initMap(this._$places.find('.js-place'));
             }.bind(this)
         );
-        $(document).ready(function(){
-            $('.combobox').combobox();
-        });
     },
 
     _addPlace: function () {
