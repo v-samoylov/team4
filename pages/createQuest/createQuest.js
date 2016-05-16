@@ -194,13 +194,18 @@ var addQuestForm = {
 $(function () {
     addQuestForm.init();
 
+    var boxForm = $('.box');
+    var boxLoadingGif = $('.box.loading-gif');
+    var errorMessage = $('.bg-danger.danger-message');
+
     $('.js-create-quest-form').submit(function (e) {
         e.preventDefault();
 
         var formData = new FormData($(this)[0]);
 
-        $('.box').hide();
-        $('.box.loading-gif').show();
+        boxForm.hide();
+        boxLoadingGif.show();
+        errorMessage.hide();
 
         $.ajax({
             url: '/create-quest',
@@ -212,6 +217,11 @@ $(function () {
         })
         .done(function (res) {
             window.location = res.url;
+        })
+        .fail(function (res) {
+            boxForm.show();
+            boxLoadingGif.hide();
+            errorMessage.empty().append(res.responseText).show();
         });
     });
 });

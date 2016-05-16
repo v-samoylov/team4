@@ -8,13 +8,14 @@ const getCookie = require('../../lib/getCookie.js');
 $(function () {
     validator.init();
 
+    var errorInfo = $('.bg-danger.danger-message');
+
     $('#reg-form').submit(function (e) {
         e.preventDefault();
 
         var name = $('#name').val();
         var email = $('#email').val();
         var password = $('#password').val();
-        var errorInfo = $('.bg-danger');
 
         $.ajax({
             method: 'POST',
