@@ -80,6 +80,7 @@ const isQuestValid = quest => {
     const repeatPlaceTitle = placeTitles.find((title, i) => {
         return placeTitles.slice(i + 1).indexOf(title) > -1;
     });
+
     if (repeatPlaceTitle) {
         throw new Error('Название места "' + repeatPlaceTitle + '" не уникально');
     }
