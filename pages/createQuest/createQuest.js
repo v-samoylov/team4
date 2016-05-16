@@ -50,6 +50,7 @@ var addQuestForm = {
 
         $newPlace.find('.js-map-box').append(this._$templateMap.clone());
         $newPlace.hide().appendTo(this._$places).fadeIn('medium');
+        $(window).scrollTo(this._$addPlaceBtn.selector, 500);
 
         validator.init();
         validator.updateInputs();
@@ -222,6 +223,7 @@ $(function () {
             boxForm.show();
             boxLoadingGif.hide();
             errorMessage.empty().append(res.responseText).show();
+            $(window).scrollTo(errorMessage.selector, 500);
         });
     });
 });
