@@ -8,8 +8,9 @@ const getCookie = require('../../lib/getCookie.js');
 $(function () {
     validator.init();
 
-    $('#auth-form').on('submit', function (e) {
+    $('#auth-form').submit(function (e) {
         e.preventDefault();
+
         var password = $('#password').val();
         var email = $('#email').val();
         var errorInfo = $('.bg-danger');

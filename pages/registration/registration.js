@@ -10,6 +10,7 @@ $(function () {
 
     $('#reg-form').submit(function (e) {
         e.preventDefault();
+
         var name = $('#name').val();
         var email = $('#email').val();
         var password = $('#password').val();

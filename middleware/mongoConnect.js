@@ -1,6 +1,7 @@
 'use strict';
 
 const debug = require('debug')('team4:middleware:mongo');
+
 const config = require('config');
 const dbConfig = config.get("db");
 const MongoClient = require('mongodb').MongoClient;
@@ -10,6 +11,7 @@ const mongoUri = `mongodb://${dbConfig.login}:${dbConfig.password}` +
 
 module.exports = () => {
     let connection;
+
     return (req, res, next) => {
         debug('connecting to db');
         if (connection) {
