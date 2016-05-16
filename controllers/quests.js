@@ -9,6 +9,7 @@ const tr = require('transliteration');
 const flickr = require('../lib/flickr');
 const questsModel = require('../models/quests.js');
 const questInfo = require('../lib/getQuestInfo');
+const geolib = require('geolib');
 
 exports.addQuest = (req, res) => {
     debug('add quest');
@@ -217,4 +218,28 @@ exports.create = (req, res) => {
             console.error(err.message);
             res.status(500).send(err.message);
         });
+};
+
+exports.checkin = req => {
+    var quests = req.db.collection('quests');
+    quests.findOne({title: req.body.quest}).then(function (quest) {
+        var place = null;
+        for (var i = 0; i < quest.places.length; i++) {
+            if (quest.places[i].title === req.body.place) {
+                place = quest.places[i];
+                break;
+            }
+        }
+        if (place) {
+            var userLatitude = parseFloat(req.body.latitude);
+            var userLongitude = parseFloat(req.body.longitude);
+            var distance = geolib.getDistance(
+                {latitude: userLatitude, longitude: userLongitude},
+                {latitude: place.geo.latitude, longitude: place.geo.longitude}
+            );
+            if (distance <= 30) {
+                questsModel.addCheckinToPlace(quest.title, place.title, req.commonData.user);
+            }
+        }
+    });
 };
