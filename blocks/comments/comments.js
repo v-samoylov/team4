@@ -1,3 +1,7 @@
+'use strict';
+
+require('./comments.css');
+
 $('.commentForm').each(function () {
     $(this).submit(function (event) {
         event.preventDefault();
@@ -15,12 +19,13 @@ $('.commentForm').each(function () {
             }
         })
         .done(function (msg) {
-            commentSection.append('<div class="row"><div class="col-sm-5">' +
+            commentSection.append('<div class="row">' +
                 '<div class="panel panel-default"><div class="panel-heading">' +
                 '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>' +
                 '<strong>' + msg.author + '</strong></div><div class="panel-body">' +
-                msg.text + '</div></div></div></div>');
+                msg.text + '</div></div></div>');
             form.find('textarea').val('');
+            form.find('[type="submit"]').prop('disabled', true);
         })
         .fail(function (msg) {
             console.log(msg);

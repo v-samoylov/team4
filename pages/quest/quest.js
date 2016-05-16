@@ -1,9 +1,8 @@
 'use strict';
-require('../../blocks/place/place.css');
-require('../../blocks/place/place.js');
-require('../../blocks/comments/comments.css');
-require('../../blocks/comments/comments.js');
+
 require('./quest.css');
+require('../../blocks/place/place.js');
+require('../../blocks/comments/comments.js');
 
 $('.panel.main .panel-heading').each(function () {
     $(this).click(function () {
@@ -40,17 +39,31 @@ $('#quest-like').change(function () {
     });
 });
 
+/*  eslint quote-props: [1, "as-needed"] */
 $('#start-quest').click(function () {
     var title = $('#quest-title').html();
+    var button = this;
+    $(button).css('display', 'none');
     $.ajax({
         method: 'POST',
         url: '/start-quest/',
         data: {title}
     })
-        .done(function (respond) {
-            window.location = '/quest/' + respond.url;
+        .done(function () {
+            $(button).remove();
+            $('.place .caption').each(function () {
+                var name = $(this).data('name');
+                var checkIn = $('<button></button>', {
+                    class: 'btn btn-success check-in',
+                    text: 'Check-in',
+                    'data-name': name
+                });
+                $(this).append(checkIn);
+            });
+           // window.location = '/quest/' + respond.url;
         })
         .fail(function (msg) {
+            $(button).css('display', 'inline-block');
             console.log(msg);
         });
 });

@@ -1,33 +1,38 @@
 'use strict';
 
-require('./authorization.css');
+require('../../blocks/authAndReg/authAndReg.css');
 
-$('#auth-form').submit(function (e) {
-    e.preventDefault();
-    var password = $('#password').val();
-    var email = $('#email').val();
-    $.ajax({
-        method: 'POST',
-        url: '/user/login',
-        data: {
-            password: password, email: email
-        }
-    })
-    .done(function (msg) {
-        console.log(msg);
-        var prevLocation = document.createElement('a');
-        prevLocation.href = document.referrer;
-        if (
-            window.location.hostname !== prevLocation.hostname ||
-            !document.referrer ||
-            new Set(['/auth', '/reg']).has(prevLocation.pathname)
-        ) {
-            window.location = '/';
-        } else {
-            window.location = prevLocation.pathname;
-        }
-    })
-    .fail(function (msg) {
-        console.log(msg);
+const validator = require('../../lib/forms/forms.js');
+const getCookie = require('../../lib/getCookie.js');
+
+$(function () {
+    validator.init();
+
+    $('#auth-form').on('submit', function (e) {
+        e.preventDefault();
+        var password = $('#password').val();
+        var email = $('#email').val();
+        var errorInfo = $('.bg-danger');
+
+        $.ajax({
+            method: 'POST',
+            url: '/user/login',
+            data: {
+                password: password, email: email
+            }
+        })
+        .done(function (msg) {
+            console.log(msg);
+            var referrer = getCookie('referrer');
+
+            if (referrer) {
+                window.location = referrer;
+            } else {
+                window.location = '/';
+            }
+        })
+        .fail(function (msg) {
+            errorInfo.empty().append(msg.responseText).show();
+        });
     });
 });
