@@ -13,10 +13,12 @@ const errors = {
         code: 1,
         message: 'Имя уже существует'
     },
+
     mongoError: {
         code: 2,
         message: 'Ошибка Mongo'
     },
+
     wrongData: {
         code: 1,
         message: 'Неверные логин/пароль'
@@ -56,6 +58,7 @@ const addUser = newUser => {
             newUser.inProgressQuests = [];
             newUser.createdQuests = [];
             newUser.url = toUrl(newUser.name);
+
             return usersCollection.insertOne(newUser);
         });
 };
@@ -75,6 +78,7 @@ function getQuestsInProgress(name) {
            if (user.length) {
                return user[0].inProgressQuests;
            }
+
            throw new Error('Пользователь не найден');
        });
 }
@@ -86,6 +90,7 @@ function getFinishedQuests(name) {
             if (user.length) {
                 return user[0].finishedQuests;
             }
+
             throw new Error('Пользователь не найден');
         });
 }
@@ -121,6 +126,17 @@ function isUserExist(name) {
         .then(users => users.length);
 }
 
+function getNameById(url) {
+    return usersCollection.findOne({url})
+        .then(user => {
+            if (!user) {
+                throw new Error('Пользователь не найден');
+            }
+
+            return user.name;
+        });
+}
+
 const operations = {
     addUser,
     login,
@@ -130,10 +146,12 @@ const operations = {
     getQuestsInProgress,
     getFinishedQuests,
     isUserExist,
-    getPublicUserData
+    getPublicUserData,
+    getNameById
 };
 
 module.exports = db => {
     usersCollection = db.collection('users');
+
     return operations;
 };

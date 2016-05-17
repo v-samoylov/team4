@@ -55,9 +55,34 @@
                             {{>place/place this user =../commonData.user quest =../title inProgress=../inProgress}}
                         {{/each}}
                     </div>
-
-                    {{> comments/comments this user =../commonData.user}}
-
+                    <div class="reviews">
+                        <h3 class="description-title">Отзывы:</h3>
+                        <section class="reviews-list">
+                        {{#if comments.length}}
+                            {{#each comments}}
+                                <div class="review">
+                                    <div class="review-heading">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                        <a class="user-link" href="/user/{{url}}"> {{author}}</a>
+                                    </div>
+                                    <hr>
+                                    <div class="review-body">
+                                        {{text}}
+                                    </div>
+                                </div>
+                            {{/each}}
+                        {{else}}
+                            <div>Пока никто не оставил отзывов</div>
+                        {{/if}}
+                        </section>
+                        {{#if commonData.user}}
+                            <form action='' id="review" data-name="{{title}}" method="post">
+                                <label for="comment">Отзыв:</label>
+                                <textarea class="new-comment form-control" rows="5" required></textarea>
+                                <button type="submit" class="btn btn-info send-com" disabled>Добавить отзыв</button>
+                            </form>
+                        {{/if}}
+                    </div>
                 </div>
             </div>
         </div>

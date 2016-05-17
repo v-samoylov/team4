@@ -1,7 +1,3 @@
-.panel.main > .panel-body
-{
-    display: none;
-}
 
 .panel.main > .panel-heading
 {
@@ -10,14 +6,29 @@
     border: none;
 }
 
+.panel-body
+{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.comment-icon
+{
+    background-image: none;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #666;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
 .panel.main
 {
     border-color: #7ec2c0;
-}
-
-.panel.main > .panel-heading:hover
-{
-    cursor: pointer;
+    text-align: left;
 }
 
 .comment-list .panel
@@ -77,4 +88,3 @@
     padding: 10px;
     background-image: none;
 }
-

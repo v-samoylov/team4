@@ -1,77 +1,120 @@
 'use strict';
 
 require('./quest.css');
-require('../../blocks/place/place.js');
 require('../../blocks/comments/comments.js');
+var checkInFunc = require('../../blocks/place/place.js').checkIn;
 
-$('.panel.main > .panel-heading').each(function () {
-    $(this).click(function () {
-        var last = $(this).next();
+$(function () {
+    $('#quest-like').change(function () {
+        var title = $('#quest-title').html();
+        var valueInput = $('#likes-count');
+        var oldValue = Number($(valueInput).html());
+        var newValue = $(this).prop('checked') ? oldValue + 1 : Math.max(0, oldValue - 1);
 
-        if ($(last).css('display') === 'none') {
-            $(last).css('display', 'block');
-        } else {
-            $(last).css('display', 'none');
-        }
+        $(valueInput).html(newValue);
+
+        var checkbox = $(this);
+
+        $(checkbox).prop('disabled', true);
+
+        $.ajax({
+            method: 'POST',
+            url: '/like-quest/',
+            data: {title}
+        })
+        .done(function (respond) {
+            $(checkbox).prop('disabled', false);
+            $(valueInput).html(respond.count);
+        })
+        .fail(function (msg) {
+            console.log(msg);
+            $(valueInput).html(oldValue);
+            $(this).prop('checked', !$(this).prop('checked'));
+        });
     });
-});
 
-$('#quest-like').change(function () {
-    var title = $('#quest-title').html();
-    var valueInput = $('#likes-count');
-    var oldValue = Number($(valueInput).html());
-    var newValue = $(this).prop('checked') ? oldValue + 1 : Math.max(0, oldValue - 1);
+    $('#review').submit(function (event) {
+        event.preventDefault();
+        var form = $(this);
+        var text = form.find('.new-comment').val();
+        var name = form.data('name');
+        var commentSection = form.prev('section');
 
-    $(valueInput).html(newValue);
-
-    var checkbox = $(this);
-
-    $(checkbox).prop('disabled', true);
-
-    $.ajax({
-        method: 'POST',
-        url: '/like-quest/',
-        data: {title}
-    })
-    .done(function (respond) {
-        $(checkbox).prop('disabled', false);
-        $(valueInput).html(respond.count);
-    })
-    .fail(function (msg) {
-        console.log(msg);
-        $(valueInput).html(oldValue);
-        $(this).prop('checked', !$(this).prop('checked'));
-    });
-});
-
-/*  eslint quote-props: [1, "as-needed"] */
-$('#start-quest').click(function () {
-    var title = $('#quest-title').html();
-    var button = this;
-
-    $(button).css('display', 'none');
-
-    $.ajax({
-        method: 'POST',
-        url: '/start-quest/',
-        data: {title}
-    })
-    .done(function () {
-        $(button).remove();
-
-        $('.place .caption').each(function () {
-            var name = $(this).data('name');
-            var checkIn = $('<button></button>', {
-                class: 'btn btn-success check-in',
-                text: 'Check-in',
-                'data-name': name
+        $.ajax({
+            method: 'POST',
+            url: '/quest-comment',
+            data: {
+                name: name, text: text
+            }
+        })
+        .done(function (msg) {
+            var comment = $('<div></div>', {
+                class: 'review'
             });
 
-            $(this).append(checkIn);
+            var heading = $('<div></div>', {
+                class: 'review-heading'
+            });
+
+            var body = $('<div></div>', {
+                class: 'review-body',
+                text: msg.text
+            });
+
+            heading.appendTo(comment);
+            $('<hr>').appendTo(comment);
+            body.appendTo(comment);
+
+            $('<span></span>', {
+                class: 'glyphicon glyphicon-user',
+                'aria-hidden': true
+            }).appendTo(heading);
+
+            $('<a></a>', {
+                href: '/user/' + msg.url,
+                class: 'user-link',
+                text: ' ' + msg.author
+            }).appendTo(heading);
+
+            commentSection.append(comment);
+
+            form.find('textarea').val('');
+            form.find('[type="submit"]').prop('disabled', true);
+        })
+        .fail(function (msg) {
+            console.log(msg);
         });
-    })
-    .fail(function (msg) {
-        console.log(msg);
-        $(button).css('display', 'inline-block');
+    });
+
+    /*  eslint quote-props: [1, "as-needed"] */
+    $('#start-quest').click(function () {
+        var title = $('#quest-title').html();
+        var button = this;
+
+        $(button).css('display', 'none');
+
+        $.ajax({
+            method: 'POST',
+            url: '/start-quest/',
+            data: {title}
+        })
+        .done(function () {
+            $(button).remove();
+
+            $('.place .caption').each(function () {
+                var name = $(this).data('name');
+                var checkIn = $('<button></button>', {
+                    class: 'btn btn-success check-in',
+                    text: 'Check-in',
+                    'data-name': name
+                });
+                checkIn.click(checkInFunc);
+                $(this).append(checkIn);
+            });
+        })
+        .fail(function (msg) {
+            console.log(msg);
+            $(button).css('display', 'inline-block');
+        });
     });
 });

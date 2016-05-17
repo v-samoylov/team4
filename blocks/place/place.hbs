@@ -4,14 +4,16 @@
             <div class="img">
                 <img class="" src={{img}} alt={{title}}>
             </div>
-            <div class="caption">
-                <h3 class="place-title">{{title}}</h3>
-                {{> comments/comments this place=true}}
+            <div class="caption" data-name="{{quest}}#{{title}}">
+                <div class="place-head">
+                    <h3 class="place-title">{{title}}</h3>
+                    {{> comments/comments this place=true}}
+                </div>
                 {{#if inProgress}}
                     {{#unless checkIn}}
                         <button data-name="{{quest}}#{{title}}" class="btn btn-success check-in">Check-in</button>
                     {{else}}
-                        <div class="success-checkIn">Вы здесь были</div>
+                        <span class="glyphicon glyphicon-ok-circle success-checkIn"></span>
                     {{/unless}}
                 {{/if}}
             </div>
