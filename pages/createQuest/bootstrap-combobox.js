@@ -248,7 +248,6 @@
     }
 
   , toggle: function () {
-    console.log('TOGGLE');
     if (!this.disabled) {
       if (this.$container.hasClass('combobox-selected')) {
         this.clearTarget();
@@ -424,7 +423,6 @@
     }
 
   , click: function (e) {
-      console.log('CLICK');
       e.stopPropagation();
       e.preventDefault();
       this.select();
