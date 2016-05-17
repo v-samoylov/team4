@@ -20,16 +20,16 @@ function checkIn() {
                     longitude: position.coords.longitude
                 }
             })
-                .done(function () {
-                    console.log('checkIn');
-                    var checkIn = $('<span></span>', {
-                        class: 'glyphicon glyphicon-ok-circle success-checkIn'
-                    });
-                    $(button).replaceWith(checkIn);
-                })
-                .fail(function (err) {
-                    console.log(err);
+            .done(function () {
+                console.log('checkIn');
+                var checkIn = $('<span></span>', {
+                    class: 'glyphicon glyphicon-ok-circle success-checkIn'
                 });
+                $(button).replaceWith(checkIn);
+            })
+            .fail(function (err) {
+                console.log(err);
+            });
         },
         function (error) {
             console.log(error);

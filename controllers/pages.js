@@ -2,14 +2,16 @@
 
 const debug = require('debug')('team4:controllers:pages');
 
+const fuzzy = require('fuzzysearch');
+
 const questsModel = require('../models/quests');
 const userModel = require('../models/users');
 const randInt = require('../lib/random').randInt;
-const fuzzy = require('fuzzysearch');
 
 function filterFields(fields) {
     return obj => {
         let resObj = {};
+
         fields.forEach(field => {
             if (field === 'photo') {
                 resObj[field] = getRandomPhoto(obj);
@@ -17,6 +19,7 @@ function filterFields(fields) {
                 resObj[field] = obj[field];
             }
         });
+
         return resObj;
     };
 }
@@ -28,9 +31,11 @@ function getRandomPhoto(quest) {
 exports.index = (req, res) => {
     debug('index');
     const quests = questsModel(req.db);
-    let questNum = req.body.hasOwnProperty('skip') ? parseInt(req.body.skip, 10) : 0;
-    let questLimit = req.body.hasOwnProperty('get') ? parseInt(req.body.get, 10) : 3;
+
+    let questNum = req.body.skip ? parseInt(req.body.skip, 10) : 0;
+    let questLimit = req.body.get ? parseInt(req.body.get, 10) : 3;
     let filter = req.url === '/popular' ? 'likesCount' : '';
+
     quests.getLimitQuestsSorted(questNum, questLimit, filter).then(chosenQuests => {
         console.log(chosenQuests.map(filterFields(['title', 'likesCount'])));
         chosenQuests = chosenQuests.map(filterFields(['url', 'photo', 'title']));
@@ -47,15 +52,19 @@ exports.userPage = (req, res) => {
     debug('userPage');
     let users = userModel(req.db);
     let quests = questsModel(req.db);
+
     var response = {
         username: req.params.name
     };
+
     let user;
+
     users.isUserExist(req.params.name)
         .then(users => {
             if (users) {
                 return req.params.name;
             }
+
             res.renderLayout('./pages/notFound/notFound.hbs');
             throw new Error('это как return, только следующий then не будет работать');
         })
@@ -65,6 +74,7 @@ exports.userPage = (req, res) => {
             let finished = user.finishedQuests;
             let inProcess = user.inProgressQuests;
             let created = user.createdQuests;
+
             return finished.concat(inProcess, created);
         })
         .then(quests.getQuestsById)
@@ -74,11 +84,13 @@ exports.userPage = (req, res) => {
                     return user.finishedQuests.find(q => q.equals(quest._id));
                 })
                 .map(filterFields(['title', 'photo', 'url']));
+
             let inProcess = questsInfo
                 .filter(quest => {
                     return user.inProgressQuests.find(q => q.equals(quest._id));
                 })
                 .map(filterFields(['title', 'photo', 'url']));
+
             let created = questsInfo
                 .filter(quest => {
                     return user.createdQuests.find(q => q.equals(quest._id));
@@ -131,9 +143,11 @@ exports.search = (req, res) => {
     debug('search');
     const quests = questsModel(req.db);
     const query = req.query.query;
+
     if (typeof query !== 'string') {
         res.end();
     }
+
     quests
         .getQuest(query)
         .then(quest => {
@@ -152,6 +166,7 @@ exports.search = (req, res) => {
                 res.status(404).renderLayout('./pages/notFound/notFound.hbs');
                 throw new Error('');
             }
+
             return quests;
         })
         .then(quests => {
