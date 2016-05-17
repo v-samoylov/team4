@@ -53,20 +53,14 @@ exports.userPage = (req, res) => {
     let users = userModel(req.db);
     let quests = questsModel(req.db);
 
-    var response = {
-        username: req.params.name
-    };
+    let response = {};
 
     let user;
 
-    users.isUserExist(req.params.name)
-        .then(users => {
-            if (users) {
-                return req.params.name;
-            }
-
-            res.renderLayout('./pages/notFound/notFound.hbs');
-            throw new Error('это как return, только следующий then не будет работать');
+    users.getNameById(req.params.name)
+        .then(name => {
+            response.username = name;
+            return name;
         })
         .then(users.getPublicUserData)
         .then(userInfo => {
@@ -102,7 +96,7 @@ exports.userPage = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-            res.status(500).renderLayout('./pages/notFound/notFound.hbs');
+            res.status(404).renderLayout('./pages/notFound/notFound.hbs');
         });
 };
 
