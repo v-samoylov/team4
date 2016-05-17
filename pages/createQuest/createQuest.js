@@ -10,7 +10,11 @@ var validator = require('../../lib/forms/forms');
 var addQuestForm = {
     _initLocationSearch: function (place) {
         var combobox = place.find('.combobox');
-        combobox.combobox({matcher: function () {return true;}});
+        combobox.combobox({
+            matcher: function () {
+                return true;
+            }
+        });
         combobox = combobox.combobox.get();
         var setPlacemark = this._setPlacemark;
         var addressInputField = place.find('input.combobox');
@@ -29,21 +33,24 @@ var addQuestForm = {
                 placemark.options.set('visible', false);
             }
             var userInput = $(this).val();
-            ymaps.geocode(userInput).then(function (res) {
+            ymaps.geocode(userInput).then(function (res) { //eslint-disable-line
                 var it = res.geoObjects.getIterator();
                 place.find('select.combobox').empty();
                 place.find('select.combobox').append('<option></option>');
                 var placeChoise;
-                while ((placeChoise = it.getNext()) != it.STOP_ITERATION) {
+                while ((placeChoise = it.getNext()) !== it.STOP_ITERATION) {
                     var address = placeChoise.properties.get('text');
                     var coords = placeChoise.geometry.getCoordinates().join(',');
-                    place.find('select.combobox').append('<option value="'+coords+'">'+address+'</option>');
+                    var newOption = '<option value="'+coords+'">'+address+'</option>';
+                    place.find('select.combobox').append(newOption);
                 }
                 combobox.refresh();
                 combobox.lookup();
                 combobox.show();
             },
-            function (err) {console.log('err', err);});
+            function (err) {
+                console.log('err', err);
+            });
         });
     },
     init: function () {
@@ -192,7 +199,6 @@ var addQuestForm = {
     },
 
     _setPlacemark: function (place, location, isCentered) {
-        var combobox = place.find('.combobox');
         var coordinatesField = place.find('.combobox-container > input:first-child');
         var addressField = place.find('input.combobox');
 
