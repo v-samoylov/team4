@@ -50,7 +50,7 @@ const createPlace = place => {
     };
 };
 
-const isQuestValid = quest => {
+const isQuestDataValid = quest => {
     let author = quest.author;
     let title = quest.title;
     let description = quest.description;
@@ -94,12 +94,17 @@ const isQuestExist = title => {
         });
 };
 
+const isQuestValid = quest => {
+    return isQuestExist(quest.title)
+        .then(() => isQuestDataValid(quest));
+};
+
 const createQuest = quest => {
     let title = quest.title;
 
     return isQuestExist(title)
         .then(() => {
-            isQuestValid(quest);
+            isQuestDataValid(quest);
 
             let places = quest.places.map(place => createPlace(place));
 
@@ -237,6 +242,7 @@ module.exports = db => {
         isPlaceExist,
         addCheckinToPlace,
         addCommentToPlace,
-        getTitle
+        getTitle,
+        isQuestValid
     };
 };

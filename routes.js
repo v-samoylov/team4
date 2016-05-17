@@ -5,6 +5,7 @@ const authRequired = require('./middleware/authRequired');
 const pages = require('./controllers/pages');
 const users = require('./controllers/users');
 const quests = require('./controllers/quests');
+const questValidator = require('./middleware/questValidator');
 
 module.exports = function (app) {
     app.get('/', pages.index);
@@ -23,7 +24,7 @@ module.exports = function (app) {
     app.post('/place-comment', authRequired, quests.addCommentToPlace);
     app.post('/quest-comment', authRequired, quests.addCommentToQuest);
     app.get('/create-quest', authRequired, pages.createQuest);
-    app.post('/create-quest', authRequired, quests.upload, quests.create);
+    app.post('/create-quest', authRequired, questValidator, quests.upload, quests.create);
     app.post('/get-quest-titles', pages.getTitles);
     app.get('/search', pages.search);
     app.all('*', pages.error404);

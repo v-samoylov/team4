@@ -20,7 +20,8 @@ module.exports = () => {
         } else {
             connection = MongoClient.connect(mongoUri, (err, db) => {
                 if (err) {
-                    next(err);
+                    res.send('Нет коннекта к монге =(');
+                    // next(err);
                 } else {
                     connection = db;
                     req.db = connection;
