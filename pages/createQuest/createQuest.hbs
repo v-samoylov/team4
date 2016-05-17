@@ -11,6 +11,7 @@
     {{#content "styles"}}
         {{#if commonData.isDev}}
             <link rel="stylesheet" href="/createQuest.css">
+            <link rel="stylesheet" href="/bootstrap-combobox.css">
         {{else}}
             <link rel="stylesheet" href="//dream-team-4.surge.sh/createQuest.css">
         {{/if}}
@@ -55,9 +56,6 @@
                                         <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                     </div>
                                 </div>
-                                <div class="form-group has-feedback">
-                                    <input type="text" name="geo-place" class="form-control js-coordinates-place" style="display: none" placeholder="Координаты"/>
-                                </div>
                                 <div class="js-map-box"></div>
                                 <div class="form-group has-feedback has-error js-file-input-div">
                                     <div class="custom-image-preview js-custom-image-preview"></div>
@@ -93,9 +91,6 @@
                                             <input type="text" class="form-control js-address-place" placeholder="Адрес" required disabled/>
                                             <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </div>
-                                    </div>
-                                    <div class="form-group has-feedback">
-                                        <input type="text" name="geo-place" class="form-control js-coordinates-place" style="display: none" placeholder="Координаты"/>
                                     </div>
                                     <div class="js-map-box"></div>
                                     <div class="form-group has-feedback has-error js-file-input-div">
@@ -140,6 +135,7 @@
     {{#content "scripts"}}
         {{#if commonData.isDev}}
             <script src="/createQuest.js"></script>
+            <script src="/bootstrap-combobox.js"></script>
         {{else}}
             <script src="//dream-team-4.surge.sh/createQuest.js"></script>
         {{/if}}
