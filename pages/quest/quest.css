@@ -75,6 +75,12 @@
     margin-bottom: 10px;
 }
 
+.review-body
+{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
 .description-title
 {
     text-align: center;

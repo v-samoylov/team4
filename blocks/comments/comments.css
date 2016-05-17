@@ -6,9 +6,10 @@
     border: none;
 }
 
-.quest-comment > .panel-body
+.panel-body
 {
-    display: none;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .comment-icon
