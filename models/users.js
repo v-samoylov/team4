@@ -13,10 +13,12 @@ const errors = {
         code: 1,
         message: 'Имя уже существует'
     },
+
     mongoError: {
         code: 2,
         message: 'Ошибка Mongo'
     },
+
     wrongData: {
         code: 1,
         message: 'Неверные логин/пароль'
@@ -56,6 +58,7 @@ const addUser = newUser => {
             newUser.inProgressQuests = [];
             newUser.createdQuests = [];
             newUser.url = toUrl(newUser.name);
+
             return usersCollection.insertOne(newUser);
         });
 };
@@ -75,6 +78,7 @@ function getQuestsInProgress(name) {
            if (user.length) {
                return user[0].inProgressQuests;
            }
+
            throw new Error('Пользователь не найден');
        });
 }
@@ -86,6 +90,7 @@ function getFinishedQuests(name) {
             if (user.length) {
                 return user[0].finishedQuests;
             }
+
             throw new Error('Пользователь не найден');
         });
 }
@@ -135,5 +140,6 @@ const operations = {
 
 module.exports = db => {
     usersCollection = db.collection('users');
+
     return operations;
 };

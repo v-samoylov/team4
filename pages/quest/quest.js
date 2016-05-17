@@ -47,38 +47,43 @@ $(function () {
                 name: name, text: text
             }
         })
-            .done(function (msg) {
-                var comment = $('<div></div>', {
-                    class: 'review'
-                });
-                var heading = $('<div></div>', {
-                    class: 'review-heading'
-                });
-                var body = $('<div></div>', {
-                    class: 'review-body',
-                    text: msg.text
-                });
-                heading.appendTo(comment);
-                $('<hr>').appendTo(comment);
-                body.appendTo(comment);
-                $('<span></span>', {
-                    class: 'glyphicon glyphicon-user',
-                    'aria-hidden': true
-                }).appendTo(heading);
-                $('<a></a>', {
-                    href: '/user/' + msg.url,
-                    class: 'user-link',
-                    text: ' ' + msg.author
-                }).appendTo(heading);
-
-                commentSection.append(comment);
-
-                form.find('textarea').val('');
-                form.find('[type="submit"]').prop('disabled', true);
-            })
-            .fail(function (msg) {
-                console.log(msg);
+        .done(function (msg) {
+            var comment = $('<div></div>', {
+                class: 'review'
             });
+
+            var heading = $('<div></div>', {
+                class: 'review-heading'
+            });
+
+            var body = $('<div></div>', {
+                class: 'review-body',
+                text: msg.text
+            });
+
+            heading.appendTo(comment);
+            $('<hr>').appendTo(comment);
+            body.appendTo(comment);
+
+            $('<span></span>', {
+                class: 'glyphicon glyphicon-user',
+                'aria-hidden': true
+            }).appendTo(heading);
+
+            $('<a></a>', {
+                href: '/user/' + msg.url,
+                class: 'user-link',
+                text: ' ' + msg.author
+            }).appendTo(heading);
+
+            commentSection.append(comment);
+
+            form.find('textarea').val('');
+            form.find('[type="submit"]').prop('disabled', true);
+        })
+        .fail(function (msg) {
+            console.log(msg);
+        });
     });
 
     /*  eslint quote-props: [1, "as-needed"] */
