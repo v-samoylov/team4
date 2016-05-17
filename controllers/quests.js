@@ -39,7 +39,6 @@ exports.quest = (req, res) => {
             .getTitle(questUrl)
             .then(questName => questInfo(req.db, questName, user))
             .then(quest => {
-                console.log(quest);
                 let response = Object.assign(quest, commonData);
                 res.status(200).renderLayout('./pages/quest/quest.hbs', response);
             })
@@ -49,7 +48,6 @@ exports.quest = (req, res) => {
             .getTitle(questUrl)
             .then(model.getQuest)
             .then(quest => {
-                console.log(quest);
                 let response = Object.assign(quest, commonData);
                 res.status(200).renderLayout('./pages/quest/quest.hbs', response);
             })
@@ -256,7 +254,7 @@ exports.checkin = (req, res) => {
 
             model
                 .addCheckinToPlace(questName, placeName, req.commonData.user)
-                .then(() => res.status(200));
+                .then(() => res.status(200).send({}));
         })
         .catch(err => {
             console.log(err);

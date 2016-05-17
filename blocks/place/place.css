@@ -2,6 +2,7 @@
 {
     width: 100%;
     margin: auto;
+    position: relative;
 }
 
 .img img
@@ -20,13 +21,25 @@
 {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
-    width: 100%;
-    margin: 10px auto;
+    max-width: 80%;
+    display: inline-block;
+    margin: 0;
 }
 
-.check-in.success-checkIn
+.place-head
 {
-    background-color: #c09853;
+    display: inline-block;
+    margin: 10px auto;
+    width: 90%;
+}
+
+.success-checkIn
+{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 100px;
+    color: #a8cc77;
 }
 
 @media screen and (min-width: 768px)
@@ -40,15 +53,32 @@
 
     .img
     {
-        margin: 9% auto 0;
-        width: 80%;
+        margin: 5% auto 0;
+        width: 90%;
         max-height: 600px;
         padding: 0;
     }
 
     .img img
     {
-        width: 100%;
         border: 1px solid #ddd;
+    }
+
+    .success-checkIn
+    {
+        font-size: 150px;
+        right: 10px;
+        top: 10px;
+    }
+
+    .place-title
+    {
+        margin-bottom: 10px;
+        display: inline;
+    }
+
+    .place-head
+    {
+        width: 100%;
     }
 }
