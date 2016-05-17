@@ -45,5 +45,21 @@
 
 .combobox
 {
-  display: hidden;
+  display: none;
+}
+
+.combobox-container .input-group
+{
+    width: 100%;
+}
+
+/* Красивый фикс */
+.dropdown-menu
+{
+    width: 100%;
+}
+
+.dropdown-menu > li > a
+{
+    padding: 3px 12px !important;
 }
