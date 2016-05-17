@@ -167,7 +167,8 @@ const storage = multer.diskStorage({
 
         const fileType = file.originalname.replace(/.+(\.\w{3,4})$/, '$1');
 
-        cb(null, crypto.createHash('md5').update(fileName).digest('hex') + fileType);
+        cb(null, fileNumber + '_' +
+            crypto.createHash('md5').update(fileName).digest('hex') + fileType);
     }
 });
 

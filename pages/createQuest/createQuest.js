@@ -211,10 +211,7 @@ $(function () {
         $.ajax({
             url: '/create-quest',
             type: 'POST',
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false
+            data: formData
         })
         .done(function (res) {
             window.location = res.url;
