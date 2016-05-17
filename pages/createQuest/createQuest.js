@@ -192,15 +192,9 @@ var addQuestForm = {
     },
 
     _setPlacemark: function (place, location, isCentered) {
-<<<<<<< HEAD
         var combobox = place.find('.combobox');
         var coordinatesField = place.find('.combobox-container > input:first-child');
         var addressField = place.find('input.combobox');
-=======
-        var addressField = place.find('.form-control.js-address-place');
-        var coordinatesField = place.find('.form-control.js-coordinates-place');
->>>>>>> 514e6714a3ab674587736dd9f64577c73860ece7
-
         var cb = function (res) {
             var nearest = res.geoObjects.get(0);
             var coords;
@@ -223,13 +217,8 @@ var addQuestForm = {
                 placemark = new ymaps.Placemark(coords); // eslint-disable-line
                 placemark.events.add('dblclick', function () {
                     placemark.options.set('visible', false);
-<<<<<<< HEAD
                     coordinatesField.val('');
                     addressField.val('');
-=======
-                    addressField.val('').change();
-                    coordinatesField.val('');
->>>>>>> 514e6714a3ab674587736dd9f64577c73860ece7
                 });
                 place.map.geoObjects.add(placemark);
             }
@@ -237,12 +226,6 @@ var addQuestForm = {
             if (isCentered) {
                 place.map.setCenter(coords, 17);
             }
-<<<<<<< HEAD
-            
-=======
-
-            addressField.val(address).change();
->>>>>>> 514e6714a3ab674587736dd9f64577c73860ece7
             coordinatesField.val(coords);
             addressField.val(address);
         };
