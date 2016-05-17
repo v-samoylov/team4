@@ -126,6 +126,17 @@ function isUserExist(name) {
         .then(users => users.length);
 }
 
+function getNameById(url) {
+    return usersCollection.findOne({url})
+        .then(user => {
+            if (!user) {
+                throw new Error('Пользователь не найден');
+            }
+
+            return user.name;
+        });
+}
+
 const operations = {
     addUser,
     login,
@@ -135,7 +146,8 @@ const operations = {
     getQuestsInProgress,
     getFinishedQuests,
     isUserExist,
-    getPublicUserData
+    getPublicUserData,
+    getNameById
 };
 
 module.exports = db => {
