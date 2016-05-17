@@ -15,14 +15,23 @@
 .comment-icon
 {
     background-image: none;
-    background-color: #fff;
     border: none;
     cursor: pointer;
-    font-size: 20px;
     color: #666;
-    margin-left: 5px;
     margin-bottom: 10px;
     display: inline-block;
+    position: absolute;
+    left: 2px;
+    top: -3px;
+    font-size: 30px;
+}
+
+.comment-title
+{
+    font-size: 20px;
+    text-align: left;
+    margin: auto auto 10px 35px;
+    cursor: pointer;
 }
 
 .panel.main
@@ -87,4 +96,13 @@
     margin: 20px 5px 20px 0;
     padding: 10px;
     background-image: none;
+}
+
+@media screen and (min-width: 768px)
+{
+    .comment-icon
+    {
+        font-size: 30px;
+        top: -2px;
+    }
 }

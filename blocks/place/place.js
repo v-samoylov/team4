@@ -25,7 +25,9 @@ function checkIn() {
                 var checkIn = $('<span></span>', {
                     class: 'glyphicon glyphicon-ok-circle success-checkIn'
                 });
-                $(button).replaceWith(checkIn);
+                var container = $(button).parent().prev();
+                $(container).append(checkIn);
+                $(button).remove();
             })
             .fail(function (err) {
                 console.log(err);
