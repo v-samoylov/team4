@@ -1,16 +1,32 @@
 .like
 {
-    width: 50px;
-    height: 50px;
     color: #cbcbcb;
     font-size: 50px;
     cursor: pointer;
+}
+
+.likes .badge
+{
+    position: absolute;
+    top: 39px;
+    right: 0;
+}
+
+.quest-title
+{
+    margin: 0 auto;
 }
 
 .likes
 {
     width: 80px;
     margin: auto;
+    position: relative;
+}
+
+.likes + hr
+{
+    margin-top: 0;
 }
 
 .description
