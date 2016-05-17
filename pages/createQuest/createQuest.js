@@ -2,10 +2,50 @@
 
 require('./createQuest.css');
 require('../../blocks/yandexMap/yandexMap.js');
+require('./bootstrap-combobox.js');
+require('./bootstrap-combobox.css');
 
 var validator = require('../../lib/forms/forms');
 
 var addQuestForm = {
+    _initLocationSearch: function (place) {
+        var combobox = place.find('.combobox');
+        combobox.combobox({matcher: function () {return true;}});
+        combobox = combobox.combobox.get();
+        var setPlacemark = this._setPlacemark;
+        var addressInputField = place.find('input.combobox');
+        var coordsInputField = place.find('.combobox-container > input:first-child');
+        coordsInputField.attr('name','geo-place');
+        coordsInputField.addClass('form-control js-coordinates-place');
+        addressInputField.addClass('form-control js-address-field');
+        place.find('.combobox-container > input:first-child').change(function () {
+            if (combobox.selected) {
+                setPlacemark(place, $(this).val().split(','), true);
+            }
+        });
+        place.find('input.combobox').keyup(function () {
+            var placemark = place.map.geoObjects.get(0);
+            if (placemark && !combobox.selected) {
+                placemark.options.set('visible', false);
+            }
+            var userInput = $(this).val();
+            ymaps.geocode(userInput).then(function (res) {
+                var it = res.geoObjects.getIterator();
+                place.find('select.combobox').empty();
+                place.find('select.combobox').append('<option></option>');
+                var placeChoise;
+                while ((placeChoise = it.getNext()) != it.STOP_ITERATION) {
+                    var address = placeChoise.properties.get('text');
+                    var coords = placeChoise.geometry.getCoordinates().join(',');
+                    place.find('select.combobox').append('<option value="'+coords+'">'+address+'</option>');
+                }
+                combobox.refresh();
+                combobox.lookup();
+                combobox.show();
+            },
+            function (err) {console.log('err', err);});
+        });
+    },
     init: function () {
         this._collectData();
         validator.init();
@@ -125,13 +165,6 @@ var addQuestForm = {
             }
         );
 
-        place.find('.js-location-search-button').click(
-            function () {
-                var addressInputField = place.find('.js-address-field');
-                this._setPlacemark(place, addressInputField.val(), true);
-            }.bind(this)
-        );
-
         place.find('.js-current-location-search-button').click(
             function () {
                 var options = {
@@ -151,11 +184,16 @@ var addQuestForm = {
                 );
             }.bind(this)
         );
+
+        $(document).ready(function(){
+            this._initLocationSearch(place);
+        }.bind(this));
     },
 
     _setPlacemark: function (place, location, isCentered) {
-        var addressField = place.find('.form-control.js-address-place');
-        var coordinatesField = place.find('.form-control.js-coordinates-place');
+        var combobox = place.find('.combobox');
+        var coordinatesField = place.find('.combobox-container > input:first-child');
+        var addressField = place.find('input.combobox');
 
         var cb = function (res) {
             var nearest = res.geoObjects.get(0);
@@ -167,7 +205,7 @@ var addQuestForm = {
                 coords = nearest.geometry.getCoordinates();
             }
 
-            var address = nearest.properties.get('name');
+            var address = nearest.properties.get('text');
 
             var placemark = place.map.geoObjects.get(0);
             if (placemark) {
@@ -179,8 +217,8 @@ var addQuestForm = {
                 placemark = new ymaps.Placemark(coords); // eslint-disable-line
                 placemark.events.add('dblclick', function () {
                     placemark.options.set('visible', false);
-                    addressField.val('').change();
                     coordinatesField.val('');
+                    addressField.val('');
                 });
                 place.map.geoObjects.add(placemark);
             }
@@ -188,9 +226,9 @@ var addQuestForm = {
             if (isCentered) {
                 place.map.setCenter(coords, 17);
             }
-
-            addressField.val(address).change();
+            
             coordinatesField.val(coords);
+            addressField.val(address);
         };
         ymaps.geocode(location).then(cb); // eslint-disable-line
     }
