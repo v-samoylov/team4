@@ -31,12 +31,14 @@
     text-align: left;
     margin: auto auto 10px 35px;
     cursor: pointer;
+    width: auto;
 }
 
 .panel.main
 {
     border-color: #7ec2c0;
     text-align: left;
+    margin-top: 15px;
 }
 
 .comment-list .panel

@@ -41,8 +41,29 @@
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.btn-default,
-.check-in
+.btn-default
+{
+    color: #333;
+    background-image: none;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.confirm
+{
+    color: #333;
+    background-image: none;
+    background-color: #a8cc77;
+    border-color: #a8cc77;
+}
+
+.icon.success ~ h2
+{
+    margin-top: 30px;
+}
+
+.start-quest,
+.place .check-in
 {
     background-color: #a8cc77;
     background-image: none;
@@ -54,7 +75,7 @@
     border: 1px solid #a8cc77;
 }
 
-.btn-default:hover
+.start-quest:hover
 {
     background-image: none;
     background-color: #a8cc77;
