@@ -41,7 +41,7 @@ var addQuestForm = {
         ymaps.ready( // eslint-disable-line
             function () {
                 var _this = this;
-                $('.one-place').each(function (index) {
+                $('.one-place').each(function () {
                     var place = $(this);
                     _this._initMap(place);
                     var $mapBox = place.find('.js-map-box');
