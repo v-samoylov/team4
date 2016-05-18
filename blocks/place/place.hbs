@@ -4,7 +4,7 @@
             <h3 class="place-title">{{title}}</h3>
             <div class="statistics">
                 <span class="statistics-icon glyphicon glyphicon-user"></span>
-                <span class="badge">{{checkins.length}}</span>
+                <span class="badge" id="{{url}}-count">{{checkins.length}}</span>
             </div>
             <div class="img">
                 {{#if checkIn}}
@@ -14,11 +14,11 @@
             </div>
             <div class="caption" data-name="{{quest}}#{{title}}">
                 <div class="place-head">
-                    {{> comments/comments this place=true}}
+                    {{> comments/comments this}}
                 </div>
                 {{#if inProgress}}
                     {{#unless checkIn}}
-                        <button data-name="{{quest}}#{{title}}" class="btn btn-success check-in">Check-in</button>
+                        <button data-name="{{quest}}#{{title}}" data-url="{{url}}" class="btn btn-success check-in">Check-in</button>
                     {{/unless}}
                 {{/if}}
             </div>

@@ -42,6 +42,7 @@ const isPlaceExist = (questTitle, placeTitle) => {
 const createPlace = place => {
     return {
         title: place.title,
+        url: toUrl(place.title),
         img: place.img,
         geo: place.geo,
         checkins: [],
