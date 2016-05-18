@@ -63,3 +63,8 @@
 {
     padding: 3px 12px !important;
 }
+
+.dropdown-menu > li.active
+{
+    display: inline-block;
+}
