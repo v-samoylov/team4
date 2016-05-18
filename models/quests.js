@@ -42,6 +42,7 @@ const isPlaceExist = (questTitle, placeTitle) => {
 const createPlace = place => {
     return {
         title: place.title,
+        url: toUrl(place.title),
         img: place.img,
         geo: place.geo,
         checkins: [],
@@ -74,6 +75,16 @@ const isQuestValid = quest => {
     }
 
     places.every(isValidPlace);
+
+    const placeTitles = places.map(place => place.title);
+
+    const repeatPlaceTitle = placeTitles.find((title, i) => {
+        return placeTitles.slice(i + 1).indexOf(title) > -1;
+    });
+
+    if (repeatPlaceTitle) {
+        throw new Error('Название места "' + repeatPlaceTitle + '" не уникально');
+    }
 };
 
 const isQuestExist = title => {

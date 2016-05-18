@@ -4,14 +4,14 @@ const debug = require('debug')('team4:controllers:quests');
 
 const fs = require('fs');
 const crypto = require('crypto');
-const multer = require('multer');
 const tr = require('transliteration');
+const multer = require('multer');
+const geolib = require('geolib');
 
 const flickr = require('../lib/flickr');
 const questsModel = require('../models/quests.js');
 const questInfo = require('../lib/getQuestInfo');
 const userModel = require('../models/users.js');
-const geolib = require('geolib');
 
 exports.addQuest = (req, res) => {
     debug('add quest');
@@ -39,8 +39,8 @@ exports.quest = (req, res) => {
             .getTitle(questUrl)
             .then(questName => questInfo(req.db, questName, user))
             .then(quest => {
-                console.log(quest);
                 let response = Object.assign(quest, commonData);
+
                 res.status(200).renderLayout('./pages/quest/quest.hbs', response);
             })
             .catch(err => res.error(err));
@@ -49,8 +49,8 @@ exports.quest = (req, res) => {
             .getTitle(questUrl)
             .then(model.getQuest)
             .then(quest => {
-                console.log(quest);
                 let response = Object.assign(quest, commonData);
+
                 res.status(200).renderLayout('./pages/quest/quest.hbs', response);
             })
             .catch(err => res.error(err));
@@ -97,6 +97,7 @@ exports.addCommentToPlace = (req, res) => {
         .getPublicUserData(author)
         .then(user => {
             comment.url = user.url;
+
             return model.addCommentToPlace(questName, placeName, comment);
         })
         .then(() => res.status(200).send(comment))
@@ -110,6 +111,7 @@ exports.addCommentToQuest = (req, res) => {
     let text = req.body.text;
     let model = questsModel(req.db);
     let userMod = userModel(req.db);
+
     if (!author) {
         res.status(401);
 
@@ -117,6 +119,7 @@ exports.addCommentToQuest = (req, res) => {
     }
 
     let comment = {author, text};
+
     userMod
         .getPublicUserData(author)
         .then(user => {
@@ -241,6 +244,7 @@ exports.checkin = (req, res) => {
     let placeName = name[1];
     let userLatitude = parseFloat(req.body.latitude);
     let userLongitude = parseFloat(req.body.longitude);
+
     model.getQuest(questName)
         .then(quest => quest.places.find(place => place.title === placeName))
         .then(place => {
@@ -251,12 +255,13 @@ exports.checkin = (req, res) => {
 
             if (distance > 30) {
                 res.status(400).send('Вы слишком далеко от места');
+
                 return;
             }
 
             model
                 .addCheckinToPlace(questName, placeName, req.commonData.user)
-                .then(() => res.status(200));
+                .then(() => res.status(200).send({}));
         })
         .catch(err => {
             console.log(err);

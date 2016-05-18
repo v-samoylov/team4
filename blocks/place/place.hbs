@@ -1,17 +1,24 @@
 <div class="row">
     <div class="place">
         <div class="thumbnail ">
+            <h3 class="place-title">{{title}}</h3>
+            <div class="statistics">
+                <span class="statistics-icon glyphicon glyphicon-user"></span>
+                <span class="badge" id="{{url}}-count">{{checkins.length}}</span>
+            </div>
             <div class="img">
+                {{#if checkIn}}
+                    <span class="glyphicon glyphicon-ok-circle success-checkIn"></span>
+                {{/if}}
                 <img class="" src={{img}} alt={{title}}>
             </div>
-            <div class="caption">
-                <h3 class="place-title">{{title}}</h3>
-                {{> comments/comments this place=true}}
+            <div class="caption" data-name="{{quest}}#{{title}}">
+                <div class="place-head">
+                    {{> comments/comments this}}
+                </div>
                 {{#if inProgress}}
                     {{#unless checkIn}}
-                        <button data-name="{{quest}}#{{title}}" class="btn btn-success check-in">Check-in</button>
-                    {{else}}
-                        <div class="success-checkIn">Вы здесь были</div>
+                        <button data-name="{{quest}}#{{title}}" data-url="{{url}}" class="btn btn-success check-in">Check-in</button>
                     {{/unless}}
                 {{/if}}
             </div>

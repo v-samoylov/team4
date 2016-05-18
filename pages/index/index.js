@@ -2,47 +2,76 @@
 
 require('./index.css');
 
-var skip = 3;
+$(function () {
+    var skip = 3;
+    var end = false;
+    var $loadGif = $('.more-loading-gif');
 
-/* global $: true */
-$('#getMore').click(function (e) {
-    e.preventDefault();
+    function getMore() {
+        $.ajax({
+            method: "POST",
+            url: "/get-more-quests",
+            data: {
+                skip: skip,
+                get: 3
+            }
+        })
+        .done(function (data) {
+            console.log(data);
 
-    $.ajax({
-        method: "POST",
-        url: "/get-more-quests",
-        data: {
-            skip: skip,
-            get: 3
-        }
-    })
-    .done(function (data) {
-        console.log(data);
-        skip += data.quests.length;
+            if (!end && data.quests.length == 0) { // eslint-disable-line
+                end = true;
+                $loadGif.fadeOut('medium');
 
-        data.quests.forEach(function (quest) {
-            var newElem = $('<div></div>', {
-                class: 'col-lg-12 text-center'
+                return;
+            }
+
+            skip += data.quests.length;
+
+            data.quests.forEach(function (quest) {
+                var $newElem = $('<div></div>', {
+                    class: 'text-center'
+                });
+
+                var $imgBox = $('<div></div>', {
+                    class: 'img-box'
+                }).appendTo($newElem);
+
+                $('<img>', {
+                    class: 'img-responsive img-border img-full',
+                    src: quest.photo,
+                    alt: quest.title
+                }).appendTo($imgBox);
+
+                $('<h2></h2>', {
+                    text: quest.title
+                }).appendTo($newElem);
+
+                $('<a></a>', {
+                    href: '/quest/' + quest.url,
+                    class: 'btn btn-default btn-lg',
+                    text: 'Посмотреть'
+                }).appendTo($newElem);
+
+                $newElem.append('<hr>');
+
+                $newElem.hide();
+
+                $('#list-of-quests').append($newElem);
+
+                $newElem.fadeIn('medium');
+
+                $loadGif.fadeOut('medium');
             });
-
-            $('<img>', {
-                class: 'img-responsive img-border img-full',
-                src: quest.photo,
-                alt: quest.title
-            }).appendTo(newElem);
-
-            $('<h2></h2>', {
-                text: quest.title
-            }).appendTo(newElem);
-
-            $('<a></a>', {
-                href: '/quest/' + quest.url,
-                class: 'btn btn-default btn-lg',
-                text: 'Посмотреть'
-            }).appendTo(newElem);
-
-            newElem.append('<hr>');
-            $('#list-of-quests').append(newElem);
         });
+    }
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+            if (!end) {
+                $loadGif.fadeIn('medium');
+                setTimeout(getMore, 500);
+            }
+        }
     });
 });

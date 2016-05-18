@@ -117,7 +117,10 @@ module.exports.startQuest = (req, res) => {
     quests.getQuest(title)
         .then(quest => {
             users.addQuestInProgress(user, quest._id)
-                .then(() => res.status(200));
+                .then(() => res.status(200).send({}));
         })
-        .catch(res.status(400));
+        .catch(err => {
+            console.log(err);
+            res.status(400);
+        });
 };
