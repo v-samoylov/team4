@@ -87,8 +87,7 @@
 .add-button
 {
     margin-bottom: 20px;
-    background-color: #5bc0de;
-    background-image: none;
+    background: #5bc0de none;
 }
 
 .create-button
@@ -110,5 +109,5 @@
 .loading-gif
 {
     height: 600px;
-    background: url("hourglass.gif") no-repeat center;
+    background: rgba(255, 255, 255, 0.9) url("hourglass.gif") no-repeat center;
 }
