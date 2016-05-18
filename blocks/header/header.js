@@ -16,10 +16,10 @@ $(function () {
                 type: 'POST',
                 data: {get: 100}
             })
-                .done(function (res) {
-                    items = res.quests;
-                    done(items);
-                });
+            .done(function (res) {
+                items = res.quests;
+                done(items);
+            });
         },
 
         appendTo: $('.search')[0],
