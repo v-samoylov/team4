@@ -48,8 +48,8 @@ body .main-content .panel
 
 img
 {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
 }
 
 h3
@@ -69,7 +69,7 @@ p
     font-size: 30px;
 }
 
-@media screen and (min-width: 500px)
+@media screen and (min-width: 550px)
 {
     body .main-content .panel
     {

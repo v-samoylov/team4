@@ -11,24 +11,36 @@ function checkIn() {
 
     navigator.geolocation.getCurrentPosition(
         function (position) {
-            $.ajax({
-                url: '/quest/checkin/',
-                type: 'POST',
-                data: {
-                    name: name,
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                }
-            })
-            .done(function () {
-                console.log('checkIn');
-                var checkIn = $('<span></span>', {
-                    class: 'glyphicon glyphicon-ok-circle success-checkIn'
+            swal({ //eslint-disable-line
+                title: "Вы на месте?",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Да!",
+                cancelButtonText: "Отмена"
+            }, function () {
+                $.ajax({
+                    url: '/quest/checkin/',
+                    type: 'POST',
+                    data: {
+                        name: name,
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    }
+                })
+                .done(function () {
+                    var checkIn = $('<span></span>', {
+                        class: 'glyphicon glyphicon-ok-circle success-checkIn'
+                    });
+                    swal("Отлично!", "Вы успешно нашли место!", "success"); //eslint-disable-line
+                    var container = $(button).parent().prev();
+                    $(container).append(checkIn);
+                    $(button).remove();
+                })
+                .fail(function (err) {
+                    swal(err.responseText); //eslint-disable-line
                 });
-                $(button).replaceWith(checkIn);
-            })
-            .fail(function (err) {
-                console.log(err);
             });
         },
         function (error) {

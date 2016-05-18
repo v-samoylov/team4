@@ -1,16 +1,32 @@
 .like
 {
-    width: 50px;
-    height: 50px;
     color: #cbcbcb;
     font-size: 50px;
     cursor: pointer;
+}
+
+.likes .badge
+{
+    position: absolute;
+    top: 39px;
+    right: 0;
+}
+
+.quest-title
+{
+    margin: 0 auto;
 }
 
 .likes
 {
     width: 80px;
     margin: auto;
+    position: relative;
+}
+
+.likes + hr
+{
+    margin-top: 0;
 }
 
 .description
@@ -25,8 +41,29 @@
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.btn-default,
-.check-in
+.btn-default
+{
+    color: #333;
+    background-image: none;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.confirm
+{
+    color: #333;
+    background-image: none;
+    background-color: #a8cc77;
+    border-color: #a8cc77;
+}
+
+.icon.success ~ h2
+{
+    margin-top: 30px;
+}
+
+.start-quest,
+.place .check-in
 {
     background-color: #a8cc77;
     background-image: none;
@@ -38,7 +75,7 @@
     border: 1px solid #a8cc77;
 }
 
-.btn-default:hover
+.start-quest:hover
 {
     background-image: none;
     background-color: #a8cc77;
@@ -73,6 +110,12 @@
 .reviews-list
 {
     margin-bottom: 10px;
+}
+
+.review-body
+{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .description-title

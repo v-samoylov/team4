@@ -5,16 +5,23 @@
     position: relative;
 }
 
+.place .caption
+{
+    width: 100%;
+}
+
 .img img
 {
     width: 100%;
     max-width: 100%;
+    margin: auto;
 }
 
 .img
 {
     overflow: hidden;
-    padding: 9px 9px 0 9px;
+    margin: 0 auto 9px;
+    position: relative;
 }
 
 .place-title
@@ -22,15 +29,15 @@
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
     max-width: 80%;
-    display: inline-block;
-    margin: 0;
+    margin: 10px auto 10px auto;
 }
 
 .place-head
 {
     display: inline-block;
-    margin: 10px auto;
-    width: 90%;
+    margin: 5px auto;
+    width: 100%;
+    position: relative;
 }
 
 .success-checkIn
@@ -40,6 +47,32 @@
     right: 2px;
     font-size: 100px;
     color: #a8cc77;
+}
+
+.statistics
+{
+    position: relative;
+    margin: auto auto 10px auto;
+    background-color: #fff;
+    text-align: left;
+    width: 40px;
+}
+
+.statistics .glyphicon
+{
+    font-size: 20px;
+}
+
+.statistics .badge
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.icon.success h2
+{
+    text-transform: none;
 }
 
 @media screen and (min-width: 768px)
@@ -53,7 +86,6 @@
 
     .img
     {
-        margin: 5% auto 0;
         width: 90%;
         max-height: 600px;
         padding: 0;
@@ -66,19 +98,19 @@
 
     .success-checkIn
     {
-        font-size: 150px;
+        font-size: 90px;
         right: 10px;
         top: 10px;
     }
 
-    .place-title
-    {
-        margin-bottom: 10px;
-        display: inline;
-    }
-
     .place-head
     {
-        width: 100%;
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .place .caption
+    {
+        padding: 5px 0;
     }
 }
