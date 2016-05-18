@@ -250,7 +250,7 @@ var addQuestForm = {
                 });
         });
 
-        place.find('.combobox-container > input:first-child').change(function () {
+        coordsInputField.change(function () {
             if (combobox.selected) {
                 setPlacemark(place, $(this).val().split(','), true);
             }
