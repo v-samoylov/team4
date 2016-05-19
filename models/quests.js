@@ -210,9 +210,14 @@ const addCheckinToPlace = (title, placeTitle, user) => {
                 {returnOriginal: false}
             );
         })
-        .then(res => res.value.places
-            .find(place => place.title === placeTitle)
-            .checkins.length);
+        .then(res => {
+            const quest = res.value;
+            const checkinCount = quest.places
+                .find(place => place.title === placeTitle)
+                .checkins.length;
+            const isFinished = quest.places.every(place => place.checkins.indexOf('user') > -1);
+            return {checkinCount, isFinished};
+        });
 };
 
 const getTitle = url => {
