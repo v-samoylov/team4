@@ -72,13 +72,13 @@
                                 </div>
                             {{/each}}
                         {{else}}
-                            <div>Пока никто не оставил отзывов</div>
+                            <div id="empty-reviews">Пока никто не оставил отзывов</div>
                         {{/if}}
                         </section>
                         {{#if commonData.user}}
                             <form action='' id="review" data-name="{{title}}" method="post">
                                 <label for="comment">Отзыв:</label>
-                                <textarea class="new-comment form-control" rows="5" required></textarea>
+                                <textarea id="comment" class="form-control new-comment" rows="5" required></textarea>
                                 <button type="submit" class="btn btn-info send-com" disabled>Добавить отзыв</button>
                             </form>
                         {{/if}}

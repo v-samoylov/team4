@@ -2,6 +2,7 @@ require('./place.css');
 
 function checkIn() {
     var name = $(this).data('name');
+    var countId = $(this).data('url') + '-count';
     var options = {
         enableHighAccuracy: true,
         maximumAge: 50000,
@@ -33,6 +34,8 @@ function checkIn() {
                     var checkIn = $('<span></span>', {
                         class: 'glyphicon glyphicon-ok-circle success-checkIn'
                     });
+                    var count = $('#' + countId);
+                    count.html(Number(count.html()) + 1);
                     swal("Отлично!", "Вы успешно нашли место!", "success"); //eslint-disable-line
                     var container = $(button).parent().prev();
                     $(container).append(checkIn);

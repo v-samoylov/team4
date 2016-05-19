@@ -77,7 +77,7 @@ $(function () {
             }).appendTo(heading);
 
             commentSection.append(comment);
-
+            $('#empty-reviews').remove();
             form.find('textarea').val('');
             form.find('[type="submit"]').prop('disabled', true);
         })
