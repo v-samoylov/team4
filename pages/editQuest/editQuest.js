@@ -12,6 +12,7 @@ var addQuestForm = {
         validator.init();
         this._bindEvents();
         $('.js-map-box').append(this._$templateMap.clone());
+        $('.js-image-preview-filename').val(' ').change();
     },
 
     _collectData: function () {
