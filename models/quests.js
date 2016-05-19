@@ -216,7 +216,7 @@ const addCheckinToPlace = (title, placeTitle, user) => {
             const checkinCount = quest.places
                 .find(place => place.title === placeTitle)
                 .checkins.length;
-            const isFinished = quest.places.every(place => place.checkins.indexOf('user') > -1);
+            const isFinished = quest.places.every(place => place.checkins.indexOf(user) > -1);
             return {checkinCount, isFinished};
         });
 };
