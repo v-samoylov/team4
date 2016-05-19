@@ -1,6 +1,8 @@
 'use strict';
 
 require('../../blocks/yandexMap/yandexMap.js');
+require('./bootstrap-combobox.css');
+require('./bootstrap-combobox.js');
 
 var validator = require('../../lib/forms/forms');
 
