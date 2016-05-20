@@ -24,6 +24,19 @@
     position: relative;
 }
 
+.add-route-btn,
+.insta-img
+{
+    background-image: none;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    display: inline-block;
+    font-size: 30px;
+    margin: 0 5px 10px 0;
+}
+
 .place-title
 {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -38,6 +51,7 @@
     margin: 5px auto;
     width: 100%;
     position: relative;
+    text-align: center;
 }
 
 .success-checkIn
