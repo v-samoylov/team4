@@ -253,7 +253,7 @@ exports.checkin = (req, res) => {
     model.getQuest(questName)
         .then(quest => {
             id = quest._id;
-            quest.places.find(place => place.title === placeName);
+            return quest.places.find(place => place.title === placeName);
         })
         .then(place => {
             let distance = geolib.getDistance(
@@ -263,17 +263,16 @@ exports.checkin = (req, res) => {
 
             if (distance > 30) {
                 res.status(400).send('Вы слишком далеко от места');
-
                 return;
             }
 
             model
                 .addCheckinToPlace(questName, placeName, req.commonData.user)
-                .then(res => {
-                    if (res.isFinished) {
+                .then(result => {
+                    if (result.isFinished) {
                         userMod.questFinish(req.commonData.user, id);
                     }
-                    res.status(200).send(res);
+                    res.status(200).send(result);
                 });
         })
         .catch(err => {
