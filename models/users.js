@@ -105,8 +105,7 @@ function getPublicUserData(name) {
 
 function questFinish(name, questId) {
     return usersCollection.update({name},
-        {$pull: {inProgressQuests: questId}},
-        {$push: {finishedQuests: questId}});
+        {$pull: {inProgressQuests: questId}, $push: {finishedQuests: questId}});
 }
 
 function isNameAvalible(newName) {
