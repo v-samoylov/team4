@@ -22,7 +22,6 @@ module.exports = () => {
                 if (err) {
                     res.renderLayout('./pages/notFound/notFound.hbs',
                         {text: "Сожелеем, но сервис временно не доступен"});
-                    // next(err);
                 } else {
                     connection = db;
                     req.db = connection;
