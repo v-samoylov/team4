@@ -2,8 +2,8 @@
 
 require('../../blocks/authAndReg/authAndReg.css');
 
-const validator = require('../../lib/forms/forms.js');
-const getCookie = require('../../lib/getCookie.js');
+var validator = require('../../lib/forms/forms.js');
+var getCookie = require('../../lib/getCookie.js');
 
 $(function () {
     validator.init();
