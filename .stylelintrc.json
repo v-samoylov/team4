@@ -8,6 +8,8 @@
   },
   "ignoreFiles": [
     "public/*",
-    "presentation/*"
+    "presentation/*",
+    "pages/createQuest/bootstrap-combobox.css",
+    "pages/editQuest/bootstrap-combobox.css"
   ]
 }
