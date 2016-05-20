@@ -35,9 +35,9 @@ app.use((req, res, next) => {
 app.use(mongo());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(renderLayout());
 app.use(cookieParser());
 app.use(cookieAuthenticator());
+app.use(renderLayout());
 
 require('./routes')(app);
 
