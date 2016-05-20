@@ -84,6 +84,16 @@
     border-color: #00a000;
 }
 
+.reg-ref-button
+{
+    background-color: #a8cc77;
+}
+
+.reg-ref
+{
+    margin-bottom: 20px;
+}
+
 .reviews
 {
     text-align: left;
