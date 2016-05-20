@@ -117,7 +117,8 @@ exports.reg = (req, res) => {
 
 exports.error404 = (req, res) => {
     debug('error404');
-    res.status(404).renderLayout('./pages/notFound/notFound.hbs');
+    res.status(404).renderLayout('./pages/notFound/notFound.hbs',
+        {text: "Ой, ничего нет. Но <a href='/'>здесь</a> есть много интересного."});
 };
 
 exports.getTitles = (req, res) => {
