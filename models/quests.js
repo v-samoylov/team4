@@ -116,7 +116,12 @@ const createQuest = quest => {
                 likesCount: 0
             });
         })
-        .then(res => res.ops[0].url);
+        .then(res => {
+            return {
+                url: res.ops[0].url,
+                id: res.ops[0]._id
+            };
+        });
 };
 
 const addCommentToPlace = (title, placeTitle, comment) => {
