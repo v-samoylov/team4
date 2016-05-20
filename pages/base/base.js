@@ -7,7 +7,7 @@ require('../../blocks/footer/footer.js');
 $(function () {
     autosize($('textarea')); // eslint-disable-line
 
-     $('#logout').click(function (e) {
+    $('#logout').click(function (e) {
         e.preventDefault();
 
         $.ajax({

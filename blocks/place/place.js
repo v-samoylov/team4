@@ -30,13 +30,16 @@ function checkIn() {
                         longitude: position.coords.longitude
                     }
                 })
-                .done(function () {
+                .done(function (msg) {
                     var checkIn = $('<span></span>', {
                         class: 'glyphicon glyphicon-ok-circle success-checkIn'
                     });
                     var count = $('#' + countId);
-                    count.html(Number(count.html()) + 1);
-                    swal("Отлично!", "Вы успешно нашли место!", "success"); //eslint-disable-line
+                    count.html(msg.checkinCount);
+                    swal("Отлично!", "Вы нашли место!", "success");//eslint-disable-line
+                    if (msg.isFinished) {
+                        swal("Поздравлем!", "Вы успешно завершили квест!", "success");//eslint-disable-line
+                    }
                     var container = $(button).parent().prev();
                     $(container).append(checkIn);
                     $(button).remove();

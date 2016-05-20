@@ -20,7 +20,8 @@ module.exports = () => {
         } else {
             connection = MongoClient.connect(mongoUri, (err, db) => {
                 if (err) {
-                    next(err);
+                    res.renderLayout('./pages/notFound/notFound.hbs',
+                        {text: "Сожелеем, но сервис временно не доступен"});
                 } else {
                     connection = db;
                     req.db = connection;

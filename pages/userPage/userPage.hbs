@@ -18,80 +18,81 @@
                 <div class="box">
                     <div class="main-content">
                         {{#if self}}
-                            <p class="text-center">
+                            <p class="text-center username">
                                 Моя страничка
                             </p>
                         {{else}}
-                            <p class="text-center">
+                            <p class="text-center username">
                                 {{username}}
                             </p>
                         {{/if}}
-                        <div class="main panel-primary">
-                            <div id="inProcess-title">
-                                <hr>
-                                {{#if self}}
-                                    <h2 class="intro-text text-center">Мои квесты</h2>
-                                {{else}}
-                                    <h2 class="intro-text text-center">Созданные</h2>
-                                {{/if}}
-                                <hr>
-                            </div>
-                            <div class="quest">
-                                <div class="row">
-                                    {{#if created}}
-                                        {{>tableImages/tableImages this created=../created arr=../created}}
-                                    {{else}}
-                                        <div class="text-center">
-                                            {{#if self}}
-                                                Вы еще не создали ни одного квеста
-                                            {{else}}
-                                                Пользователь еще не создал ни одного квеста
-                                            {{/if}}
-                                        </div>
-                                    {{/if}}
+
+                        <ul class="nav nav-tabs nav-justified" role="tablist" id="myTabExample">
+                            <li><a href="#my-quest" role="tab" data-toggle="tab">Созданные</a></li>
+                            <li><a href="#finished-quest" role="tab" data-toggle="tab">Пройденные</a></li>
+                            <li><a href="#in-process-quest" role="tab" data-toggle="tab">В процессе</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane" id="my-quest"> 
+                                <div class="quest">
+                                    <div class="row">
+                                        {{#if created}}
+                                            {{>tableImages/tableImages this created=../created arr=../created}}
+                                        {{else}}
+                                            <div class="text-center message">
+                                                {{#if self}}
+                                                    Вы еще не создали ни одного квеста
+                                                {{else}}
+                                                    Пользователь еще не создал ни одного квеста
+                                                {{/if}}
+                                            </div>
+                                        {{/if}}
+                                    </div>
                                 </div>
                             </div>
-                            <div id="inProcess-title">
-                                <hr>
-                                <h2 class="intro-text text-center">Завершенные</h2>
-                                <hr>
-                            </div>
-                            <div class="quest">
-                                <div class="row">
-                                    {{#if finished}}
-                                        {{>tableImages/tableImages this arr=../finished}}
-                                    {{else}}
-                                        <div class="text-center">
-                                            {{#if self}}
-                                                Вы еще не прошли ни одного квеста
+
+                            <div class="tab-pane" id="finished-quest"> 
+                                <div name="finished-quest">
+                                    <div class="quest">
+                                        <div class="row">
+                                            {{#if finished}}
+                                                {{>tableImages/tableImages this arr=../finished}}
                                             {{else}}
-                                                Пользователь еще не прошел ни одного квеста
+                                                <div class="text-center message">
+                                                    {{#if self}}
+                                                        Вы еще не прошли ни одного квеста
+                                                    {{else}}
+                                                        Пользователь еще не прошел ни одного квеста
+                                                    {{/if}}
+                                                </div>
                                             {{/if}}
                                         </div>
-                                    {{/if}}
+                                    </div>
                                 </div>
                             </div>
-                            <div id="inProcess-title">
-                                <hr>
-                                <h2 class="intro-text text-center">В процессе</h2>
-                                <hr>
-                            </div>
-                            <div class="quest">
-                                <div class="row">
-                                    {{#if inProcess}}
-                                        {{>tableImages/tableImages this arr=../inProcess}}
-                                    {{else}}
-                                        <div class="text-center">
-                                            {{#if self}}
-                                                Сейчас вы не проходите ни одного квеста
+
+                            <div class="tab-pane" id="in-process-quest"> 
+                                <div name="in-process-quest">
+                                    <div class="quest">
+                                        <div class="row">
+                                            {{#if inProcess}}
+                                                {{>tableImages/tableImages this arr=../inProcess}}
                                             {{else}}
-                                                Сейчас пользователь не проходит ни одного квеста
+                                                <div class="text-center message">
+                                                    {{#if self}}
+                                                        Сейчас вы не проходите ни одного квеста
+                                                    {{else}}
+                                                        Сейчас пользователь не проходит ни одного квеста
+                                                    {{/if}}
+                                                </div>
                                             {{/if}}
                                         </div>
-                                    {{/if}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

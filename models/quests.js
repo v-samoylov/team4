@@ -51,7 +51,7 @@ const createPlace = place => {
     };
 };
 
-const isQuestValid = quest => {
+const isQuestDataValid = quest => {
     let author = quest.author;
     let title = quest.title;
     let description = quest.description;
@@ -96,12 +96,17 @@ const isQuestExist = title => {
         });
 };
 
+const isQuestValid = quest => {
+    return isQuestExist(quest.title)
+        .then(() => isQuestDataValid(quest));
+};
+
 const createQuest = quest => {
     let title = quest.title;
 
     return isQuestExist(title)
         .then(() => {
-            isQuestValid(quest);
+            isQuestDataValid(quest);
 
             let places = quest.places.map(place => createPlace(place));
 
@@ -116,7 +121,12 @@ const createQuest = quest => {
                 likesCount: 0
             });
         })
-        .then(res => res.ops[0].url);
+        .then(res => {
+            return {
+                url: res.ops[0].url,
+                id: res.ops[0]._id
+            };
+        });
 };
 
 const addCommentToPlace = (title, placeTitle, comment) => {
@@ -206,9 +216,14 @@ const addCheckinToPlace = (title, placeTitle, user) => {
                 {returnOriginal: false}
             );
         })
-        .then(res => res.value.places
-            .find(place => place.title === placeTitle)
-            .checkins.length);
+        .then(res => {
+            const quest = res.value;
+            const checkinCount = quest.places
+                .find(place => place.title === placeTitle)
+                .checkins.length;
+            const isFinished = quest.places.every(place => place.checkins.indexOf(user) > -1);
+            return {checkinCount, isFinished};
+        });
 };
 
 const getTitle = url => {
@@ -239,6 +254,7 @@ module.exports = db => {
         isPlaceExist,
         addCheckinToPlace,
         addCommentToPlace,
-        getTitle
+        getTitle,
+        isQuestValid
     };
 };

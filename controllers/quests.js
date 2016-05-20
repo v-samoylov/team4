@@ -172,7 +172,8 @@ const storage = multer.diskStorage({
 
         const fileType = file.originalname.replace(/.+(\.\w{3,4})$/, '$1');
 
-        cb(null, crypto.createHash('md5').update(fileName).digest('hex') + fileType);
+        cb(null, fileNumber + '_' +
+            crypto.createHash('md5').update(fileName).digest('hex') + fileType);
     }
 });
 
@@ -225,10 +226,13 @@ exports.create = (req, res) => {
                 })
             };
 
-            console.log('create quest:', quest);
+            debug('create quest:', quest);
             return questsModel(req.db).createQuest(quest);
         })
-        .then(url => res.send({url: 'quest/' + url}))
+        .then(data => {
+            userModel(req.db).addCreatedQuest(req.commonData.user, data.id)
+                .then(() => res.send({url: 'quest/' + data.url}));
+        })
         .catch(err => {
             console.error(err.message);
             res.status(500).send(err.message);
@@ -238,15 +242,19 @@ exports.create = (req, res) => {
 exports.checkin = (req, res) => {
     debug(`checkIn`);
     const model = questsModel(req.db);
-
+    const userMod = userModel(req.db);
     let name = req.body.name.split('#');
     let questName = name[0];
     let placeName = name[1];
     let userLatitude = parseFloat(req.body.latitude);
     let userLongitude = parseFloat(req.body.longitude);
+    let id;
 
     model.getQuest(questName)
-        .then(quest => quest.places.find(place => place.title === placeName))
+        .then(quest => {
+            id = quest._id;
+            quest.places.find(place => place.title === placeName);
+        })
         .then(place => {
             let distance = geolib.getDistance(
                 {latitude: userLatitude, longitude: userLongitude},
@@ -261,7 +269,12 @@ exports.checkin = (req, res) => {
 
             model
                 .addCheckinToPlace(questName, placeName, req.commonData.user)
-                .then(() => res.status(200).send({}));
+                .then(res => {
+                    if (res.isFinished) {
+                        userMod.questFinish(req.commonData.user, id);
+                    }
+                    res.status(200).send(res);
+                });
         })
         .catch(err => {
             console.log(err);
