@@ -1,38 +1,77 @@
 'use strict';
 
 require('./index.css');
-require('../../blocks/header/header.js');
-var skip = 0;
 
-/* global $: true*/
-$('#getMore').click(function (e) {
-    e.preventDefault();
-    $.ajax({
-        method: "POST",
-        url: "/get-more-quests",
-        data: {skip: skip + 10}
-    })
+$(function () {
+    var skip = 3;
+    var end = false;
+    var $loadGif = $('.more-loading-gif');
+
+    function getMore() {
+        $.ajax({
+            method: "POST",
+            url: "/get-more-quests",
+            data: {
+                skip: skip,
+                get: 3
+            }
+        })
         .done(function (data) {
-            skip += 10;
+            console.log(data);
+
+            if (!end && data.quests.length == 0) { // eslint-disable-line
+                end = true;
+                $loadGif.fadeOut('medium');
+
+                return;
+            }
+
+            skip += data.quests.length;
+
             data.quests.forEach(function (quest) {
-                var newElem = $('<div></div>', {
-                    class: 'col-lg-12 text-center'
+                var $newElem = $('<div></div>', {
+                    class: 'text-center'
                 });
+
+                var $imgBox = $('<div></div>', {
+                    class: 'img-box'
+                }).appendTo($newElem);
+
                 $('<img>', {
                     class: 'img-responsive img-border img-full',
                     src: quest.photo,
                     alt: quest.title
-                }).appendTo(newElem);
+                }).appendTo($imgBox);
+
                 $('<h2></h2>', {
                     text: quest.title
-                }).appendTo(newElem);
+                }).appendTo($newElem);
+
                 $('<a></a>', {
                     href: '/quest/' + quest.url,
                     class: 'btn btn-default btn-lg',
                     text: 'Посмотреть'
-                }).appendTo(newElem);
-                newElem.append('<hr>');
-                $('#list-of-quests').append(newElem);
+                }).appendTo($newElem);
+
+                $newElem.append('<hr>');
+
+                $newElem.hide();
+
+                $('#list-of-quests').append($newElem);
+
+                $newElem.fadeIn('medium');
+
+                $loadGif.fadeOut('medium');
             });
         });
+    }
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+            if (!end) {
+                $loadGif.fadeIn('medium');
+                setTimeout(getMore, 500);
+            }
+        }
+    });
 });

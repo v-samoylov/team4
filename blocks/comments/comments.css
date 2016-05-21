@@ -1,24 +1,59 @@
-.panel.main > .panel-body
+.panel.main
 {
-    display: none;
+    margin-top: 0 !important;
 }
 
-.panel.main > .panel-heading:hover
+.panel.main > .panel-heading
 {
+    background: none #7ec2c0;
+    border: none;
+}
+
+.panel-body
+{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.comment-icon
+{
+    background-image: none;
+    background-color: #fff;
+    border: none;
     cursor: pointer;
+    color: #666;
+    display: inline-block;
+    margin: 0 5px 10px 0;
+}
+
+.comment-title
+{
+    font-size: 20px;
+    text-align: left;
+    margin: auto auto 15px 35px;
+    cursor: pointer;
+    width: auto;
+}
+
+.panel.main
+{
+    border-color: #7ec2c0;
+    text-align: left;
+    margin-top: 15px;
 }
 
 .comment-list .panel
 {
     position: relative;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.comment-list .panel > .panel-heading::after,
-.panel > .panel-heading::before
+.panel > .panel-heading::before,
+.comment-list .panel > .panel-heading::after
 {
     position: absolute;
     top: 11px;
-    left: -16px;
+    left: -15px;
     right: 100%;
     width: 0;
     height: 0;
@@ -51,4 +86,24 @@
 .comment-list .thumbnail
 {
     padding: 0;
+}
+
+.comment-list .row
+{
+    margin: 0;
+}
+
+.send-com
+{
+    margin: 20px 5px 20px 0;
+    padding: 10px;
+    background-image: none;
+}
+
+@media screen and (min-width: 768px)
+{
+    .comment-icon
+    {
+        font-size: 30px;
+    }
 }

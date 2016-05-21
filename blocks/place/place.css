@@ -1,21 +1,130 @@
 .place
 {
-    width: 80%;
+    width: 100%;
     margin: auto;
+    position: relative;
+}
+
+.place .caption
+{
+    width: 100%;
+}
+
+.img img
+{
+    width: 100%;
+    max-width: 100%;
+    margin: auto;
+}
+
+.img
+{
+    overflow: hidden;
+    margin: 0 auto 9px;
+    position: relative;
+}
+
+.add-route-btn,
+.insta-img
+{
+    background-image: none;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    display: inline-block;
+    font-size: 30px;
+    margin: 0 5px 10px 0;
 }
 
 .place-title
 {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
-    width: 50%;
-    margin: 10px auto;
-    font-size: 50px;
+    max-width: 80%;
+    margin: 10px auto 10px auto;
 }
 
-@media screen and (max-device-width: 568px)
+.place-head
 {
+    display: inline-block;
+    margin: 5px auto;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.success-checkIn
+{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 100px;
+    color: #a8cc77;
+}
+
+.statistics
+{
+    position: relative;
+    margin: auto auto 10px auto;
+    background-color: #fff;
+    text-align: left;
+    width: 40px;
+}
+
+.statistics .glyphicon
+{
+    font-size: 20px;
+}
+
+.statistics .badge
+{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.icon.success h2
+{
+    text-transform: none;
+}
+
+@media screen and (min-width: 768px)
+{
+
     .place
     {
-        width: 100%;
+        width: 80%;
+        margin: auto;
+    }
+
+    .img
+    {
+        width: 90%;
+        max-height: 600px;
+        padding: 0;
+    }
+
+    .img img
+    {
+        border: 1px solid #ddd;
+    }
+
+    .success-checkIn
+    {
+        font-size: 90px;
+        right: 10px;
+        top: 10px;
+    }
+
+    .place-head
+    {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .place .caption
+    {
+        padding: 5px 0;
     }
 }

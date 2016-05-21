@@ -1,7 +1,9 @@
 'use strict';
 
 require('./createQuest.css');
-require('../../blocks/yandexMap/yandexMap.css');
+require('./bootstrap-combobox.css');
+require('./bootstrap-combobox.js');
+require('../../blocks/yandexMap/yandexMap.js');
 
 var validator = require('../../lib/forms/forms');
 
@@ -50,6 +52,7 @@ var addQuestForm = {
 
         $newPlace.find('.js-map-box').append(this._$templateMap.clone());
         $newPlace.hide().appendTo(this._$places).fadeIn('medium');
+        $(window).scrollTo(this._$addPlaceBtn.selector, 500);
 
         validator.init();
         validator.updateInputs();
@@ -57,15 +60,15 @@ var addQuestForm = {
         this._initMap($newPlace);
     },
 
-    _removePlace: function (event) {
-        $(event.target).closest(this._$place.selector).fadeOut('medium', function () {
+    _removePlace: function (e) {
+        $(e.target).closest(this._$place.selector).fadeOut('medium', function () {
             $(this).remove();
             validator.updateInputs();
         });
     },
 
-    _showPreview: function (event) {
-        var $input = $(event.target);
+    _showPreview: function (e) {
+        var $input = $(e.target);
         var $parent = $input.closest(this._$fileInputDiv.selector);
         var $previewPlace = $parent.find(this._$customImagePreview.selector);
         var $fileName = $parent.find(this._$imagePreviewFileName.selector);
@@ -88,13 +91,16 @@ var addQuestForm = {
         reader.readAsDataURL(file);
     },
 
-    _clearPreview: function (event) {
-        var $button = $(event.target);
+    _clearPreview: function (e) {
+        var $button = $(e.target);
         var $parent = $button.closest(this._$fileInputDiv.selector);
-        $parent.find(this._$customImagePreview).empty();
+        var $icon = $parent.find(this._$imagePreviefFileNameIcon);
+
+        $parent.find(this._$customImagePreview.selector).empty();
         $parent.find(this._$imagePreviewFileName.selector).val('');
         $parent.find(this._$imagePreviewInputFile.selector).val('');
         $parent.find(this._$imagePreviewClear.selector).hide();
+        $icon.attr('style', 'right: 40px');
         validator.updateInputs();
     },
 
@@ -107,19 +113,21 @@ var addQuestForm = {
                 controls: []
             }
         );
+
         place.map.placemark = null;
+
         place.map.events.add(
             'click', function (e) {
                 var coords = e.get('coords');
                 this._setPlacemark(place, coords);
             }.bind(this)
         );
-        place.find('.js-location-search-button').click(
-            function () {
-                var addressInputField = place.find('.js-address-field');
-                this._setPlacemark(place, addressInputField.val(), true);
-            }.bind(this)
+        place.map.events.add(
+            'dblclick', function (e) {
+                e.preventDefault();
+            }
         );
+
         place.find('.js-current-location-search-button').click(
             function () {
                 var options = {
@@ -127,11 +135,14 @@ var addQuestForm = {
                     maximumAge: 50000,
                     timeout: 10000
                 };
+
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
                         var coords = [position.coords.latitude, position.coords.longitude];
+
                         this._setPlacemark(place, coords, true);
                     }.bind(this),
+
                     function (error) {
                         console.log(error);
                     },
@@ -139,50 +150,130 @@ var addQuestForm = {
                 );
             }.bind(this)
         );
+
+        this._initLocationSearch(place);
     },
 
     _setPlacemark: function (place, location, isCentered) {
-        if (place.map.placemark) {
-            place.map.geoObjects.remove(place.map.placemark);
-            place.map.placemark = null;
-        }
-        var addressField = place.find('.form-control.js-address-place');
-        var coordinatesField = place.find('.form-control.js-coordinates-place');
+        var coordinatesField = place.find('.combobox-container > input:first-child');
+        var addressField = place.find('input.combobox');
 
         var cb = function (res) {
             var nearest = res.geoObjects.get(0);
             var coords;
+
             if (location instanceof Array) {
                 coords = location;
             } else {
                 coords = nearest.geometry.getCoordinates();
             }
-            var address = nearest.properties.get('name');
-            place.map.placemark = new ymaps.Placemark(coords); // eslint-disable-line
+
+            var address = nearest.properties.get('text');
+
+            var placemark = place.map.geoObjects.get(0);
+
+            if (placemark) {
+                if (!placemark.options.get('visible')) {
+                    placemark.options.set('visible', true);
+                }
+                placemark.geometry.setCoordinates(coords);
+            } else {
+                placemark = new ymaps.Placemark(coords); // eslint-disable-line
+                placemark.events.add('dblclick', function () {
+                    placemark.options.set('visible', false);
+                    coordinatesField.val('');
+                    addressField.val('');
+                });
+                place.map.geoObjects.add(placemark);
+            }
+
             if (isCentered) {
                 place.map.setCenter(coords, 17);
             }
-            place.map.placemark.events.add('dblclick', function (evt) {
-                evt.preventDefault();
-                place.map.geoObjects.remove(place.map.placemark);
-                place.map.placemark = null;
-                addressField.val('').change();
-                coordinatesField.val('');
-            });
-            place.map.geoObjects.add(place.map.placemark);
-            addressField.val(address).change();
+
             coordinatesField.val(coords);
+            addressField.val(address);
         };
         ymaps.geocode(location).then(cb); // eslint-disable-line
+    },
+
+    _initLocationSearch: function (place) {
+        var combobox = place.find('.combobox');
+
+        combobox.combobox({
+            matcher: function () {
+                return true;
+            }
+        });
+
+        combobox = combobox.combobox.get();
+
+        var setPlacemark = this._setPlacemark;
+        var addressInputField = place.find('input.combobox');
+        var coordsInputField = place.find('.combobox-container > input:first-child');
+
+        coordsInputField.attr('name', 'geo-place');
+        coordsInputField.addClass('form-control');
+        addressInputField.addClass('form-control');
+
+        place.find('input.combobox').keyup(function () {
+            var placemark = place.map.geoObjects.get(0);
+
+            if (placemark && !combobox.selected) {
+                placemark.options.set('visible', false);
+            }
+
+            var userInput = $(this).val();
+
+            ymaps.geocode(userInput).then(function (res) { //eslint-disable-line
+                var it = res.geoObjects.getIterator();
+
+                place.find('select.combobox').empty();
+                place.find('select.combobox').append('<option></option>');
+
+                var placeChoise;
+
+                while ((placeChoise = it.getNext()) !== it.STOP_ITERATION) {
+                    var address = placeChoise.properties.get('text');
+                    var coords = placeChoise.geometry.getCoordinates().join(',');
+                    var newOption = '<option value="' + coords + '">' + address + '</option>';
+
+                    place.find('select.combobox').append(newOption);
+                }
+
+                combobox.refresh();
+                combobox.lookup();
+                combobox.show();
+            },
+
+            function (err) {
+                console.log(err);
+            });
+        });
+
+        place.find('.combobox-container > input:first-child').change(function () {
+            if (combobox.selected) {
+                setPlacemark(place, $(this).val().split(','), true);
+            }
+        });
     }
 };
 
 $(function () {
     addQuestForm.init();
 
+    var $boxForm = $('.box');
+    var $boxLoadingGif = $('.box.loading-gif');
+    var $errorMessage = $('.bg-danger.danger-message');
+
     $('.js-create-quest-form').submit(function (e) {
         e.preventDefault();
+
         var formData = new FormData($(this)[0]);
+
+        $boxForm.hide();
+        $boxLoadingGif.show();
+        $errorMessage.hide();
 
         $.ajax({
             url: '/create-quest',
@@ -191,6 +282,15 @@ $(function () {
             cache: false,
             contentType: false,
             processData: false
+        })
+        .done(function (res) {
+            window.location = res.url;
+        })
+        .fail(function (res) {
+            $boxForm.show();
+            $boxLoadingGif.hide();
+            $errorMessage.empty().append(res.responseText).show();
+            $(window).scrollTo($errorMessage.selector, 500);
         });
     });
 });

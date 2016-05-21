@@ -5,8 +5,16 @@ const debug = require('debug')('team4:middleware:authRequired');
 module.exports = (req, res, next) => {
     debug('check auth');
     if (req.commonData.user) {
+        if (res.cookie('referrer')) {
+            res.cookie('referrer', '', {maxAge: -1});
+        }
         next();
     } else {
-        res.redirect('/auth');
+        res.cookie('referrer', req.get('Referrer'), {maxAge: 60 * 60 * 1000});
+        if (req.method === 'GET') {
+            res.redirect('/auth');
+        } else {
+            res.send({redirect: '/auth'});
+        }
     }
 };

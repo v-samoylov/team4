@@ -1,15 +1,51 @@
 <div class="row">
     <div class="place">
-        <div class="thumbnail">
-            <img src={{img}} alt={{title}}>
-            <div class="caption">
-                <h3 class="place-title">{{title}}</h3>
-                {{> comments/comments this place=true}}
-                {{#if inProgress}}
-                    {{#unless check-in}}
-                        <button class="btn btn-success check-in">Check-in</button>
-                    {{/unless}}
+        <div class="thumbnail ">
+            <h3 class="place-title">{{title}}</h3>
+            <div class="statistics">
+                <span class="statistics-icon glyphicon glyphicon-user"></span>
+                <span class="badge" id="{{url}}-count">{{checkins.length}}</span>
+            </div>
+            <div class="img">
+                {{#if checkIn}}
+                    <span class="glyphicon glyphicon-ok-circle success-checkIn"></span>
                 {{/if}}
+                <img class="" src={{img}} alt={{title}}>
+            </div>
+            <div class="caption" data-name="{{quest}}#{{title}}">
+                <div class="place-head" id="collapse-group">
+                    <button data-toggle="collapse"
+                            data-parent="#collapse-group"
+                            class="comment-icon glyphicon glyphicon-comment"
+                            data-target="#{{url}}-comments">
+                    </button>
+                    <button data-latitude="{{geo.latitude}}"
+                            data-toggle="collapse"
+                            data-parent="#collapse-group"
+                            data-target="#{{url}}-map"
+                            data-longitude="{{geo.longitude}}"
+                            class="add-route-btn glyphicon glyphicon-globe">
+                    </button>
+                    <button data-latitude="{{geo.latitude}}"
+                            data-toggle="collapse"
+                            data-parent="#collapse-group"
+                            data-target="#{{url}}-img"
+                            data-longitude="{{geo.longitude}}"
+                            class="insta-img glyphicon glyphicon-picture">
+                    </button>
+                    <div class="accordion-group panel">
+                        {{> comments/comments this}}
+                        <div id="{{url}}-map" class="collapse map"></div>
+                        <div id="{{url}}-img" class="collapse"></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+            {{#if inProgress}}
+                {{#unless checkIn}}
+                    <button data-name="{{quest}}#{{title}}" data-url="{{url}}" class="btn btn-success check-in">Check-in</button>
+                {{/unless}}
+            {{/if}}
             </div>
         </div>
     </div>

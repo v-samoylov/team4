@@ -6,20 +6,18 @@
     {{#content "styles"}}
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
         {{#if commonData.isDev}}
-            <link rel="stylesheet" href="//dream-team-4.surge.sh/registration.css">
-        {{else}}
             <link rel="stylesheet" href="/registration.css">
+        {{else}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/registration.css">
         {{/if}}
     {{/content}}
 
     {{#content "main"}}
         <div class="form">
-
             <div class="form-box">
                 <div class="form-top">
                     <div class="form-top-left">
                         <h3>Регистрация</h3>
-                        <p>Заполните форму:</p>
                     </div>
                     <div class="form-top-right">
                         <i class="fa fa-pencil"></i>
@@ -27,29 +25,42 @@
                 </div>
                 <div class="form-bottom">
                     <form role="form" action="" method="post" class="registration-form" id="reg-form">
-                        <div class="form-group">
-                            <label class="sr-only" for="form-first-name">Имя пользователя</label>
-                            <input type="text" name="form-first-name" placeholder="Username..." class="form-first-name form-control" id="name">
+                        <div class="form-group has-feedback has-error">
+                            <div class="js-input-group" data-validate="length" data-length="2">
+                                <label class="sr-only" for="form-first-name">Имя пользователя</label>
+                                <input type="text" name="form-first-name" placeholder="Username" class="form-control" id="name" required>
+                                <span class="form-control-feedback glyphicon glyphicon-remove" style="top: 10px;" aria-hidden="true"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="form-last-name">Email</label>
-                            <input type="text" name="form-last-name" placeholder="Email..." class="form-last-name form-control" id="email">
+                        <div class="form-group has-feedback has-error">
+                            <div class="js-input-group" data-validate="email">
+                                <label class="sr-only" for="form-last-name">Email</label>
+                                <input name="form-last-name" placeholder="Email" class="form-control" type="text" id="email" required>
+                                <span class="form-control-feedback glyphicon glyphicon-remove" style="top: 10px;" aria-hidden="true"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="sr-only" for="form-email">Пароль</label>
-                            <input type="text" name="form-email" placeholder="Пароль..." class="form-email form-control" id="password">
+                        <div class="form-group has-feedback has-error">
+                            <div class="js-input-group">
+                                <label class="sr-only" for="form-email">Пароль</label>
+                                <input name="form-email" placeholder="Пароль" class="form-control" type="password" id="password" required>
+                                <span class="form-control-feedback glyphicon glyphicon-remove" style="top: 10px;" aria-hidden="true"></span>
+                            </div>
                         </div>
-                        <button type="submit" class="btn">Зарегистрироваться</button>
+                        <p class="bg-danger danger-message"></p>
+                        <button type="submit" class="btn" disabled>Зарегистрироваться</button>
                         <span>Уже зарегистрированы? <a href="/auth" class="link-for-checkIn">Вход</a></span>
                     </form>
                 </div>
             </div>
-
         </div>
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="/registration.js"></script>
+        {{#if commonData.isDev}}
+            <script src="/registration.js"></script>
+        {{else}}
+            <script src="//dream-team-4.surge.sh/registration.js"></script>
+        {{/if}}
     {{/content}}
 {{/extend}}
 

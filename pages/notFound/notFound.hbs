@@ -5,24 +5,26 @@
 
     {{#content "styles"}}
         {{#if commonData.isDev}}
-            <link rel="stylesheet" href="//dream-team-4.surge.sh/notFound.css">
-        {{else}}
             <link rel="stylesheet" href="/notFound.css">
+        {{else}}
+            <link rel="stylesheet" href="//dream-team-4.surge.sh/notFound.css">
         {{/if}}
     {{/content}}
 
     {{#content "main"}}
-        <div class="main-div">
+        <div class="box main-div">
             <img src="http://iconspot.ru/image.php?width=512&height=512&crop=none&id=7196">
-            <div>
-                <p>
-                    Ой, ничего нет. Но <a href='/'>здесь</a> есть много интересного.
-                </p>
+            <div class="message">
+                {{{text}}}
             </div>
         </div>
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="/notFound.js"></script>
+        {{#if commonData.isDev}}
+            <script src="/notFound.js"></script>
+        {{else}}
+            <script src="//dream-team-4.surge.sh/notFound.js"></script>
+        {{/if}}
     {{/content}}
 {{/extend }}

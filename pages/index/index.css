@@ -1,26 +1,20 @@
-.more-btn
-{
-    display: inline-block;
-    padding: 5px 14px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-}
-
 #list-of-quests .btn-default
 {
-    background-color: #a8cc77;
-    background-image: none;
+    background: none #a8cc77;
     text-shadow: none;
+    text-transform: lowercase;
+    letter-spacing: 1px;
 }
 
-@media screen and (min-width: 768px)
+.img-box
 {
-    .img-box
-    {
-        margin: auto;
-        overflow: hidden;
-        width: 90%;
-    }
+    margin: auto;
+    overflow: hidden;
+    width: 90%;
 }
 
+.more-loading-gif
+{
+    height: 130px;
+    background: url("magnify.gif") no-repeat center;
+}

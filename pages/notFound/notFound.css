@@ -8,8 +8,21 @@ img
     text-align: center;
 }
 
-p,
-a
+.message
 {
-    font-size: 40px;
+    font-size: 25px;
+}
+
+@media screen and (min-width: 768px)
+{
+    img
+    {
+        width: 450px;
+        height: 450px;
+    }
+
+    .message
+    {
+        font-size: 60px;
+    }
 }
