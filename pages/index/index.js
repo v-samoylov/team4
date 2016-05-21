@@ -7,6 +7,18 @@ $(function () {
     var end = false;
     var $loadGif = $('.more-loading-gif');
 
+    function scroll() {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                if (!end) {
+                    $(window).unbind('scroll');
+                    $loadGif.fadeIn('medium');
+                    setTimeout(getMore, 500);
+                }
+            }
+        });
+    }
+    
     function getMore() {
         $.ajax({
             method: "POST",
@@ -17,8 +29,6 @@ $(function () {
             }
         })
         .done(function (data) {
-            console.log(data);
-
             if (!end && data.quests.length == 0) { // eslint-disable-line
                 end = true;
                 $loadGif.fadeOut('medium');
@@ -62,16 +72,12 @@ $(function () {
                 $newElem.fadeIn('medium');
 
                 $loadGif.fadeOut('medium');
-            });
+                scroll();
+            })
+        })
+        .fail(function () {
+            scroll();
         });
     }
-
-    $(window).scroll(function () {
-        if ($(window).scrollTop() + $(window).height() === $(document).height()) {
-            if (!end) {
-                $loadGif.fadeIn('medium');
-                setTimeout(getMore, 500);
-            }
-        }
-    });
+    scroll();
 });
