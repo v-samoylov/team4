@@ -49,10 +49,14 @@ describe('test a user login', function () {
 });
 
 describe('test a user registration', function () {
-    it.skip('should set an identification cookie on a successful registration', function (done) {
+    it('should set an identification cookie on a successful registration', function (done) {
         agent
             .post('/user/reg')
-            .send({name: 'testuser' + (new Date()).getTime(), email: 'a@a.com', password: 'qwer'})
+            .send({
+                name: 'testuser' + (new Date()).getTime(),
+                email: 'a@a' + (new Date()).getTime() + '.com' ,
+                password: 'qwer'
+            })
             .expect(200)
             .expect(function (res) {
                 var cookies = res.header['set-cookie'];
@@ -143,7 +147,7 @@ describe('test a user logout', function () {
                 var idCookie;
                 if (cookies) {
                     idCookie = cookies.find(function (cookie) {
-                        return cookie.substring(0, 3) === 'id=';
+                        return cookie.substring(0, 4) === 'id=;';
                     });
                 }
                 assert.ok(idCookie, 'Cookie has not been cleared');
