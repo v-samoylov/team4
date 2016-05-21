@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const tr = require('transliteration');
 const multer = require('multer');
 const geolib = require('geolib');
+const requestify = require('requestify');
 
 const flickr = require('../lib/flickr');
 const questsModel = require('../models/quests.js');
@@ -240,9 +241,10 @@ exports.create = (req, res) => {
 };
 
 exports.checkin = (req, res) => {
-    debug(`checkIn`);
+    debug('checkIn');
     const model = questsModel(req.db);
     const userMod = userModel(req.db);
+
     let name = req.body.name.split('#');
     let questName = name[0];
     let placeName = name[1];
@@ -278,5 +280,33 @@ exports.checkin = (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(400).send(err);
+        });
+};
+
+exports.instaPhotos = (req, res) => {
+    debug('instaPhotos');
+
+    let lat = req.params.lat;
+    let lng = req.params.lng;
+    let radius = 100;
+
+    let url = `http://www.whatsthere.co/media_search_by_location/${lat}&${lng}&${radius}&undefined`;
+
+    let photos = [];
+
+    requestify.get(url)
+        .then(response => {
+            let ans = JSON.parse(response.getBody());
+
+            ans.data.slice(0, 5).forEach(item => {
+                photos.push(
+                    {
+                        photo: item.images.low_resolution.url,
+                        thumnail: item.images.thumbnail.url
+                    }
+                );
+            });
+            
+            res.json(JSON.stringify(photos));
         });
 };

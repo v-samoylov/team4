@@ -18,13 +18,14 @@ module.exports = function (app) {
     app.post('/get-more-quests', pages.index);
     app.post('/start-quest', authRequired, users.startQuest);
     app.get('/quest/:name', quests.quest);
-    app.post('/quest/checkin', quests.checkin);
+    app.post('/quest/checkin', authRequired, quests.checkin);
     app.post('/like-quest', quests.likeQuest);
     app.post('/place-comment', authRequired, quests.addCommentToPlace);
     app.post('/quest-comment', authRequired, quests.addCommentToQuest);
     app.get('/create-quest', authRequired, pages.createQuest);
     app.post('/create-quest', authRequired, quests.upload, quests.create);
     app.post('/get-quest-titles', pages.getTitles);
+    app.get('/get-location-insta-photos/:lat/:lng', quests.instaPhotos);
     app.get('/search', pages.search);
     app.all('*', pages.error404);
 

@@ -6,14 +6,19 @@
     {{#content "styles"}}
         {{#if commonData.isDev}}
             <link rel="stylesheet" href="/quest.css">
+            <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
         {{else}}
             <link rel="stylesheet" href="//dream-team-4.surge.sh/quest.css">
+            <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
         {{/if}}
+    {{/content}}
+
+    {{#content "head-scripts" mode="append"}}
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     {{/content}}
 
     {{#content "main"}}
         <div class="container">
-
             <div class="row">
                 <div class="box">
                     <div class="quest-head">
@@ -45,12 +50,8 @@
                             {{/if}}
                         {{/unless}}
                     {{else}}
-                        <!--<form class="reg-ref" method="get" action="/reg">-->
-                            <!--<button class="btn reg-ref-button btn-lg" type="submit">Зарегистрироваться чтобы пройти квест</button>-->
-                        <!--</form>-->
-                        <button class="btn reg-ref-button btn-lg" id="start-quest">Зарегистрироваться чтобы пройти квест</button>
+                        <button class="btn reg-ref-button btn-lg" id="start-quest">Авторизоваться чтобы пройти квест</button>
                     {{/if}}
-
                     <div id="list-of-places">
                         {{#each places}}
                             {{>place/place this user =../commonData.user quest =../title inProgress=../inProgress}}
@@ -90,11 +91,14 @@
     {{/content}}
 
     {{#content "scripts"}}
-        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
         {{#if commonData.isDev}}
             <script src="/quest.js"></script>
+            <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/bootstrap.image-gallery/3.1.0/js/bootstrap-image-gallery.min.js"></script>
         {{else}}
             <script src="//dream-team-4.surge.sh/quest.js"></script>
+            <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/bootstrap.image-gallery/3.1.0/js/bootstrap-image-gallery.min.js"></script>
         {{/if}}
     {{/content}}
 {{/extend}}

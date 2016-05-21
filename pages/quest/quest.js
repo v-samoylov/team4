@@ -2,6 +2,7 @@
 
 require('./quest.css');
 require('../../blocks/comments/comments.js');
+
 var checkInFunc = require('../../blocks/place/place.js').checkIn;
 
 $(function () {
@@ -50,8 +51,8 @@ $(function () {
         .done(function (msg) {
             if (msg && msg.redirect) {
                 window.location = msg.redirect;
-                return;
             }
+
             var comment = $('<div></div>', {
                 class: 'review'
             });
@@ -105,8 +106,8 @@ $(function () {
         .done(function (res) {
             if (res && res.redirect) {
                 window.location = res.redirect;
-                return;
             }
+
             $(button).remove();
 
             $('.place .caption').each(function () {
@@ -116,6 +117,7 @@ $(function () {
                     text: 'Check-in',
                     'data-name': name
                 });
+
                 checkIn.click(checkInFunc);
                 $(this).append(checkIn);
             });

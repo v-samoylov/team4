@@ -89,6 +89,13 @@
     text-transform: none;
 }
 
+.loading-insta-gif
+{
+    display: none;
+    height: 150px;
+    background: url("poi.gif") no-repeat center;
+}
+
 @media screen and (min-width: 768px)
 {
 
