@@ -59,6 +59,12 @@ module.exports.login = (req, res) => {
     );
 };
 
+module.exports.loginVK = (req, res) => {
+    let userId = hash.create(req.name, salt);
+    res.cookie('id', userId, {maxAge: 24 * 60 * 60 * 1000});
+    res.redirect('/');
+};
+
 module.exports.validate = (req, res, next) => {
     debug('validate');
     if (!req.body.email) {

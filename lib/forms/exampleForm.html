@@ -15,7 +15,14 @@
     </div>
     <div class="form-group has-feedback has-error">
         <!--С проверкой длины-->
-        <div class="js-input-group" data-validate="length" data-length="10">
+        <div class="js-input-group" data-validate="min-length" data-length="10">
+            <textarea name="validate-length" class="form-control resize-vertical" placeholder="Validate length" required></textarea>
+            <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="form-group has-feedback has-error">
+        <!--С проверкой длины-->
+        <div class="js-input-group" data-validate="max-length" data-length="5">
             <textarea name="validate-length" class="form-control resize-vertical" placeholder="Validate length" required></textarea>
             <span class="form-control-feedback glyphicon glyphicon-remove" aria-hidden="true"></span>
         </div>

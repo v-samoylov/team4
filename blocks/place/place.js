@@ -1,4 +1,5 @@
 require('./place.css');
+require('./bootstrap-image-gallery.css');
 
 function checkIn() {
     var name = $(this).data('name');
@@ -36,9 +37,9 @@ function checkIn() {
                     });
                     var count = $('#' + countId);
                     count.html(msg.checkinCount);
-                    swal("Отлично!", "Вы нашли место!", "success");//eslint-disable-line
+                    swal("Отлично!", "Вы нашли место!", "success"); //eslint-disable-line
                     if (msg.isFinished) {
-                        swal("Поздравлем!", "Вы успешно завершили квест!", "success");//eslint-disable-line
+                        swal("Поздравлем!", "Вы успешно завершили квест!", "success"); //eslint-disable-line
                     }
                     var container = $(button).parent().prev();
                     $(container).append(checkIn);
@@ -57,16 +58,63 @@ function checkIn() {
 }
 
 module.exports.checkIn = checkIn;
-var routeMap;
+
+var routeMaps = {};
+
 $(function () {
     $('.check-in').each(function () {
         $(this).click(checkIn);
     });
 
     $('.insta-img').click(function () {
-        var placeLatitude = parseFloat($(this).data('latitude'));
-        var placeLongitude = parseFloat($(this).data('longitude'));
-        console.log(placeLatitude, placeLongitude);
+        var $target = $(this).data('target');
+        var $linksPlace = $($target).find('.js-links').empty();
+        var $loadGif = $($target).find('.loading-insta-gif');
+
+        var $placeLatitude = parseFloat($(this).data('latitude'));
+        var $placeLongitude = parseFloat($(this).data('longitude'));
+        console.log($placeLatitude, $placeLongitude);
+
+        $loadGif.show();
+
+        $.ajax({
+            url: '/get-location-insta-photos' + '/' + $placeLatitude + '/' + $placeLongitude, // eslint-disable-line
+            type: 'GET'
+        })
+        .done(function (msg) {
+            var ans = JSON.parse(msg);
+
+            if (ans.length) {
+                ans.forEach(function (item) {
+                    var elem = $('<a />',
+                        {
+                            href: item.photo,
+                            title: 'photo'
+                        }
+                    );
+
+                    elem.attr('data-gallery', '');
+
+                    elem.append($('<img >', {
+                        style: 'display: inline-block; margin: 10px;',
+                        src: item.thumnail,
+                        alt: 'thumb'
+                    }));
+                    $linksPlace.append(elem);
+                });
+
+                $loadGif.hide();
+                $linksPlace.fadeIn('medium');
+            } else {
+                $loadGif.hide();
+                $linksPlace.append(
+                    $('<p></p>').text('Здесь никто не чекинился :<')
+                ).fadeIn('medium');
+            }
+        })
+        .fail(function (err) {
+            console.log(err.responseText); //eslint-disable-line
+        });
     });
 
     $('.add-route-btn').click(function () {
@@ -78,23 +126,23 @@ $(function () {
         var placeLongitude = parseFloat($(obj).data('longitude'));
 
         var map = $(obj).data('target').split('#')[1];
-        console.log(placeLatitude, placeLongitude, map);
         var options = {
             enableHighAccuracy: true,
             maximumAge: 50000,
             timeout: 10000
         };
+
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                if (!routeMap) {
-                    routeMap = new ymaps.Map(map, { //eslint-disable-line
+                if (!routeMaps[map]) {
+                    routeMaps[map] = new ymaps.Map(map, { //eslint-disable-line
                         center: [placeLatitude, placeLongitude],
                         zoom: 10,
                         controls: []
                     });
                 }
                 var userCoords = [position.coords.latitude, position.coords.longitude];
-                // тестовая точка
+
                 ymaps.route([ //eslint-disable-line
                     {type: 'wayPoint', point: userCoords},
                     {type: 'wayPoint', point: [placeLatitude, placeLongitude]}
@@ -105,7 +153,8 @@ $(function () {
                         strokeColor: '0000ffff',
                         opacity: 0.9
                     });
-                    routeMap.geoObjects.add(route);
+                    routeMaps[map].geoObjects.add(route);
+                    $(obj).parent().find('.loading-map').hide();
                 });
             },
             function (error) {

@@ -19,7 +19,7 @@ $(function () {
             window.location = '/';
         })
         .fail(function (msg) {
-            console.log(msg);
+            console.error(msg);
         });
     });
 });

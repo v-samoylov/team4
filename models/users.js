@@ -22,6 +22,11 @@ const errors = {
     wrongData: {
         code: 1,
         message: 'Неверные логин/пароль'
+    },
+
+    mailExist: {
+        code: 1,
+        message: 'Почта уже зарегистрирована'
     }
 };
 
@@ -50,8 +55,42 @@ const login = user => {
         );
 };
 
+const addUserVK = newUser => {
+    return isNameAvalible(newUser.name)
+        .then(() => {
+            newUser.finishedQuests = [];
+            newUser.inProgressQuests = [];
+            newUser.createdQuests = [];
+            newUser.url = toUrl(newUser.name);
+
+            return usersCollection.insertOne(newUser);
+        });
+};
+
+const loginVK = user => {
+    return usersCollection
+        .find({name: user.name})
+        .toArray()
+        .then(
+            result => {
+                if (result.length) {
+                    return result[0];
+                }
+                return addUserVK(user);
+            },
+            () => {
+                throw errors.mongoError;
+            }
+        );
+};
+
+const removeUser = user => {
+    usersCollection.remove({name: user.name});
+};
+
 const addUser = newUser => {
     return isNameAvalible(newUser.name)
+        .then(() => isEmailAvalible(newUser.email))
         .then(() => {
             newUser.password = getHash(newUser.password);
             newUser.finishedQuests = [];
@@ -122,6 +161,20 @@ function isNameAvalible(newName) {
     });
 }
 
+function isEmailAvalible(email) {
+    return new Promise((resolve, reject) => {
+        usersCollection.find({email}).toArray((err, result) => {
+            if (err) {
+                reject(errors.mongoError);
+            } else if (result.length) {
+                reject(errors.mailExist);
+            } else {
+                resolve();
+            }
+        });
+    });
+}
+
 function isUserExist(name) {
     return usersCollection
         .find({name})
@@ -143,6 +196,8 @@ function getNameById(url) {
 const operations = {
     addUser,
     login,
+    loginVK,
+    removeUser,
     addQuestInProgress,
     removeQuestInProgress,
     questFinish,

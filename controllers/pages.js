@@ -158,7 +158,7 @@ exports.search = (req, res) => {
         .then(quests => {
             console.log('count found quest ', quests.length);
             if (quests.length === 0) {
-                res.status(404).renderLayout('./pages/notFound/notFound.hbs');
+                res.status(404).renderLayout('./pages/notFound/notFound.hbs', {text: 'Ничего не найдено'});
                 throw new Error('');
             }
 

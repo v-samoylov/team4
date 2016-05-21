@@ -37,4 +37,8 @@ $(function () {
             errorInfo.empty().append(msg.responseText).show();
         });
     });
+
+    $('#vk').attr('href', 'https://oauth.vk.com/authorize?' +
+        'client_id=5471140&display=page&redirect_uri=' + window.location.origin +
+        '/auth-vk&scope=email&response_type=code&v=5.52');
 });
