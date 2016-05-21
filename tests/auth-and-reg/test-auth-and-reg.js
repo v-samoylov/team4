@@ -49,7 +49,7 @@ describe('test a user login', function () {
 });
 
 describe('test a user registration', function () {
-    it('should set an identification cookie on a successful registration', function (done) {
+    it.skip('should set an identification cookie on a successful registration', function (done) {
         agent
             .post('/user/reg')
             .send({name: 'testuser' + (new Date()).getTime(), email: 'a@a.com', password: 'qwer'})

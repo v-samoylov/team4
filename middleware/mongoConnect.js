@@ -3,7 +3,7 @@
 const debug = require('debug')('team4:middleware:mongo');
 
 const config = require('config');
-const dbConfig = config.get("db");
+const dbConfig = config.get('db');
 const MongoClient = require('mongodb').MongoClient;
 
 const mongoUri = `mongodb://${dbConfig.login}:${dbConfig.password}` +
@@ -21,7 +21,7 @@ module.exports = () => {
             connection = MongoClient.connect(mongoUri, (err, db) => {
                 if (err) {
                     res.renderLayout('./pages/notFound/notFound.hbs',
-                        {text: "Сожелеем, но сервис временно не доступен"});
+                        {text: 'Сожелеем, но сервис временно не доступен'});
                 } else {
                     connection = db;
                     req.db = connection;

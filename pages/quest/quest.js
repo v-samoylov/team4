@@ -28,7 +28,7 @@ $(function () {
             $(valueInput).html(respond.count);
         })
         .fail(function (msg) {
-            console.log(msg);
+            console.error(msg);
             $(valueInput).html(oldValue);
             $(this).prop('checked', !$(this).prop('checked'));
         });
@@ -87,7 +87,7 @@ $(function () {
             form.find('[type="submit"]').prop('disabled', true);
         })
         .fail(function (msg) {
-            console.log(msg);
+            console.error(msg);
         });
     });
 
@@ -123,7 +123,7 @@ $(function () {
             });
         })
         .fail(function (msg) {
-            console.log(msg);
+            console.error(msg);
             $(button).css('display', 'inline-block');
         });
     });
