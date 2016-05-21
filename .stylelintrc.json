@@ -9,7 +9,6 @@
   "ignoreFiles": [
     "public/*",
     "presentation/*",
-    "pages/createQuest/bootstrap-combobox.css",
-    "pages/editQuest/bootstrap-combobox.css"
+    "pages/createQuest/bootstrap-combobox.css"
   ]
 }

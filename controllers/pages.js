@@ -110,17 +110,6 @@ exports.createQuest = (req, res) => {
     res.renderLayout('./pages/createQuest/createQuest.hbs');
 };
 
-exports.editQuest = (req, res) => {
-    debug('editQuest');
-    questsModel(req.db).getQuest(req.body.quest).then(function (quest) {
-        for (var i = 0; i < quest.places.length; i++) {
-            var coords = quest.places[i].geo.latitude + ',' + quest.places[i].geo.longitude;
-            quest.places[i].geo = coords;
-        }
-        res.renderLayout('./pages/editQuest/editQuest.hbs', {quest}); 
-    });
-};
-
 exports.reg = (req, res) => {
     debug('reg');
     res.renderLayout('./pages/registration/registration.hbs');
