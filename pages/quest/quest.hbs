@@ -57,6 +57,11 @@
                             {{>place/place this user =../commonData.user quest =../title inProgress=../inProgress}}
                         {{/each}}
                     </div>
+                    <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                        <a class="a2a_button_vk"></a>
+                    </div>
                     <div class="reviews">
                         <h3 class="description-title">Отзывы:</h3>
                         <section class="reviews-list">
@@ -91,6 +96,7 @@
     {{/content}}
 
     {{#content "scripts"}}
+        <script async src="https://static.addtoany.com/menu/page.js"></script>
         {{#if commonData.isDev}}
             <script src="/quest.js"></script>
             <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>

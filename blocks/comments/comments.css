@@ -46,7 +46,6 @@
 .comment-list .panel
 {
     position: relative;
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .panel > .panel-heading::before,

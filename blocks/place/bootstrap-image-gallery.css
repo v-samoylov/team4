@@ -73,7 +73,6 @@
 }
 .blueimp-gallery .modal-body .video-content a:after
 {
-	font-family: "Glyphicons Halflings";
 	-webkit-font-smoothing: antialiased;
 	content: "\e029";
 	font-size: 64px;
