@@ -18,7 +18,7 @@ $(function () {
             }
         });
     }
-    
+
     function getMore() {
         $.ajax({
             method: "POST",
