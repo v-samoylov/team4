@@ -14,5 +14,4 @@ $(function () {
             }
         });
     });
-    $('#myTabExample a:first').tab('show');
 });

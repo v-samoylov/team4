@@ -27,14 +27,20 @@
                             </p>
                         {{/if}}
 
-                        <ul class="nav nav-tabs nav-justified" role="tablist" id="myTabExample">
-                            <li><a href="#my-quest" role="tab" data-toggle="tab">Созданные</a></li>
-                            <li><a href="#finished-quest" role="tab" data-toggle="tab">Пройденные</a></li>
-                            <li><a href="#in-process-quest" role="tab" data-toggle="tab">В процессе</a></li>
+                        <ul class="nav nav-tabs nav-justified" role="tablist" id="questsTab">
+                            <li>
+                                <a href="#my-quest" class="text-link" role="tab" data-toggle="tab">Созданные</a>
+                            </li>
+                            <li>
+                                <a href="#finished-quest" class="text-link" role="tab" data-toggle="tab">Пройденные</a>
+                            </li>
+                            <li>
+                                <a href="#in-process-quest" class="text-link" role="tab" data-toggle="tab">В процессе</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
-                            <div class="tab-pane" id="my-quest"> 
+                            <div class="tab-pane fade in active" id="my-quest">
                                 <div class="quest">
                                     <div class="row">
                                         {{#if created}}
@@ -52,7 +58,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="finished-quest"> 
+                            <div class="tab-pane fade in" id="finished-quest">
                                 <div name="finished-quest">
                                     <div class="quest">
                                         <div class="row">
@@ -72,7 +78,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="in-process-quest"> 
+                            <div class="tab-pane fade in" id="in-process-quest">
                                 <div name="in-process-quest">
                                     <div class="quest">
                                         <div class="row">
