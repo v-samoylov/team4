@@ -306,7 +306,7 @@ exports.instaPhotos = (req, res) => {
                     }
                 );
             });
-            
+
             res.json(JSON.stringify(photos));
         });
 };

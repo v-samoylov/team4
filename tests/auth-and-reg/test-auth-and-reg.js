@@ -1,8 +1,9 @@
-const cookieParser = require('cookie-parser');
 const app = require('../../app');
-
 const config = require('config');
-const dbConfig = config.get("db");
+const dbConfig = config.get("db")
+    ;
+const cookieParser = require('cookie-parser');
+
 const MongoClient = require('mongodb').MongoClient;
 
 const mongoUri = `mongodb://${dbConfig.login}:${dbConfig.password}` +
@@ -12,13 +13,14 @@ var request = require('supertest');
 var assert = require('assert');
 
 app.use(cookieParser);
+
 var agent = request.agent(app);
 
 describe('test a user login', function () {
     it('should set an identification cookie on a successful login', function (done) {
         agent
             .post('/user/login')
-            .send({email: 'c@c.com', password: 'qwe'})
+            .send({email: 'a@a.com', password: 'qwer'})
             .expect(200)
             .expect(function (res) {
                 var cookies = res.header['set-cookie'];
@@ -31,7 +33,7 @@ describe('test a user login', function () {
     it('should not set an identification cookie on a failed login', function (done) {
         agent
             .post('/user/login')
-            .send({email: '1', password: 'qwe'})
+            .send({email: '1', password: 'qwer'})
             .expect(400)
             .expect(function (res) {
                 var cookies = res.header['set-cookie'];
@@ -50,7 +52,7 @@ describe('test a user registration', function () {
     it('should set an identification cookie on a successful registration', function (done) {
         agent
             .post('/user/reg')
-            .send({name: 'testuser' + (new Date()).getTime(), email: 'c@c.com', password: 'qwe'})
+            .send({name: 'testuser' + (new Date()).getTime(), email: 'a@a.com', password: 'qwer'})
             .expect(200)
             .expect(function (res) {
                 var cookies = res.header['set-cookie'];
@@ -66,7 +68,7 @@ describe('test a user registration', function () {
     it('should not set an identification cookie on a failed registration', function (done) {
         agent
             .post('/user/reg')
-            .send({name: '1', email: 'c@c.com', password: 'qwe'})
+            .send({name: '1', email: 'a@a.com', password: 'qwer'})
             .expect(400)
             .expect(function (res) {
                 var cookies = res.header['set-cookie'];
@@ -82,10 +84,10 @@ describe('test a user registration', function () {
 
     it('should add user to the database on a successful registration', function (done) {
         var userName = 'testuser' + (new Date()).getTime();
-        var userEmail = 'c@c' + (new Date()).getTime() + '.com';
+        var userEmail = 'a@a' + (new Date()).getTime() + '.com';
         agent
             .post('/user/reg')
-            .send({name: userName, email: userEmail, password: 'qwe'})
+            .send({name: userName, email: userEmail, password: 'qwer'})
             .expect(200)
             .end(function () {
                 MongoClient.connect(mongoUri, (err, db) => {
@@ -110,7 +112,7 @@ describe('test a user registration', function () {
         var userEmail = 'c@c' + (new Date()).getTime() + '.com';
         agent
             .post('/user/reg')
-            .send({name: userName, email: userEmail, password: 'qwe'})
+            .send({name: userName, email: userEmail, password: 'qwer'})
             .expect(400)
             .end(function () {
                 MongoClient.connect(mongoUri, (err, db) => {
