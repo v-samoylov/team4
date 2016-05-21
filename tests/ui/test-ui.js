@@ -71,6 +71,7 @@ describe('test a user registration', function () {
     });
   })
 });
+
 describe('test a user logout', function () {
   it('should clear the cookie on a logout', function (done) {
     agent
