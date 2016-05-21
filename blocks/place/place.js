@@ -59,7 +59,7 @@ function checkIn() {
 
 module.exports.checkIn = checkIn;
 
-var routeMap;
+var routeMaps = {};
 
 $(function () {
     $('.check-in').each(function () {
@@ -124,7 +124,6 @@ $(function () {
     var setRoute = function (obj) {
         var placeLatitude = parseFloat($(obj).data('latitude'));
         var placeLongitude = parseFloat($(obj).data('longitude'));
-        console.log(placeLatitude, placeLongitude);
 
         var map = $(obj).data('target').split('#')[1];
         var options = {
@@ -135,8 +134,8 @@ $(function () {
 
         navigator.geolocation.getCurrentPosition(
             function (position) {
-                if (!routeMap) {
-                    routeMap = new ymaps.Map(map, { //eslint-disable-line
+                if (!routeMaps[map]) {
+                    routeMaps[map] = new ymaps.Map(map, { //eslint-disable-line
                         center: [placeLatitude, placeLongitude],
                         zoom: 10,
                         controls: []
@@ -154,7 +153,8 @@ $(function () {
                         strokeColor: '0000ffff',
                         opacity: 0.9
                     });
-                    routeMap.geoObjects.add(route);
+                    routeMaps[map].geoObjects.add(route);
+                    $(obj).parent().find('.loading-map').hide();
                 });
             },
             function (error) {

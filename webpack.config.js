@@ -30,7 +30,7 @@ module.exports = {
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
             },
             {
-                test: /\.jpe?g$|\.gif$|\.png$/i,
+                test: /\.jpe?g$|\.gif$|\.png$|\.svg/i,
                 loader: 'file-loader'
             }
         ]
