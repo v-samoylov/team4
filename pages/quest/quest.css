@@ -42,7 +42,6 @@
     padding: 10px;
     border: 1px solid #ddd;
     text-align: justify;
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #fff;
 }
 
@@ -144,9 +143,14 @@
 .description-title
 {
     text-align: center;
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
     font-size: 19px;
+}
+
+.a2a_default_style
+{
+    margin: 10px auto;
+    width: 108px;
 }
 
 .new-comment
