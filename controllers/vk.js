@@ -16,29 +16,32 @@ module.exports.auth = (req, res, next) => {
             uri: uriAccessToken(req.commonData.isDev, req.query.code),
             transform: JSON.parse
         })
+        .then(body => {
+            Object.assign(userInfo, {userId: body.user_id, email: body.email});
+            request({
+                uri: uriUserInfo(body.user_id, body.access_token),
+                transform: JSON.parse
+            })
             .then(body => {
-                Object.assign(userInfo, body);
-                request({
-                    uri: uriUserInfo(body.user_id, userInfo.access_token),
-                    transform: JSON.parse
-                })
+                Object.assign(userInfo, {name: body.response[0].domain});
+                return userInfo;
+            })
 
-                .then(body => {
-                    Object.assign(userInfo, {name: body.response[0].domain});
-                    return userInfo;
-                })
+            .then(users.loginVK)
 
-                .then(users.loginVK)
-
-                .then(result => {
-                    req.name = result.name;
-                    next();
-                })
-
-                .catch(() => {
-                    res.renderLayout('./pages/notFound/notFound.hbs');
-                });
+            .then(result => {
+                req.name = result.name;
+                next();
+            })
+            .catch(err => {
+                console.error(err);
+                res.renderLayout('./pages/notFound/notFound.hbs', {text: err});
             });
+        })
+        .catch(err => {
+            console.error(err);
+            res.renderLayout('./pages/notFound/notFound.hbs', {text: err});
+        });
     } else {
         res.renderLayout('./pages/notFound/notFound.hbs');
     }

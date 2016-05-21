@@ -76,7 +76,8 @@ const loginVK = user => {
                 if (result.length) {
                     return result[0];
                 }
-                return addUserVK(user);
+                addUserVK(user);
+                return loginVK(user);
             },
             () => {
                 throw errors.mongoError;
@@ -85,7 +86,7 @@ const loginVK = user => {
 };
 
 const removeUser = user => {
-    usersCollection.remove({name: user.name});
+    usersCollection.remove(user);
 };
 
 const addUser = newUser => {
