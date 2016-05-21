@@ -1,9 +1,9 @@
 'use strict';
 
 require('./createQuest.css');
-require('../../blocks/yandexMap/yandexMap.js');
 require('./bootstrap-combobox.css');
 require('./bootstrap-combobox.js');
+require('../../blocks/yandexMap/yandexMap.js');
 
 var validator = require('../../lib/forms/forms');
 
@@ -42,10 +42,7 @@ var addQuestForm = {
         this._$form.on('click', this._$imagePreviewClear.selector, this._clearPreview.bind(this));
         ymaps.ready( // eslint-disable-line
             function () {
-                var _this = this;
-                $('.one-place').each(function () {
-                    _this._initMap($(this));
-                });
+                this._initMap(this._$places.find('.js-place'));
             }.bind(this)
         );
     },
