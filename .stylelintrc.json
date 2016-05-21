@@ -8,7 +8,7 @@
   },
   "ignoreFiles": [
     "public/*",
-    "presentation/*",
-    "pages/createQuest/bootstrap-combobox.css"
+    "pages/createQuest/bootstrap-combobox.css",
+    "presentation/*"
   ]
 }

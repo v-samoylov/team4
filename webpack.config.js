@@ -14,7 +14,6 @@ module.exports = {
         quest: './quest/quest.js',
         userPage: './userPage/userPage.js',
         createQuest: './createQuest/createQuest.js',
-        editQuest: './editQuest/editQuest.js',
         notFound: './notFound/notFound.js'
     },
     devtool: 'source-map',
