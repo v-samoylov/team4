@@ -14,25 +14,25 @@
             </div>
             <div class="caption" data-name="{{quest}}#{{title}}">
                 <div class="place-head" id="{{url}}-collapse-group">
-                    <button data-toggle="collapse"
+                    <div data-toggle="collapse"
                             data-parent="#{{url}}-collapse-group"
                             class="comment-icon glyphicon glyphicon-comment"
                             data-target="#{{url}}-comments">
-                    </button>
-                    <button data-latitude="{{geo.latitude}}"
+                    </div>
+                    <div data-latitude="{{geo.latitude}}"
                             data-toggle="collapse"
                             data-parent="#{{url}}-collapse-group"
                             data-target="#{{url}}-map"
                             data-longitude="{{geo.longitude}}"
                             class="add-route-btn glyphicon glyphicon-globe">
-                    </button>
-                    <button data-latitude="{{geo.latitude}}"
+                    </div>
+                    <div data-latitude="{{geo.latitude}}"
                             data-toggle="collapse"
                             data-parent="#{{url}}-collapse-group"
                             data-target="#{{url}}-img"
                             data-longitude="{{geo.longitude}}"
                             class="insta-img glyphicon glyphicon-picture">
-                    </button>
+                    </div>
                     <div class="accordion-group panel">
                         {{> comments/comments this}}
                         <div id="{{url}}-map" class="collapse map"></div>

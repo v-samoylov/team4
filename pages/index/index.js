@@ -73,7 +73,7 @@ $(function () {
 
                 $loadGif.fadeOut('medium');
                 scroll();
-            })
+            });
         })
         .fail(function () {
             scroll();

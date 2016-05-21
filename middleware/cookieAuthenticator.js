@@ -16,7 +16,7 @@ module.exports = () => {
 
         if (userId) {
             var isLoggedIn = hash.validate(userId, salt);
-            var userName = userId.split('.')[0];
+            var userName = userId.substring(0, userId.lastIndexOf('.'));
 
             if (isLoggedIn) {
                 req.commonData.user = userName;
