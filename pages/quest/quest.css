@@ -89,6 +89,13 @@
     background-color: #a8cc77;
 }
 
+#start-quest
+{
+    max-width: 80%;
+    white-space: normal;
+    margin-bottom: 20px;
+}
+
 .reg-ref
 {
     margin-bottom: 20px;

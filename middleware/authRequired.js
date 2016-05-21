@@ -10,7 +10,11 @@ module.exports = (req, res, next) => {
         }
         next();
     } else {
-        res.cookie('referrer', req.url, {maxAge: 60 * 60 * 1000});
-        res.redirect('/auth');
+        res.cookie('referrer', req.get('Referrer'), {maxAge: 60 * 60 * 1000});
+        if (req.method === 'GET') {
+            res.redirect('/auth');
+        } else {
+            res.send({redirect: '/auth'});
+        }
     }
 };
