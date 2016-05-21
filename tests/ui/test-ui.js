@@ -56,10 +56,10 @@ describe('test a user registration', function () {
                 var cookies = res.header['set-cookie'];
                 var idCookie;
                 if (cookies) {
-                        idCookie = cookies.find(function (cookie) {
-                            return cookie.substring(0, 3) === 'id=';
-                        });
-                    }
+                    idCookie = cookies.find(function (cookie) {
+                        return cookie.substring(0, 3) === 'id=';
+                    });
+                }
                 assert.ok(idCookie, 'Cookie has not been set');
             }).end(done);
     });
@@ -140,10 +140,10 @@ describe('test a user logout', function () {
                 var cookies = res.header['set-cookie'];
                 var idCookie;
                 if (cookies) {
-                        idCookie = cookies.find(function (cookie) {
-                            return cookie.substring(0, 3) === 'id=';
-                        });
-                    }
+                    idCookie = cookies.find(function (cookie) {
+                        return cookie.substring(0, 3) === 'id=';
+                    });
+                }
                 assert.ok(idCookie, 'Cookie has not been cleared');
             })
             .end(done);
