@@ -5,11 +5,13 @@ const authRequired = require('./middleware/authRequired');
 const pages = require('./controllers/pages');
 const users = require('./controllers/users');
 const quests = require('./controllers/quests');
+const vk = require('./controllers/vk');
 
 module.exports = function (app) {
     app.get('/', pages.index);
     app.get('/popular', pages.index);
     app.post('/user/login', users.validate, users.login);
+    app.get('/auth-vk', vk.auth, users.loginVK);
     app.post('/user/reg', users.validate, users.register);
     app.post('/user/logout', users.logout);
     app.get('/user/:name', pages.userPage);

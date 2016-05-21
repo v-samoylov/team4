@@ -72,7 +72,6 @@ exports.likeQuest = (req, res) => {
     model
         .likeQuest(questName, user)
         .then(count => {
-            console.log(count);
             res.status(200).send({count});
         })
         .catch(err => console.error(err));
@@ -207,7 +206,6 @@ exports.create = (req, res) => {
                 };
             });
 
-            console.log(geo);
             let placeTitle = body['title-place'];
 
             if (!Array.isArray(placeTitle)) {
@@ -278,7 +276,7 @@ exports.checkin = (req, res) => {
                 });
         })
         .catch(err => {
-            console.log(err);
+            console.error(err);
             res.status(400).send(err);
         });
 };

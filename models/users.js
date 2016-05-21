@@ -50,6 +50,39 @@ const login = user => {
         );
 };
 
+const addUserVK = newUser => {
+    return isNameAvalible(newUser.name)
+        .then(() => {
+            newUser.finishedQuests = [];
+            newUser.inProgressQuests = [];
+            newUser.createdQuests = [];
+            newUser.url = toUrl(newUser.name);
+
+            return usersCollection.insertOne(newUser);
+        });
+};
+
+const loginVK = user => {
+    return usersCollection
+        .find({name: user.name})
+        .toArray()
+        .then(
+            result => {
+                if (result.length) {
+                    return result[0];
+                }
+                return addUserVK(user);
+            },
+            () => {
+                throw errors.mongoError;
+            }
+        );
+};
+
+const removeUser = user => {
+    usersCollection.remove({name: user.name});
+};
+
 const addUser = newUser => {
     return isNameAvalible(newUser.name)
         .then(() => {
@@ -143,6 +176,8 @@ function getNameById(url) {
 const operations = {
     addUser,
     login,
+    loginVK,
+    removeUser,
     addQuestInProgress,
     removeQuestInProgress,
     questFinish,
