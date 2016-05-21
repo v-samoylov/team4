@@ -28,56 +28,56 @@ $(function () {
                 get: 3
             }
         })
-            .done(function (data) {
-                if (!end && data.quests.length == 0) { // eslint-disable-line
-                    end = true;
-                    $loadGif.fadeOut('medium');
+        .done(function (data) {
+            if (!end && data.quests.length == 0) { // eslint-disable-line
+                end = true;
+                $loadGif.fadeOut('medium');
 
-                    return;
-                }
+                return;
+            }
 
-                skip += data.quests.length;
+            skip += data.quests.length;
 
-                data.quests.forEach(function (quest) {
-                    var $newElem = $('<div></div>', {
-                        class: 'text-center'
-                    });
+            data.quests.forEach(function (quest) {
+                var $newElem = $('<div></div>', {
+                    class: 'text-center'
+                });
 
-                    var $imgBox = $('<div></div>', {
-                        class: 'img-box'
-                    }).appendTo($newElem);
+                var $imgBox = $('<div></div>', {
+                    class: 'img-box'
+                }).appendTo($newElem);
 
-                    $('<img>', {
-                        class: 'img-responsive img-border img-full',
-                        src: quest.photo,
-                        alt: quest.title
-                    }).appendTo($imgBox);
+                $('<img>', {
+                    class: 'img-responsive img-border img-full',
+                    src: quest.photo,
+                    alt: quest.title
+                }).appendTo($imgBox);
 
-                    $('<h2></h2>', {
-                        text: quest.title
-                    }).appendTo($newElem);
+                $('<h2></h2>', {
+                    text: quest.title
+                }).appendTo($newElem);
 
-                    $('<a></a>', {
-                        href: '/quest/' + quest.url,
-                        class: 'btn btn-default btn-lg',
-                        text: 'Посмотреть'
-                    }).appendTo($newElem);
+                $('<a></a>', {
+                    href: '/quest/' + quest.url,
+                    class: 'btn btn-default btn-lg',
+                    text: 'Посмотреть'
+                }).appendTo($newElem);
 
-                    $newElem.append('<hr>');
+                $newElem.append('<hr>');
 
-                    $newElem.hide();
+                $newElem.hide();
 
-                    $('#list-of-quests').append($newElem);
+                $('#list-of-quests').append($newElem);
 
-                    $newElem.fadeIn('medium');
+                $newElem.fadeIn('medium');
 
-                    $loadGif.fadeOut('medium');
-                    scroll();
-                })
-            })
-            .fail(function () {
+                $loadGif.fadeOut('medium');
                 scroll();
-            });
+            })
+        })
+        .fail(function () {
+            scroll();
+        });
     }
     scroll();
 });
