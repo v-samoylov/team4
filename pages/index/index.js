@@ -18,7 +18,7 @@ $(function () {
             }
         });
     }
-    
+
     function getMore() {
         $.ajax({
             method: "POST",
@@ -73,7 +73,7 @@ $(function () {
 
                 $loadGif.fadeOut('medium');
                 scroll();
-            })
+            });
         })
         .fail(function () {
             scroll();
